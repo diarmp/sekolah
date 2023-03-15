@@ -30,12 +30,12 @@ class Tuition extends Model
     {
         return $this->belongsTo(Grade::class);
     }
-    
-    public function transaction(): HasMany
+
+    public function transactions(): HasMany
     {
         return $this->hasMany(Grade::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
