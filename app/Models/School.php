@@ -25,67 +25,57 @@ class School extends Model
 
     protected $guarded = [];
 
-    public function academic_year(): HasMany
+    public function academic_years(): HasMany
     {
         return $this->hasMany(AcademicYear::class);
     }
 
-    public function classroom(): HasMany
+    public function classrooms(): HasMany
     {
         return $this->hasMany(Classroom::class);
     }
 
-    public function classroom_staff(): HasMany
-    {
-        return $this->hasMany(ClassroomStaff::class);
-    }
-
-    public function classroom_student(): HasMany
-    {
-        return $this->hasMany(Classroom::class);
-    }
-    
-    public function grade(): HasMany
+    public function grades(): HasMany
     {
         return $this->hasMany(Grade::class);
     }
-    
-    public function payment_type(): HasMany
+
+    public function payment_types(): HasMany
     {
         return $this->hasMany(PaymentType::class);
     }
-    
+
     public function staff(): HasMany
     {
         return $this->hasMany(Staff::class);
     }
-    
-    public function student(): HasMany
+
+    public function students(): HasMany
     {
         return $this->hasMany(Student::class);
     }
-    
-    public function student_tuition(): HasMany
+
+    public function student_tuitions(): HasMany
     {
         return $this->hasMany(StudentTuition::class);
     }
-    
-    public function transaction(): HasMany
+
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
-    
-    public function tuition(): HasMany
+
+    public function tuitions(): HasMany
     {
         return $this->hasMany(Tuition::class);
     }
-    
-    public function tuition_type(): HasMany
+
+    public function tuition_types(): HasMany
     {
         return $this->hasMany(TuitionType::class);
     }
 
-    public function user(): HasMany
+    public function users(): HasMany
     {
         return $this->hasMany(User::class);
     }

@@ -17,21 +17,21 @@ class Grade extends Model
 
     protected $guarded = [];
 
-    public function tuition(): HasMany
+    public function tuitions(): HasMany
     {
         return $this->hasMany(Tuition::class);
     }
 
-    public function classroom(): BelongsTo
+    public function classrooms(): HasMany
     {
-        return $this->belongsTo(Classroom::class);
+        return $this->hasMany(Classroom::class);
     }
-    
-    public function student_tuition(): BelongsTo
+
+    public function student_tuitions(): HasMany
     {
-        return $this->belongsTo(StudentTuition::class);
+        return $this->hasMany(StudentTuition::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);

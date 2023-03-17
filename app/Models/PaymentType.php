@@ -16,12 +16,12 @@ class PaymentType extends Model
 
     protected $guarded = [];
 
-    
-    public function transaction(): HasMany
+
+    public function transactions(): HasMany
     {
         return $this->hasMany(Transaction::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
