@@ -53,7 +53,7 @@ class AcademyYearRequest extends FormRequest
                 Rule::unique('academic_years')->where(function ($q) {
                     $q->where('name', $this->name);
                     $q->where('school_id', $this->school_id);
-                })->ignore($this->academy_year->id)
+                })->ignore($this->academic_year->id)
             ]
         ];
     }

@@ -1,5 +1,5 @@
 $(function() {
-    const table = $("#academy-year")
+    const table = $("#academic-years")
     const url   = table.data('url')
 
 
@@ -15,7 +15,7 @@ $(function() {
         ]
     });
 
-    softDelete();
+    // softDelete(); # karena belum dipakai, jadi di-disable dulu (oleh: Reza)
 
     function softDelete() {
         Swal.fire({

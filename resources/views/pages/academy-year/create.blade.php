@@ -1,9 +1,5 @@
 @extends('layout.master-page')
 
-@section('title', 'Academy year')
-
-
-
 @section('content')
 
     {{-- start ROW --}}
@@ -14,11 +10,11 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">Create Academy Year</h6>
+                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
 
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('academy-year.store') }}" method="post">
+                    <form action="{{ route('academic-years.store') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="school-select">School</label>

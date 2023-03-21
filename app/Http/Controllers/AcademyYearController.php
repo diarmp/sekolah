@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Alert;
 use App\Models\School;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AcademyYearRequest;
-
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AcademyYearController extends Controller
 {
@@ -18,8 +17,8 @@ class AcademyYearController extends Controller
     public function index()
     {
         //
-
-        return view('pages.academy-year.index');
+        $title = "Academic Years";
+        return view('pages.academy-year.index', compact('title'));
     }
 
     /**
@@ -27,8 +26,9 @@ class AcademyYearController extends Controller
      */
     public function create()
     {
+        $title = "Create Academic Year";
         $schools = School::all();
-        return view('pages.academy-year.create', compact('schools'));
+        return view('pages.academy-year.create', compact('schools', 'title'));
     }
 
     /**
@@ -52,32 +52,33 @@ class AcademyYearController extends Controller
             Alert::toast('Ops Error Save Academy Years', 'error');
         }
 
-        return redirect()->route('academy-year.index');
+        return redirect()->route('academic-years.index');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AcademicYear $academyYear)
+    public function edit(AcademicYear $academic_year)
     {
 
         $schools = School::all();
-        return view('pages.academy-year.edit', compact('schools', 'academyYear'));
+        $title = "Edit Academic Year";
+        return view('pages.academy-year.edit', compact('schools', 'academic_year', 'title'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AcademyYearRequest $request, AcademicYear $academyYear)
+    public function update(AcademyYearRequest $request, AcademicYear $academic_year)
     {
 
         DB::beginTransaction();
         try {
 
-            $academyYear->school_id = $request->school_id;
-            $academyYear->name      = $request->name;
-            $academyYear->save();
+            $academic_year->school_id = $request->school_id;
+            $academic_year->name      = $request->name;
+            $academic_year->save();
 
             DB::commit();
             Alert::toast('Save Academy Years Success ', 'success');
@@ -86,19 +87,19 @@ class AcademyYearController extends Controller
             Alert::toast('Ops Error Save Academy Years', 'error');
         }
 
-        return redirect()->route('academy-year.index');
+        return redirect()->route('academic-years.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AcademicYear $academyYear)
+    public function destroy(AcademicYear $academic_year)
     {
 
         DB::beginTransaction();
         try {
 
-            $academyYear->delete();
+            $academic_year->delete();
 
             Alert::toast('Delete Academy Years Success ', 'success');
             DB::commit();
@@ -107,6 +108,6 @@ class AcademyYearController extends Controller
             DB::rollback();
         }
 
-        return redirect()->route('academy-year.index');
+        return redirect()->route('academic-years.index');
     }
 }

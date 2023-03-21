@@ -11,3 +11,4 @@
 
 
 @yield('js')
+@stack('js')

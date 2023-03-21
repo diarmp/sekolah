@@ -1,5 +1,5 @@
 <title>
-    @yield('title', 'undefined') | {{ env('APP_NAME') }}
+    @yield('title', $title ?? 'undefined') | {{ env('APP_NAME') }}
 </title>
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 <link
@@ -9,3 +9,4 @@
 <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 
 @yield('css')
+@stack('css')
