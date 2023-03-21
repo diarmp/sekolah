@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Student extends Model
 {
@@ -19,7 +20,12 @@ class Student extends Model
 
     protected $guarded = [];
 
-    public function student_tuition(): HasMany
+    public function classrooms(): BelongsToMany
+    {
+        return $this->belongsToMany(Classroom::class)->withTimestamps();
+    }
+
+    public function student_tuitions(): HasMany
     {
         return $this->hasMany(StudentTuition::class);
     }
@@ -33,7 +39,7 @@ class Student extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);

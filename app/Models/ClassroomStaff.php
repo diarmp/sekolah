@@ -13,15 +13,4 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ClassroomStaff extends Model
 {
     use HasFactory, SoftDeletes;
-
-    
-    public function staff(): HasMany
-    {
-        return $this->hasMany(Staff::class);
-    }
-    
-    public function school(): BelongsTo
-    {
-        return $this->belongsTo(School::class);
-    }
 }

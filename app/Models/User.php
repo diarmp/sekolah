@@ -9,10 +9,19 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable;
+
+    const ROLE_SUPER_ADMIN = "super admin";
+    const ROLE_OPS_ADMIN = "ops admin";
+    const ROLE_ADMIN_SEKOLAH = "admin sekolah";
+    const ROLE_ADMIN_YAYASAN = "admin yayasan";
+    const ROLE_TATA_USAHA = "tata usaha";
+    const ROLE_BENDAHARA = "bendahara";
+    const ROLE_KEPALA_SEKOLAH = "kepala sekolah";
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +32,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'school_id'
     ];
 
     /**
@@ -44,7 +54,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);

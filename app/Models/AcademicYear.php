@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AcademicYear extends Model
 {
@@ -14,11 +15,21 @@ class AcademicYear extends Model
 
     protected $guarded = [];
 
-    public function student(): BelongsTo
+    public function students(): HasMany
     {
-        return $this->belongsTo(Student::class);
+        return $this->hasMany(Student::class);
     }
-    
+
+    public function tutitions(): HasMany
+    {
+        return $this->hasMany(Tuition::class);
+    }
+
+    public function classrooms(): HasMany
+    {
+        return $this->hasMany(Classroom::class);
+    }
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);

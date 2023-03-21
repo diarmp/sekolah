@@ -15,16 +15,16 @@ class TuitionType extends Model
 
     protected $guarded = [];
 
-    public function student_tuition(): HasMany
+    public function student_tuitions(): HasMany
     {
         return $this->hasMany(StudentTuition::class);
     }
 
-    public function tuition(): HasMany
+    public function tuitions(): HasMany
     {
         return $this->hasMany(Tuition::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);

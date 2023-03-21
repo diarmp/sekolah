@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Staff extends Model
 {
@@ -17,16 +18,16 @@ class Staff extends Model
 
     protected $guarded = [];
 
-    public function classroom_staff(): HasMany
+    public function classrooms(): BelongsToMany
     {
-        return $this->hasMany(ClassroomStaff::class);
+        return $this->belongsToMany(Classroom::class)->withTimestamps();
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
