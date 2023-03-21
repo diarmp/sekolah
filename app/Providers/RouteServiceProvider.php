@@ -33,6 +33,10 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+
+            Route::name('datatable.')
+                ->prefix('datatable')
+                ->group(base_path('routes/datatable.php'));
         });
     }
 
