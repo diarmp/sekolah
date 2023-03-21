@@ -23,6 +23,9 @@ class School extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const TYPE_YAYASAN = "yayasan";
+    const TYPE_SEKOLAH = "sekolah";
+
     protected $guarded = [];
 
     public function academic_years(): HasMany
