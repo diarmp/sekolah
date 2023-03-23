@@ -17,7 +17,7 @@
                     <a href="{{ route('academy-year.create') }}" class="btn btn-primary btn-sm">ADD</a>
                 </div>
                 <div class="card-body">
-                    <x-datatable :id="'academy-year'" :headers="['School', 'Academy Year', 'Action']" :url="route('datatable.academy-year')" />
+                    <x-datatable :tableId="'academy-year'" :tableHeaders="['School', 'Academy Year', 'Action']" :tableColumns="[['data' => 'school.name', 'name' => 'name'], ['data' => 'name'], ['data' => 'action']]" :getDataUrl="route('datatable.academy-year')" />
                 </div>
             </div>
         </div>
@@ -26,8 +26,3 @@
     {{-- END ROW --}}
 
 @endsection
-
-
-@push('js')
-    <script src="{{ asset('page/academy-year/index.js') }}"></script>
-@endpush
