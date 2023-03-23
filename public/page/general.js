@@ -45,12 +45,11 @@ function softDelete(e) {
                 success: function (response) {
                     toastMessage("success", response.msg)
                     setTimeout(function(){
-                        window.location = redirect;
+                        window.location = redirect; 
                     }, 1000)
                 },
                 error: function (xhr, status, error) {
-                    var err = eval("(" + xhr.responseText + ")")
-                    toastMessage("error", err.header.message)
+                    toastMessage("error", err.msg)
                 }
             })
         }

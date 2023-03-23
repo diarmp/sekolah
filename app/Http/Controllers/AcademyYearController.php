@@ -99,16 +99,16 @@ class AcademyYearController extends Controller
         try {
 
             $academyYear->delete();
-
+            DB::commit();
             return response()->json([
                 'msg' => 'Success Deleted Academy Year'
             ], 200);
-            DB::commit();
         } catch (\Throwable $th) {
+
             DB::rollback();
             return response()->json([
                 'msg' => 'Ops Deleted Academy Year !'
-            ], 200);
+            ], 400);
         }
     }
 }
