@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(School::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(AcademicYear::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Grade::class)->nullable()->constrained()->nullOnDelete();
-            $table->string('name', 10)->nullable();
+            $table->string('name')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

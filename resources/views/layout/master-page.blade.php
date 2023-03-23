@@ -9,9 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-
-
     @include('layout.head-css')
+    
 </head>
 
 <body id="page-top">
@@ -76,7 +75,6 @@
     <!-- Logout Modal-->
 
     @include('layout.modal')
-
 
     @include('layout.head-js')
 
