@@ -46,13 +46,12 @@ class AcademyYearController extends Controller
             $academyYear->save();
 
             DB::commit();
-            Alert::toast('Save Academy Years Success ', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            Alert::toast('Ops Error Save Academy Years', 'error');
+            return redirect()->route('academy-year.index')->withToastError('Ops Error Save Academy Years!');
         }
 
-        return redirect()->route('academy-year.index');
+        return redirect()->route('academy-year.index')->withToastSuccess('Save Academy Years Success!');
     }
 
 
@@ -80,13 +79,13 @@ class AcademyYearController extends Controller
             $academyYear->save();
 
             DB::commit();
-            Alert::toast('Save Academy Years Success ', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            Alert::toast('Ops Error Save Academy Years', 'error');
+            return redirect()->route('academy-year.index')->withToastError('Ops Error Save Academy Years!');
         }
 
-        return redirect()->route('academy-year.index');
+
+        return redirect()->route('academy-year.index')->withToastSuccess('Save Academy Years Success!');
     }
 
     /**
@@ -101,13 +100,14 @@ class AcademyYearController extends Controller
             $academyYear->delete();
 
             return response()->json([
-                'msg'=>'Success Deleted Academy Year'
+                'msg' => 'Success Deleted Academy Year'
             ], 200);
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
+            return response()->json([
+                'msg' => 'Ops Deleted Academy Year !'
+            ], 200);
         }
-
-        return redirect()->route('academy-year.index');
     }
 }
