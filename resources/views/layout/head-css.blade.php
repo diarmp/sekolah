@@ -10,5 +10,4 @@
 <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 <link href="{{ asset('vendor/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
 
-@yield('css')
 @stack('css')

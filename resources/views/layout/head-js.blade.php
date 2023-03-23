@@ -18,5 +18,5 @@
   $(".select2").select2()
 </script>
 
-@yield('js')
 @stack('js')
+<script src="{{ asset('page/general.js') }}"></script>
