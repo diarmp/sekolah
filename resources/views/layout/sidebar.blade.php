@@ -21,6 +21,17 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    
+    <!-- Nav Item - Grade -->
+    <li class="nav-item">
+        <a class="nav-link" href="#">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
     <!-- Heading -->
     <div class="sidebar-heading">
         Interface

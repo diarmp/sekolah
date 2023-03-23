@@ -8,3 +8,6 @@ use App\Http\Controllers\Datatables;
 
 
 Route::get('academy-years', [App\Http\Controllers\Datatables\AcademyYearDatatables::class, 'index'])->name('academy-year');
+
+
+Route::get('grade', [App\Http\Controllers\Datatables\GradeDatatables::class, 'index'])->name('grade');

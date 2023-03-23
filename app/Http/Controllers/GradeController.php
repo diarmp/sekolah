@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\School;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\GradeRequest;
+use App\Models\Grade;
+
+class GradeController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+        $title = "Grades";
+        return view('pages.grade.index', compact('title'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $title = "Create Grade";
+        $schools = School::all();
+        return view('pages.grade.create', compact('schools', 'title'));
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(GradeRequest $request)
+    {
+        //
+        DB::beginTransaction();
+
+        try {
+            
+            $grade              = new Grade();
+            $grade->school_id   = $request->school_id;
+            $grade->name        = $request->name;
+            $grade->save();
+
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('grade.index')->withToastError('Oops Error Save Grades!');
+        }
+
+        return redirect()->route('grade.index')->withToastSuccess('Save Grades Success!');
+    }    
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Grade $grade)
+    {
+
+        $schools = School::all();
+        $title = "Update Grade";
+        return view('pages.grade.edit', compact('schools', 'grade', 'title'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(GradeRequest $request, Grade $grade)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $grade->school_id   = $request->school_id;
+            $grade->name        = $request->name;
+            $grade->save();
+            
+            DB::commit();
+
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('grade.index')->withToastError('Oops Error Save Grades!');
+        }
+
+        return redirect()->route('grade.index')->withToastSuccess('Save Grades Success!');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Grade $grade)
+    {
+        DB::beginTransaction();
+        try {
+            
+            $grade->delete();
+            DB::commit();
+
+            return response()->json([
+                'msg' => 'Success Deleted Grade!'
+            ], 200);
+
+        } catch (\Throwable $th) {
+            
+            DB::rollBack();
+            return response()->json([
+                'msg' => 'Oops Error Deleted Grade!'
+            ]);
+        }
+    }
+}
