@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TuitionTypeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GradeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +27,11 @@ Route::get('/home', function () {
 })->name('home')->middleware(['auth']);
 Route::group([], function () {
     Route::resource("academy-year", AcademyYearController::class)->except(['show']);
+    Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
+
+    // Grade
+    Route::resource("grade", GradeController::class)->except(['show']);
 });
-})->name('home');
 
 Route::resource('/students', StudentController::class);
 Route::get('/students/datatable', [StudentController::class, 'studentsDatatable'])->name('students.datatable');
-// ->middleware(['auth']);

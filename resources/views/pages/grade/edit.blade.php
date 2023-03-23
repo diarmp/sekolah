@@ -1,7 +1,5 @@
 @extends('layout.master-page')
 
-@section('title', $title)
-
 
 @section('content')
 
@@ -9,7 +7,7 @@
 
     <div class="row">
 
-        {{-- start table academy years --}}
+        {{-- start table grade --}}
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header d-flex">
@@ -18,7 +16,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="{{ route('academy-year.update', ['academy_year' => $academyYear->id]) }}" method="post">
+                    <form action="{{ route('grade.update', ['grade' => $grade->id]) }}" method="post">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -27,7 +25,7 @@
                                 id="school-select">
                                 <option value="">-</option>
                                 @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($academyYear->school_id === $school->id) selected @endif>
+                                    <option value="{{ $school->id }}" @if ($grade->school_id === $school->id) selected @endif>
                                         {{ $school->name }}
                                     </option>
                                 @endforeach
@@ -40,9 +38,9 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="year-academy-input">Years Academy</label>
+                            <label for="grade-input">Grade</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                value="{{ $academyYear->name }}" id="year-academy-input" placeholder="20XX - 20XX">
+                                value="{{ $grade->name }}" id="grade-input" placeholder="5, 6, 7, etc">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}

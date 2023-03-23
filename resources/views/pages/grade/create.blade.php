@@ -1,7 +1,5 @@
 @extends('layout.master-page')
 
-@section('title', $title)
-
 
 @section('content')
 
@@ -17,17 +15,15 @@
 
                 </div>
                 <div class="card-body">
-
-                    <form action="{{ route('academy-year.update', ['academy_year' => $academyYear->id]) }}" method="post">
-                        @method('PUT')
+                    <form action="{{ route('grade.store') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label for="school-select">School</label>
-                            <select class="form-control  @error('school_id') is-invalid @enderror" name="school_id"
+                            <select class="form-control @error('school_id') is-invalid @enderror" name="school_id"
                                 id="school-select">
                                 <option value="">-</option>
                                 @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($academyYear->school_id === $school->id) selected @endif>
+                                    <option value="{{ $school->id }}">
                                         {{ $school->name }}
                                     </option>
                                 @endforeach
@@ -37,12 +33,11 @@
                                     {{ $message }}
                                 </div>
                             @enderror
-
                         </div>
                         <div class="form-group">
-                            <label for="year-academy-input">Years Academy</label>
-                            <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                value="{{ $academyYear->name }}" id="year-academy-input" placeholder="20XX - 20XX">
+                            <label for="grade-input">Grade</label>
+                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
+                                id="grade-input" placeholder="5, 6, 7, etc">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
