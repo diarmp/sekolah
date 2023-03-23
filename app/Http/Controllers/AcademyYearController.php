@@ -100,10 +100,11 @@ class AcademyYearController extends Controller
 
             $academyYear->delete();
 
-            Alert::toast('Delete Academy Years Success ', 'success');
+            return response()->json([
+                'msg'=>'Success Deleted Academy Year'
+            ], 200);
             DB::commit();
         } catch (\Throwable $th) {
-            Alert::toast('Ops Error Delete Academy Years', 'error');
             DB::rollback();
         }
 

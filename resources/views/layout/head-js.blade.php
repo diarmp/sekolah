@@ -11,3 +11,4 @@
 
 
 @yield('js')
+<script src="{{ asset('page/general.js') }}"></script>
