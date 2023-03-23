@@ -1,6 +1,6 @@
 @extends('layout.master-page')
 
-@section('title', 'Academy year')
+@section('title', $title)
 
 
 

@@ -1,15 +1,13 @@
 @extends('layout.master-page')
 
-@section('title', $title)
 
 
 @section('content')
-
     {{-- start ROW --}}
 
     <div class="row">
 
-        {{-- start table academy years --}}
+        {{-- start table tuitions type --}}
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header d-flex">
@@ -18,16 +16,17 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="{{ route('academy-year.update', ['academy_year' => $academyYear->id]) }}" method="post">
+                    <form action="{{ route('tuition-type.update', ['tuition_type' => $tuitionType->id]) }}" method="post">
                         @method('PUT')
                         @csrf
+
                         <div class="form-group">
                             <label for="school-select">School</label>
                             <select class="form-control  @error('school_id') is-invalid @enderror" name="school_id"
                                 id="school-select">
                                 <option value="">-</option>
                                 @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($academyYear->school_id === $school->id) selected @endif>
+                                    <option value="{{ $school->id }}" @if ($tuitionType->school_id === $school->id) selected @endif>
                                         {{ $school->name }}
                                     </option>
                                 @endforeach
@@ -42,12 +41,17 @@
                         <div class="form-group">
                             <label for="year-academy-input">Years Academy</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                value="{{ $academyYear->name }}" id="year-academy-input" placeholder="20XX - 20XX">
+                                value="{{ $tuitionType->name }}" id="year-academy-input">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
                             @enderror
+                        </div>
+                        <div class="form-check my-2">
+                            <input type="checkbox" class="form-check-input" name="generatable" value="1"
+                                @if ($tuitionType->generatable == '1') checked @endif id="generatable-checkbox">
+                            <label class="form-check-label" for="generatable-checkbox">Generatable</label>
                         </div>
                         <button type="submit" class="btn btn-primary">SAVE</button>
                     </form>
@@ -55,8 +59,7 @@
             </div>
         </div>
 
-        {{-- END table academy years --}}
+        {{-- END table tuitions type --}}
     </div>
     {{-- END ROW --}}
-
 @endsection
