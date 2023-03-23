@@ -25,13 +25,14 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('pages.home');
 })->name('home')->middleware(['auth']);
+
 Route::group([], function () {
     Route::resource("academy-year", AcademyYearController::class)->except(['show']);
     Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
 
     // Grade
     Route::resource("grade", GradeController::class)->except(['show']);
+
+    Route::resource('students', StudentController::class)->except(['show']);
 });
 
-Route::resource('/students', StudentController::class);
-Route::get('/students/datatable', [StudentController::class, 'studentsDatatable'])->name('students.datatable');
