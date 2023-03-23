@@ -22,6 +22,9 @@ class RoleSeeder extends Seeder
             User::ROLE_TATA_USAHA,
             User::ROLE_BENDAHARA,
             User::ROLE_KEPALA_SEKOLAH,
+            
+            User::ROLE_SISWA,
+            User::ROLE_ALUMNI,
         ];
 
         foreach($roles as $role) {
