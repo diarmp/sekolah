@@ -19,4 +19,3 @@
 </script>
 
 @stack('js')
-<script src="{{ asset('page/general.js') }}"></script>

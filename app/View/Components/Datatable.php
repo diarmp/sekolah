@@ -11,8 +11,14 @@ class Datatable extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(public string $id, public array $headers, public string $url)
-    {
+    public function __construct(
+        public string $tableId,
+        public array $tableHeaders,
+        public string $getDataUrl,
+        public array $tableColumns,
+        public string  $deleteDataUrl = '',
+
+    ) {
         //
     }
 
