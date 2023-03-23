@@ -23,5 +23,5 @@ Route::get('/home', function () {
 })->name('home')->middleware(['auth']);
 
 Route::group([], function () {
-    Route::resource("academic-years", AcademyYearController::class)->except(['show']);
+    Route::resource("academy-year", AcademyYearController::class)->except(['show']);
 });

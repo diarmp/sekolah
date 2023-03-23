@@ -8,5 +8,4 @@
 
 <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 
-@yield('css')
 @stack('css')

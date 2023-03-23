@@ -1,5 +1,8 @@
 @extends('layout.master-page')
 
+@section('title', 'Academy year')
+
+
 @section('content')
 
     {{-- start ROW --}}
@@ -14,7 +17,8 @@
 
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('academic-years.update', ['academic_year' => $academic_year->id]) }}" method="post">
+
+                    <form action="{{ route('academy-year.update', ['academy_year' => $academyYear->id]) }}" method="post">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -23,7 +27,7 @@
                                 id="school-select">
                                 <option value="">-</option>
                                 @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($academic_year->school_id === $school->id) selected @endif>
+                                    <option value="{{ $school->id }}" @if ($academyYear->school_id === $school->id) selected @endif>
                                         {{ $school->name }}
                                     </option>
                                 @endforeach
@@ -38,7 +42,7 @@
                         <div class="form-group">
                             <label for="year-academy-input">Years Academy</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                value="{{ $academic_year->name }}" id="year-academy-input" placeholder="20XX - 20XX">
+                                value="{{ $academyYear->name }}" id="year-academy-input" placeholder="20XX - 20XX">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
