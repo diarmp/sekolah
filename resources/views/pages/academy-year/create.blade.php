@@ -14,7 +14,7 @@
         <div class="col-lg-6">
             <div class="card">
                 <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">Create Academy Year</h6>
+                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
 
                 </div>
                 <div class="card-body">

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AcademyYearRequest;
 
-
 class AcademyYearController extends Controller
 {
     /**
@@ -18,8 +17,8 @@ class AcademyYearController extends Controller
     public function index()
     {
         //
-
-        return view('pages.academy-year.index');
+        $title = "Academic Years";
+        return view('pages.academy-year.index', compact('title'));
     }
 
     /**
@@ -27,8 +26,9 @@ class AcademyYearController extends Controller
      */
     public function create()
     {
+        $title = "Create Academic Year";
         $schools = School::all();
-        return view('pages.academy-year.create', compact('schools'));
+        return view('pages.academy-year.create', compact('schools', 'title'));
     }
 
     /**
@@ -62,7 +62,8 @@ class AcademyYearController extends Controller
     {
 
         $schools = School::all();
-        return view('pages.academy-year.edit', compact('schools', 'academyYear'));
+        $title = "Update Academic Year";
+        return view('pages.academy-year.edit', compact('schools', 'academyYear', 'title'));
     }
 
     /**
