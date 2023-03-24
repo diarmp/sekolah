@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\AcademyYearController;
+use App\Http\Controllers\SchoolsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +25,13 @@ Route::get('/home', function () {
 })->name('home')->middleware(['auth']);
 
 Route::group([], function () {
+    // Academy Year
     Route::resource("academy-year", AcademyYearController::class)->except(['show']);
 
     // Grade
     Route::resource("grade", GradeController::class)->except(['show']);
+
+    // School
+    Route::resource('schools', SchoolsController::class)->except('show');
 });
 
