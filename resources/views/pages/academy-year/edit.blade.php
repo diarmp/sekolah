@@ -1,10 +1,8 @@
 @extends('layout.master-page')
 
-@section('title', $title)
 
 
 @section('content')
-
     {{-- start ROW --}}
 
     <div class="row">
@@ -22,7 +20,7 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
-                            <label for="school-select">School</label>
+                            <label for="school-select">Sekolah</label>
                             <select class="form-control  @error('school_id') is-invalid @enderror" name="school_id"
                                 id="school-select">
                                 <option value="">-</option>
@@ -40,7 +38,7 @@
 
                         </div>
                         <div class="form-group">
-                            <label for="year-academy-input">Years Academy</label>
+                            <label for="year-academy-input">Tahun Akademik</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
                                 value="{{ $academyYear->name }}" id="year-academy-input" placeholder="20XX - 20XX">
                             @error('name')
@@ -49,7 +47,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <button type="submit" class="btn btn-primary">SAVE</button>
+                        <button type="submit" class="btn btn-primary">Ubah</button>
                     </form>
                 </div>
             </div>
@@ -58,5 +56,4 @@
         {{-- END table academy years --}}
     </div>
     {{-- END ROW --}}
-
 @endsection

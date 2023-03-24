@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class School extends Model
 {
@@ -46,6 +47,11 @@ class School extends Model
     public function payment_types(): HasMany
     {
         return $this->hasMany(PaymentType::class);
+    }
+
+    public function staf(): BelongsTo
+    {
+        return $this->belongsTo(Staff::class, 'staff_id');
     }
 
     public function staff(): HasMany
@@ -81,5 +87,20 @@ class School extends Model
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(School::class, 'school_id');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(School::class, 'school_id');
+    }
+
+    public function scopeInduk($query)
+    {
+        return $query->whereNull('school_id');
     }
 }

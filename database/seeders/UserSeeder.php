@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\School;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -53,13 +54,24 @@ class UserSeeder extends Seeder
                     'email' => str($role)->slug() . '@sekolah.com',
                 ],
                 [
-                    'name' => $role,
+                    'name' => str($role)->title(),
                     'password' => bcrypt('password'),
                     'email_verified_at' => now(),
                     'school_id' => $yayasan->getKey()
                 ]
             );
             $user->assignRole($role);
+            $staff = Staff::updateOrCreate(
+                [
+                    'school_id' => $yayasan->getKey(),
+                    'user_id' => $user->getKey(),
+                ],
+                [
+                    'name' => $user->name
+                ]
+            );
+            $yayasan->staff_id = $staff->getKey();
+            $yayasan->save();
 
             // Sekolah
             $sekolah = School::updateOrCreate([
@@ -74,19 +86,32 @@ class UserSeeder extends Seeder
                 User::ROLE_KEPALA_SEKOLAH,
             ];
 
-            foreach($roles as $role) {
+            foreach($roles as $key => $role) {
                 $user = User::updateOrCreate(
                     [
                         'email' => str($role)->slug() . '@sekolah.com',
                     ],
                     [
-                        'name' => $role,
+                        'name' => str($role)->title(),
                         'password' => bcrypt('password'),
                         'email_verified_at' => now(),
                         'school_id' => $sekolah->getKey()
                     ]
                 );
                 $user->assignRole($role);
+                $staff = Staff::updateOrCreate(
+                    [
+                        'school_id' => $sekolah->getKey(),
+                        'user_id' => $user->getKey(),
+                    ],
+                    [
+                        'name' => $user->name
+                    ]
+                );
+                if ($key == 0) {
+                    $sekolah->staff_id = $staff->getKey();
+                    $sekolah->save();
+                }
             }
         }
     }

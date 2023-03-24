@@ -17,7 +17,7 @@ class AcademyYearController extends Controller
     public function index()
     {
         //
-        $title = "Academic Years";
+        $title = "Tahun Akademik";
         return view('pages.academy-year.index', compact('title'));
     }
 
@@ -26,7 +26,7 @@ class AcademyYearController extends Controller
      */
     public function create()
     {
-        $title = "Create Academic Year";
+        $title = "Tambah Tahun Akademik";
         $schools = School::all();
         return view('pages.academy-year.create', compact('schools', 'title'));
     }
@@ -48,10 +48,10 @@ class AcademyYearController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('academy-year.index')->withToastError('Ops Error Save Academy Years!');
+            return redirect()->route('academy-year.index')->withToastError('Ops Gagal Tambah  Tahun Akademik !');
         }
 
-        return redirect()->route('academy-year.index')->withToastSuccess('Save Academy Years Success!');
+        return redirect()->route('academy-year.index')->withToastSuccess('Tambah Tahun Akademik  Berhasil!');
     }
 
 
@@ -62,7 +62,7 @@ class AcademyYearController extends Controller
     {
 
         $schools = School::all();
-        $title = "Update Academic Year";
+        $title = "Ubah Tahun Akademik";
         return view('pages.academy-year.edit', compact('schools', 'academyYear', 'title'));
     }
 
@@ -82,11 +82,11 @@ class AcademyYearController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('academy-year.index')->withToastError('Ops Error Save Academy Years!');
+            return redirect()->route('academy-year.index')->withToastError('Ops Gagal ubah Tahun Akademik !');
         }
 
 
-        return redirect()->route('academy-year.index')->withToastSuccess('Save Academy Years Success!');
+        return redirect()->route('academy-year.index')->withToastSuccess('ubah Tahun Akademik  Berhasil!');
     }
 
     /**
@@ -101,13 +101,13 @@ class AcademyYearController extends Controller
             $academyYear->delete();
             DB::commit();
             return response()->json([
-                'msg' => 'Success Deleted Academy Year'
+                'msg' => 'Berhasil Hapus Tahun Akademik'
             ], 200);
         } catch (\Throwable $th) {
 
             DB::rollback();
             return response()->json([
-                'msg' => 'Ops Deleted Academy Year !'
+                'msg' => 'Ops Gagal Hapus Tahun Akademik!'
             ], 400);
         }
     }
