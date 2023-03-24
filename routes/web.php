@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
 
 /*
@@ -28,5 +29,14 @@ Route::group([], function () {
 
     // Grade
     Route::resource("grade", GradeController::class)->except(['show']);
+
+    // Classroom
+    Route::resource("classroom", ClassroomController::class)->except(['show']);
+
+    // Student
+    Route::resource('students', StudentController::class)->except(['show']);
+
+    // Tuition Type
+    Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
 });
 
