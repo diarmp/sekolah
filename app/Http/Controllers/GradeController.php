@@ -16,7 +16,7 @@ class GradeController extends Controller
     public function index()
     {
         //
-        $title = "Grades";
+        $title = "Tingkat";
         return view('pages.grade.index', compact('title'));
     }
 
@@ -25,7 +25,7 @@ class GradeController extends Controller
      */
     public function create()
     {
-        $title = "Create Grade";
+        $title = "Tambah Tingkatan";
         $schools = School::all();
         return view('pages.grade.create', compact('schools', 'title'));
     }
@@ -50,10 +50,10 @@ class GradeController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('grade.index')->withToastError('Oops Error Save Grades!');
+            return redirect()->route('grade.index')->withToastError('Eror Simpan Tingkat!');
         }
 
-        return redirect()->route('grade.index')->withToastSuccess('Save Grades Success!');
+        return redirect()->route('grade.index')->withToastSuccess('Berhasil Simpan Tingkat!');
     }    
 
     /**
@@ -63,7 +63,7 @@ class GradeController extends Controller
     {
 
         $schools = School::all();
-        $title = "Update Grade";
+        $title = "Ubah Tingkat";
         return view('pages.grade.edit', compact('schools', 'grade', 'title'));
     }
 
@@ -84,10 +84,10 @@ class GradeController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route('grade.index')->withToastError('Oops Error Save Grades!');
+            return redirect()->route('grade.index')->withToastError('Eror Simpan Tingkat!');
         }
 
-        return redirect()->route('grade.index')->withToastSuccess('Save Grades Success!');
+        return redirect()->route('grade.index')->withToastSuccess('Berhasil Simpan Tingkat!');
     }
 
     /**
@@ -102,14 +102,14 @@ class GradeController extends Controller
             DB::commit();
 
             return response()->json([
-                'msg' => 'Success Deleted Grade!'
+                'msg' => 'Berhasil Hapus Tingkat!'
             ], 200);
 
         } catch (\Throwable $th) {
             
             DB::rollBack();
             return response()->json([
-                'msg' => 'Oops Error Deleted Grade!'
+                'msg' => 'Eror Hapus Tingkat!'
             ]);
         }
     }
