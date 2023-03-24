@@ -37,7 +37,7 @@
                         <div class="form-group">
                             <label for="grade-input">Grade</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                                id="grade-input" placeholder="TK, SD, SMP, dll">
+                                id="grade-input" placeholder="">
                             @error('name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
