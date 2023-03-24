@@ -14,7 +14,7 @@ class StudentDatatables extends Controller
         $students = Student::with('school');
         return DataTables::of($students)
                         ->editColumn('gender', function ($data) {
-                            return strtolower($data->gender) == Student::GENDER_LAKI ? 'Laki' : 'Perempuan';
+                            return strtolower($data->gender) == Student::GENDER_LAKI ? 'Laki-Laki' : 'Perempuan';
                         })
                         ->addColumn('action', function (Student $row) {
                             $data = [

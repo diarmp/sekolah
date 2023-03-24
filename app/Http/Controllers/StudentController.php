@@ -16,7 +16,7 @@ class StudentController extends Controller
     public function index()
     {
         $data = [
-            'title' => "Data Murid"
+            'title' => "Murid"
         ];
 
         return view('pages.students.index', $data);
@@ -28,7 +28,7 @@ class StudentController extends Controller
     public function create()
     {   
         $data = [
-            'title' => "Tambah Data Murid"
+            'title' => "Tambah Murid"
         ];
 
         return view('pages.students.create', $data);
@@ -66,7 +66,6 @@ class StudentController extends Controller
             $student->save();
 
         } catch (\Throwable $th) {
-            dd($th);
             return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat menambahkan data murid!');
         }
 
