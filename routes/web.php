@@ -5,6 +5,8 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\SchoolsController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TuitionTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,7 +36,7 @@ Route::group([], function () {
 
     // School
     Route::resource('schools', SchoolsController::class)->except('show');
-    
+
     // Classroom
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
