@@ -18,7 +18,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="school-select">School</label>
+                            <label for="school-select">Sekolah</label>
                             <select class="form-control @error('school_id') is-invalid @enderror" name="school_id"
                                 id="school-select">
                                 <option value="">-</option>
@@ -35,7 +35,7 @@
                             @enderror
                         </div>
                         <div class="form-group">
-                            <label for="tuition-type-input">Tuition Type</label>
+                            <label for="tuition-type-input">Tipe Biaya</label>
                             <input type="text" class="form-control @error('name') is-invalid @enderror" name="name"
                                 id="tuition-type-input">
                             @error('name')
@@ -47,10 +47,10 @@
                         <div class="form-check my-2">
                             <input type="checkbox" class="form-check-input" name="generatable" value="1"
                                 id="generatable-checkbox">
-                            <label class="form-check-label" for="generatable-checkbox">Generatable</label>
+                            <label class="form-check-label" for="generatable-checkbox">Rutin</label>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">SAVE</button>
+                        <button type="submit" class="btn btn-primary">SIMPAN</button>
                     </form>
                 </div>
             </div>
