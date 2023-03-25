@@ -30,6 +30,7 @@ class StudentFactory extends Factory
                 'password' => bcrypt('password'),
             ]),
             'school_id' => 2,
+            'academic_year_id' => $faker->numberBetween(1, 10),
             'name' => $name,
             'gender' => $gender,
             'address' => $faker->address(),

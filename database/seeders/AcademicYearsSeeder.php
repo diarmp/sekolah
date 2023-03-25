@@ -14,7 +14,7 @@ class AcademicYearsSeeder extends Seeder
     public function run(): void
     {
         AcademicYear::factory()
-                ->count(7)
+                ->count(10)
                 ->create();
     }
 }
