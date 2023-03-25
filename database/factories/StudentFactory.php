@@ -29,7 +29,7 @@ class StudentFactory extends Factory
                 'email' => Str::slug($name, '-').'@gmail.com',
                 'password' => bcrypt('password'),
             ]),
-            'school_id' => $faker->randomElement([1, 2]),
+            'school_id' => 2,
             'name' => $name,
             'gender' => $gender,
             'address' => $faker->address(),
