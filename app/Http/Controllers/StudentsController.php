@@ -152,7 +152,10 @@ class StudentsController extends Controller
     public function destroy(Student $student)
     {
         try {
+            $student->status = Student::STATUS_INACTIVE;
+            $student->save();
             $student->delete();
+
             return response()->json([
                 'msg' => 'Berhasil menghapus data murid!'
             ], 200);
