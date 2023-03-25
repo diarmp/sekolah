@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-header d-flex">
                 <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-                <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm">ADD</a>
+                <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm">Tambah</a>
             </div>
             <div class="card-body">
                 <x-datatable 
