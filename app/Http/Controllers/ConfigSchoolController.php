@@ -14,15 +14,8 @@ class ConfigSchoolController extends Controller
     public function index(){
         //
         $title = "School Configuration";
-        $data = ConfigSchool::with('master_config')->where('school_id','2')->get();
-        if($data->count()>0){
-            $init = 1;
-            $listconfig = false;
-        }else{
-            $init = 0;
-            $listconfig = Config::all();
-        }
-        return view('pages.config-school.list', compact('title','data','init','listconfig'));
+        $data = Config::leftJoin("config_schools","configs.code","=","code_config")->get();
+        return view('pages.config-school.list', compact('title','data'));
     }
 
     public function save(SchoolConfigRequest $request){
@@ -44,7 +37,6 @@ class ConfigSchoolController extends Controller
             Alert::toast('Save Config Success ', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            dd($th);
             Alert::toast('Ops Error Save Config', 'error');
         }
 
