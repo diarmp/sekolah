@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentsRequest;
+use App\Imports\StudentsImport;
 use App\Models\AcademicYear;
 use App\Models\Student;
 use App\Models\StudentTuition;
 use App\Models\TuitionType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Excel;
 
 class StudentsController extends Controller
 {
@@ -48,7 +51,7 @@ class StudentsController extends Controller
     {
         try {
             DB::beginTransaction();
-            
+
             // Save Student
                 $student                            = new Student;
                 $student->school_id                 = $request->school_id ?? Auth::user()->school_id;
@@ -78,22 +81,9 @@ class StudentsController extends Controller
                 $student->guardian_work             = $request->guardian_work;
                 $student->guardian_education        = $request->guardian_education;
                 $student->guardian_income           = $request->guardian_income;
+
                 $student->save();
             // End Save Student
-
-            // Save User
-                $user               = new User;
-                $user->school_id    = $request->school_id ?? Auth::user()->school_id;
-                $user->name         = $student->name;
-                $user->email        = Str::slug($student->name, '-').'@gmail.com';
-                $user->password     = bcrypt('password');
-                $user->save();
-            // End Save User
-
-            // update Student's user_id
-                $student->user_id = $user->id;
-                $student->save();
-            // End update Student's user_id
 
             // If Has Unique Tuitions
                 if ($request->has('tuitions')) {
@@ -200,28 +190,22 @@ class StudentsController extends Controller
                 $student->save();
             // End Update Student
 
-            // Update User
-                $user               = User::findOrFail($student->user_id);
-                $user->name         = $student->name;
-                $user->save();
-            // End Update User
-
             // Update Student Tuitions
-            if ($request->has('selected_tuitions')) {
-                foreach ($request->selected_tuitions as $key => $value) {
+                if ($request->has('selected_tuitions')) {
+                    foreach ($request->selected_tuitions as $key => $value) {
 
-                    // Get Student Tuitions Data
-                    $selectedStudentTuition = StudentTuition::findOrFail($key);
+                        // Get Student Tuitions Data
+                        $selectedStudentTuition = StudentTuition::findOrFail($key);
 
-                    if ($value > 0) {
-                        $selectedStudentTuition->price = $value;
-                        $selectedStudentTuition->note = $value->note ?? null;
-                        $selectedStudentTuition->save();
-                    } else {
-                        $selectedStudentTuition->forceDelete();
-                    }
+                        if ($value > 0) {
+                            $selectedStudentTuition->price = $value;
+                            $selectedStudentTuition->note = $value->note ?? null;
+                            $selectedStudentTuition->save();
+                        } else {
+                            $selectedStudentTuition->forceDelete();
+                        }
+                    };
                 };
-            };
             // Update Student Tuitions
 
             // If Has New Added Tuitions
@@ -268,6 +252,21 @@ class StudentsController extends Controller
             return response()->json([
                 'msg' => 'Gagal menghapus data murid!'
             ], 400);
+        }
+    }
+
+    public function importStudentByExcel(Request $request)
+    {
+        try {
+            $school_id = $request->school_id ?? Auth::user()->school_id;
+
+            $excel = Excel::import(new StudentsImport($school_id, $request->academic_year_id), $request->file('excel'));
+            dd($excel);
+
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengimpor data murid!');
         }
     }
 }

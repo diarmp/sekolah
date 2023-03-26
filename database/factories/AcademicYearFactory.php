@@ -20,7 +20,7 @@ class AcademicYearFactory extends Factory
         $year = fake()->year('-10 years');
         return [
             'school_id' => 2,
-            'name' => "$year -". $year + 1,
+            'name' => "$year - ". $year + 1,
         ];
     }
 }
