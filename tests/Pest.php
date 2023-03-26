@@ -14,6 +14,8 @@
 uses(
     Tests\TestCase::class,
     // Illuminate\Foundation\Testing\RefreshDatabase::class,
+    Illuminate\Foundation\Testing\LazilyRefreshDatabase::class,
+    Illuminate\Foundation\Testing\WithFaker::class,
 )->in('Feature');
 
 /*
@@ -45,4 +47,9 @@ expect()->extend('toBeOne', function () {
 function something()
 {
     // ..
+}
+
+function sum(int $a, int $b)
+{
+    return (int) $a + $b;
 }

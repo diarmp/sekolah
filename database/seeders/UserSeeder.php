@@ -16,32 +16,34 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         // Super Admin
+        $role = User::ROLE_SUPER_ADMIN;
         $user = User::updateOrCreate(
             [
                 'email' => 'admin@sempoa.id',
             ],
             [
-                'name' => 'Sempoa',
+                'name' => str($role)->title(),
                 'password' => bcrypt('password'),
                 'email_verified_at' => now()
             ]
         );
-        $user->assignRole(User::ROLE_SUPER_ADMIN);
+        $user->assignRole($role);
 
         // local env
-        if (app()->environment('local')) {
+        if (true) {
             // Ops Admin
+            $role = User::ROLE_OPS_ADMIN;
             $user = User::updateOrCreate(
                 [
                     'email' => 'ops@sempoa.id',
                 ],
                 [
-                    'name' => 'Ops Sempoa',
+                    'name' => str($role)->title(),
                     'password' => bcrypt('password'),
                     'email_verified_at' => now()
                 ]
             );
-            $user->assignRole(User::ROLE_OPS_ADMIN);
+            $user->assignRole($role);
 
             // Yayasan
             $yayasan = School::updateOrCreate([
