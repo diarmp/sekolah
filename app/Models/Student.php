@@ -21,6 +21,10 @@ class Student extends Model
     const GENDER_LAKI = 'l';
     const GENDER_PEREMPUAN = 'p';
 
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_GRADUATE = 'graduate';
+
     protected $guarded = [];
 
 

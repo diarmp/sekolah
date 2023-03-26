@@ -5,7 +5,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\SchoolsController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TuitionTypeController;
 
 /*
@@ -41,9 +41,10 @@ Route::group([], function () {
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
     // Student
-    Route::resource('students', StudentController::class)->except(['show']);
+    Route::resource('students', StudentsController::class)->except(['show']);
 
     // Tuition Type
     Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
-});
 
+    Route::resource('students', StudentsController::class)->except(['show']);
+});
