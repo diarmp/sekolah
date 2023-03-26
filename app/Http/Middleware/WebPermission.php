@@ -23,6 +23,7 @@ class WebPermission
         $permissionRegistered = Permission::where('name', $routeName)->first();
         if ($permissionRegistered) {
             $user = Auth::user();
+            if (!$user) abort(404);
             $roleId = $user->roles->pluck('id')->first();
             $rolePermissions = DB::table('role_has_permissions')->where('role_id', $roleId)
                 ->where('permission_id', $permissionRegistered->id)
@@ -33,7 +34,7 @@ class WebPermission
                 ->where('permission_id', $permissionRegistered->id)
                 ->first();
 
-            if (!$userPermission and !$rolePermissions) abort(403);
+            if (!$userPermission and !$rolePermissions) abort(404);
         }
 
         return $next($request);
