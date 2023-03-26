@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('tuition_types', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(School::class)->nullable()->constrained()->nullOnDelete();
-            $table->string('name', 30)->nullable();
+            $table->string('name')->nullable();
             $table->boolean('generatable')->nullable();
             $table->timestamps();
             $table->softDeletes();

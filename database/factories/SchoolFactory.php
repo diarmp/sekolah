@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class SchoolFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-            "name" => fake()->name
+            "name" => fake()->name(),
+            'type' => School::TYPE_YAYASAN
         ];
     }
 }

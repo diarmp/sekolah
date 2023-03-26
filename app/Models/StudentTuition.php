@@ -22,7 +22,7 @@ class StudentTuition extends Model
 
     public function tuition_type(): BelongsTo
     {
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(TuitionType::class);
     }
     
     public function school(): BelongsTo

@@ -10,8 +10,9 @@
     <meta name="author" content="">
 
 
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('layout.head-css')
+    
 </head>
 
 <body id="page-top">
@@ -76,7 +77,6 @@
     <!-- Logout Modal-->
 
     @include('layout.modal')
-
 
     @include('layout.head-js')
 

@@ -15,7 +15,12 @@ class AcademyYearDatatables extends Controller
         $academyYear = AcademicYear::with('school');
         return DataTables::of($academyYear)
             ->addColumn('action', function (AcademicYear $row) {
-                return view('pages.academy-year.action', compact('row'));
+                $data = [
+                    'edit_url'     => route('academy-year.edit', ['academy_year' => $row->id]),
+                    'delete_url'   => route('academy-year.destroy', ['academy_year' => $row->id]),
+                    'redirect_url' => route('academy-year.index')
+                ];
+                return view('components.datatable-action', $data);
             })->toJson();
     }
 }

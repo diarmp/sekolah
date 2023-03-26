@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
 use App\Models\School;
 use App\Models\AcademicYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\AcademyYearRequest;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class AcademyYearController extends Controller
 {
@@ -17,7 +17,7 @@ class AcademyYearController extends Controller
     public function index()
     {
         //
-        $title = "Academic Years";
+        $title = "Tahun Akademik";
         return view('pages.academy-year.index', compact('title'));
     }
 
@@ -26,7 +26,7 @@ class AcademyYearController extends Controller
      */
     public function create()
     {
-        $title = "Create Academic Year";
+        $title = "Tambah Tahun Akademik";
         $schools = School::all();
         return view('pages.academy-year.create', compact('schools', 'title'));
     }
@@ -46,68 +46,69 @@ class AcademyYearController extends Controller
             $academyYear->save();
 
             DB::commit();
-            Alert::toast('Save Academy Years Success ', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            Alert::toast('Ops Error Save Academy Years', 'error');
+            return redirect()->route('academy-year.index')->withToastError('Ops Gagal Tambah  Tahun Akademik !');
         }
 
-        return redirect()->route('academic-years.index');
+        return redirect()->route('academy-year.index')->withToastSuccess('Tambah Tahun Akademik  Berhasil!');
     }
 
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AcademicYear $academic_year)
+    public function edit(AcademicYear $academyYear)
     {
 
         $schools = School::all();
-        $title = "Edit Academic Year";
-        return view('pages.academy-year.edit', compact('schools', 'academic_year', 'title'));
+        $title = "Ubah Tahun Akademik";
+        return view('pages.academy-year.edit', compact('schools', 'academyYear', 'title'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(AcademyYearRequest $request, AcademicYear $academic_year)
+    public function update(AcademyYearRequest $request, AcademicYear $academyYear)
     {
 
         DB::beginTransaction();
         try {
 
-            $academic_year->school_id = $request->school_id;
-            $academic_year->name      = $request->name;
-            $academic_year->save();
+            $academyYear->school_id = $request->school_id;
+            $academyYear->name      = $request->name;
+            $academyYear->save();
 
             DB::commit();
-            Alert::toast('Save Academy Years Success ', 'success');
         } catch (\Throwable $th) {
             DB::rollback();
-            Alert::toast('Ops Error Save Academy Years', 'error');
+            return redirect()->route('academy-year.index')->withToastError('Ops Gagal ubah Tahun Akademik !');
         }
 
-        return redirect()->route('academic-years.index');
+
+        return redirect()->route('academy-year.index')->withToastSuccess('ubah Tahun Akademik  Berhasil!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AcademicYear $academic_year)
+    public function destroy(AcademicYear $academyYear)
     {
 
         DB::beginTransaction();
         try {
 
-            $academic_year->delete();
-
-            Alert::toast('Delete Academy Years Success ', 'success');
+            $academyYear->delete();
             DB::commit();
+            return response()->json([
+                'msg' => 'Berhasil Hapus Tahun Akademik'
+            ], 200);
         } catch (\Throwable $th) {
-            Alert::toast('Ops Error Delete Academy Years', 'error');
-            DB::rollback();
-        }
 
-        return redirect()->route('academic-years.index');
+            DB::rollback();
+            return response()->json([
+                'msg' => 'Ops Gagal Hapus Tahun Akademik!'
+            ], 400);
+        }
     }
 }

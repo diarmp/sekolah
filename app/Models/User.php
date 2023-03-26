@@ -8,6 +8,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -22,6 +23,8 @@ class User extends Authenticatable
     const ROLE_TATA_USAHA = "tata usaha";
     const ROLE_BENDAHARA = "bendahara";
     const ROLE_KEPALA_SEKOLAH = "kepala sekolah";
+    const ROLE_MURID = "murid";
+    const ROLE_ALUMNI = "alumni";
 
     /**
      * The attributes that are mass assignable.

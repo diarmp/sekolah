@@ -18,7 +18,15 @@ class Student extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const GENDER_LAKI = 'l';
+    const GENDER_PEREMPUAN = 'p';
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    const STATUS_GRADUATE = 'graduate';
+
     protected $guarded = [];
+
 
     public function classrooms(): BelongsToMany
     {
