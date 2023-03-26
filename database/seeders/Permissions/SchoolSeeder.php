@@ -21,11 +21,20 @@ class SchoolSeeder extends Seeder
 
         // schools
         $roles = [
+            'index' => 'schools.index',
             'create' => 'schools.create',
-            'read' => 'schools.index',
-            'update' => 'schools.edit',
-            'delete' => 'schools.destroy'
+            'store' => 'schools.store',
+            'edit' => 'schools.edit',
+            'update' => 'schools.update',
+            'destroy' => 'schools.destroy'
         ];
+
+        // index school
+        $permission = Permission::firstOrCreate([
+            'name' => $roles['index'],
+            'guard_name' => 'web'
+        ]);
+        $permission->syncRoles([$super_admin, $ops_admin]);
 
         // create school
         $permission = Permission::firstOrCreate([
@@ -33,26 +42,29 @@ class SchoolSeeder extends Seeder
             'guard_name' => 'web'
         ]);
         $permission->syncRoles([$super_admin]);
-
-        // read school
         $permission = Permission::firstOrCreate([
-            'name' => $roles['read'],
+            'name' => $roles['store'],
+            'guard_name' => 'web'
+        ]);
+        $permission->syncRoles([$super_admin]);
+
+        // update school
+        $permission = Permission::firstOrCreate([
+            'name' => $roles['edit'],
             'guard_name' => 'web'
         ]);
         $permission->syncRoles([$super_admin, $ops_admin]);
-
-        // update school
         $permission = Permission::firstOrCreate([
             'name' => $roles['update'],
             'guard_name' => 'web'
         ]);
         $permission->syncRoles([$super_admin, $ops_admin]);
-        
-        // delete school
+
+        // destroy school
         $permission = Permission::firstOrCreate([
-            'name' => $roles['delete'],
+            'name' => $roles['destroy'],
             'guard_name' => 'web'
         ]);
-        $permission->syncRoles([$super_admin, $ops_admin]);
+        $permission->syncRoles([$super_admin]);
     }
 }
