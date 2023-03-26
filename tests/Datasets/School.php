@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\School;
-use App\Models\Staff;
 use App\Models\User;
 
 dataset('school_staff', [
