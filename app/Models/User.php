@@ -23,7 +23,7 @@ class User extends Authenticatable
     const ROLE_TATA_USAHA = "tata usaha";
     const ROLE_BENDAHARA = "bendahara";
     const ROLE_KEPALA_SEKOLAH = "kepala sekolah";
-    const ROLE_SISWA = "siswa";
+    const ROLE_MURID = "murid";
     const ROLE_ALUMNI = "alumni";
 
     /**
