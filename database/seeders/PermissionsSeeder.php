@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Permissions\AcademicYearSeeder;
 use Database\Seeders\Permissions\GradeSeeder;
 use Database\Seeders\Permissions\SchoolSeeder;
+use Database\Seeders\Permissions\TuitionTypeSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -29,6 +31,8 @@ class PermissionsSeeder extends Seeder
         $this->call([
             SchoolSeeder::class,
             GradeSeeder::class,
+            TuitionTypeSeeder::class,
+            AcademicYearSeeder::class,
         ]);
     }
 }
