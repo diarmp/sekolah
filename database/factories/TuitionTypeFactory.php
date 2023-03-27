@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\School>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class SchoolFactory extends Factory
+class TuitionTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,9 @@ class SchoolFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => fake()->name(),
-            'type' => School::TYPE_YAYASAN
+            'school_id' => 2,
+            'name' => fake()->word(),
+            'generatable' => fake()->randomElement([true, false]),
         ];
     }
 }

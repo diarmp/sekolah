@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\School;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\School>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class SchoolFactory extends Factory
+class AcademicYearFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,9 +17,10 @@ class SchoolFactory extends Factory
      */
     public function definition(): array
     {
+        $year = fake()->year('-10 years');
         return [
-            "name" => fake()->name(),
-            'type' => School::TYPE_YAYASAN
+            'school_id' => 2,
+            'name' => "$year -". $year + 1,
         ];
     }
 }
