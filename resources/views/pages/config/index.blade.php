@@ -18,7 +18,7 @@
                     <a href="{{ route('master-configs.create') }}" class="btn btn-primary btn-sm">Tambah Configurasi</a>
                 </div> -->
                 <div class="card-body">
-                    <x-datatable :id="'master-configs'" :headers="['Config Code', 'Name', ' ']" :url="route('datatable.master-configs')" />
+                    <x-datatable :tableId="'master-configs'" :tableHeaders="['Config Code', 'Name', ' ']" :tableColumns="[['data'=>'code'], ['data' => 'name'], ['data' => 'action']]" :getDataUrl="route('datatable.master-configs')" />
                 </div>
             </div>
         </div>
@@ -26,9 +26,4 @@
     </div>
     {{-- END ROW --}}
 
-@endsection
-
-
-@section('js')
-    <script src="{{ asset('page/config/index.js') }}"></script>
 @endsection
