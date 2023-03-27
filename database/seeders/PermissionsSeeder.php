@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Database\Seeders\Permissions\GradeSeeder;
 use Database\Seeders\Permissions\SchoolSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,7 +27,8 @@ class PermissionsSeeder extends Seeder
         // $kepala_sekolah = Role::whereName(User::ROLE_KEPALA_SEKOLAH)->first();
 
         $this->call([
-            SchoolSeeder::class
+            SchoolSeeder::class,
+            GradeSeeder::class,
         ]);
     }
 }
