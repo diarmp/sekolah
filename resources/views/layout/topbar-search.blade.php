@@ -1,11 +1,39 @@
-<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search"
-            aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
-        </div>
-    </div>
-</form>
+@hasanyrole('super admin|ops admin')
+  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <select id="school_selector" name="school_selector"
+      class="form-control select2 @error('school_selector') is-invalid @enderror" required>
+      <option value="">Pilih Sekolah ...</option>
+      @foreach ($school_selectors as $school_selector)
+        <option value="{{ $school_selector->getKey() }}" @selected($school_selector->getKey() == session('school_selector_id'))>{{ $school_selector->name }}</option>
+      @endforeach
+    </select>
+  </form>
+@endrole
+
+@push('js')
+  <script>
+    $(function() {
+      $('#school_selector').change(function() {
+        const token = $('meta[name="csrf-token"]').attr('content');
+        const data = {
+          _token: token,
+          school_selector: $(this).val()
+        };
+        fetch(route('school_selector'), {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Success:", data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      });
+    });
+  </script>
+@endpush
