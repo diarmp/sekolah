@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TuitionType>
  */
 class TuitionTypeFactory extends Factory
 {
@@ -17,9 +18,8 @@ class TuitionTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'school_id' => 2,
-            'name' => fake()->word(),
-            'generatable' => fake()->randomElement([true, false]),
+            'school_id' => School::latest()->first(),
+            'name' => fake()->name()
         ];
     }
 }

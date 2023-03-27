@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ConfigSchoolController;
@@ -46,15 +47,13 @@ Route::group([], function () {
 
     // Tuition Type
     Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
-
-    Route::resource('students', StudentsController::class)->except(['show']);
 });
 
 Route::group([], function () {
     Route::resource("master-configs", ConfigController::class)->except(['show']);
 });
 
-Route::group(['prefix' => 'config','as' => 'config.'], function() {
-    Route::get('/',[ConfigSchoolController::class,'index'])->name('index');
-    Route::post('/save',[ConfigSchoolController::class,'save'])->name('save');
+Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
+    Route::get('/', [ConfigSchoolController::class, 'index'])->name('index');
+    Route::post('/save', [ConfigSchoolController::class, 'save'])->name('save');
 });
