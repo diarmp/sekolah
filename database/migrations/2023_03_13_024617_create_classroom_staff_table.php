@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Classroom;
+use App\Models\School;
 use App\Models\Staff;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('classroom_staff', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(School::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Staff::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
