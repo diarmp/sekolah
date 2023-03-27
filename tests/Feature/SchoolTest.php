@@ -43,22 +43,6 @@ it('has Super Admin & Ops Admin users', function () {
         ]);
 });
 
-it('can render School index page as Sempoa Staff', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('schools.index'));
-
-    $response->assertOk();
-})->with('sempoa_staff');
-
-it('can not render School index page as School Staff', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('schools.index'));
-
-    $response->assertNotFound();
-})->with('school_staff');
-
 it('can render School create page as Super Admin', function (User $user) {
     $response = $this
         ->actingAs($user)
@@ -68,24 +52,6 @@ it('can render School create page as Super Admin', function (User $user) {
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin]
 ]);
-
-it('can not render School create page as Ops Admin', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('schools.create'));
-
-    $response->assertNotFound();
-})->with([
-    User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin]
-]);
-
-it('can not render School create page as School Staff', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('schools.create'));
-
-    $response->assertNotFound();
-})->with('school_staff');
 
 it('requires the school name', function () {
     $name = $this->faker()->company();
@@ -160,6 +126,14 @@ it('can create new School', function () {
     expect($user->hasRole(User::ROLE_ADMIN_SEKOLAH))->toBeTrue();
 });
 
+it('can render School index page as Sempoa Staff', function (User $user) {
+    $response = $this
+        ->actingAs($user)
+        ->get(route('schools.index'));
+
+    $response->assertOk();
+})->with('sempoa_staff');
+
 it('can render School edit page as Sempoa Staff', function (User $user) {
     $school = School::factory()->create();
     $_user = User::factory()->create([
@@ -178,25 +152,6 @@ it('can render School edit page as Sempoa Staff', function (User $user) {
 
     $response->assertOk();
 })->with('sempoa_staff');
-
-it('can not render School edit page as School Staff', function (User $user) {
-    $school = School::factory()->create();
-    $_user = User::factory()->create([
-        'school_id' => $school->getKey()
-    ]);
-    $_staff = Staff::factory()->create([
-        'school_id' => $school->getKey(),
-        'user_id' => $_user->getKey()
-    ]);
-    $school->staff_id = $_staff->getKey();
-    $school->save();
-
-    $response = $this
-        ->actingAs($user)
-        ->get(route('schools.edit', $school->getKey()));
-
-    $response->assertNotFound();
-})->with('school_staff');
 
 it('can edit school', function (User $user) {
     $school = School::factory()->create();
@@ -231,6 +186,51 @@ it('can delete School as Super Admin', function () {
 
     $this->assertSoftDeleted($school);
 });
+
+it('can not render School create page as Ops Admin', function (User $user) {
+    $response = $this
+        ->actingAs($user)
+        ->get(route('schools.create'));
+
+    $response->assertNotFound();
+})->with([
+    User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin]
+]);
+
+it('can not render School create page as School Staff', function (User $user) {
+    $response = $this
+        ->actingAs($user)
+        ->get(route('schools.create'));
+
+    $response->assertNotFound();
+})->with('school_staff');
+
+it('can not render School index page as School Staff', function (User $user) {
+    $response = $this
+        ->actingAs($user)
+        ->get(route('schools.index'));
+
+    $response->assertNotFound();
+})->with('school_staff');
+
+it('can not render School edit page as School Staff', function (User $user) {
+    $school = School::factory()->create();
+    $_user = User::factory()->create([
+        'school_id' => $school->getKey()
+    ]);
+    $_staff = Staff::factory()->create([
+        'school_id' => $school->getKey(),
+        'user_id' => $_user->getKey()
+    ]);
+    $school->staff_id = $_staff->getKey();
+    $school->save();
+
+    $response = $this
+        ->actingAs($user)
+        ->get(route('schools.edit', $school->getKey()));
+
+    $response->assertNotFound();
+})->with('school_staff');
 
 it('can not delete School as Ops Admin', function () {
     $school = School::factory()->create();
