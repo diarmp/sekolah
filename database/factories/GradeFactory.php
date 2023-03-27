@@ -17,7 +17,7 @@ class GradeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['TK', 'SD', 'SMP', 'SMA', 'SMK'])
+            'name' => fake()->randomElements(['TK', 'SD', 'SMP', 'SMA', 'SMK'])
         ];
     }
 }
