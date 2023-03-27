@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Grade>
  */
-class GradeFactory extends Factory
+class ClassroomFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,7 @@ class GradeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['TK', 'SD', 'SMP', 'SMA', 'SMK'])
+            'name' => fake()->randomElements(['1a', '2b', '3c', '4d', '5e'])
         ];
     }
 }
