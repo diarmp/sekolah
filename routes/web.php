@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ConfigSchoolController;
@@ -6,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SchoolsController;
+use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TuitionTypeController;
 
@@ -47,14 +49,15 @@ Route::group([], function () {
     // Tuition Type
     Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
 
-    Route::resource('students', StudentsController::class)->except(['show']);
+    // School Selector
+    Route::post('school_selector', SchoolSelectorController::class)->name('school_selector')->middleware('role:super admin|ops admin');
 });
 
 Route::group([], function () {
     Route::resource("master-configs", ConfigController::class)->except(['show']);
 });
 
-Route::group(['prefix' => 'config','as' => 'config.'], function() {
-    Route::get('/',[ConfigSchoolController::class,'index'])->name('index');
-    Route::post('/save',[ConfigSchoolController::class,'save'])->name('save');
+Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
+    Route::get('/', [ConfigSchoolController::class, 'index'])->name('index');
+    Route::post('/save', [ConfigSchoolController::class, 'save'])->name('save');
 });
