@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SchoolsController;
+use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TuitionTypeController;
 
@@ -47,6 +48,9 @@ Route::group([], function () {
 
     // Tuition Type
     Route::resource("tuition-type", TuitionTypeController::class)->except(['show']);
+
+    // School Selector
+    Route::post('school_selector', SchoolSelectorController::class)->name('school_selector')->middleware('role:super admin|ops admin');
 });
 
 Route::group([], function () {

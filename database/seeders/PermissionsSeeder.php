@@ -6,6 +6,7 @@ use Database\Seeders\Permissions\AcademicYearSeeder;
 use Database\Seeders\Permissions\ClassroomSeeder;
 use Database\Seeders\Permissions\GradeSeeder;
 use Database\Seeders\Permissions\SchoolSeeder;
+use Database\Seeders\Permissions\SchoolSelectorSeeder;
 use Database\Seeders\Permissions\TuitionTypeSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -34,6 +35,7 @@ class PermissionsSeeder extends Seeder
             TuitionTypeSeeder::class,
             AcademicYearSeeder::class,
             ClassroomSeeder::class,
+            SchoolSelectorSeeder::class,
         ]);
     }
 }
