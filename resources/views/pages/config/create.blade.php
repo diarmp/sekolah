@@ -8,11 +8,11 @@
 
         {{-- start table academy years --}}
         <div class="col-lg-6">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">{{$title}}</h1>
+            </div>
             <div class="card">
-                <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-
-                </div>
+                
                 <div class="card-body">
                     <form action="{{ route('master-configs.store') }}" method="post">
                         @csrf
