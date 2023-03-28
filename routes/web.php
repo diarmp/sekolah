@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AcademyYearController;
+use App\Http\Controllers\AssignClassroomStudentController;
 use App\Http\Controllers\ConfigController;
 use App\Http\Controllers\ConfigSchoolController;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,9 @@ Route::group([], function () {
 
     // School Selector
     Route::post('school_selector', SchoolSelectorController::class)->name('school_selector')->middleware('role:super admin|ops admin');
+
+    // Assign Classroom student
+    Route::get('assign-classroom-student', AssignClassroomStudentController::class)->name(('assign-classroom-student'));
 });
 
 Route::group([], function () {
