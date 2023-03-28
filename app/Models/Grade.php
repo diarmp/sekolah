@@ -21,9 +21,7 @@ class Grade extends Model
 
     protected static function booted()
     {
-        if (Session::has('school_id')) {
-            static::addGlobalScope(new GradeScope);
-        }
+        static::addGlobalScope(new GradeScope);
     }
 
     public function tuitions(): HasMany
