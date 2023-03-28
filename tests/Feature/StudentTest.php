@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Models\Student;
+use App\Models\TuitionType;
 use App\Models\User;
 
 beforeEach(function () {
@@ -25,13 +27,13 @@ beforeEach(function () {
     });
 
     // It Will Throw Error because doesn't have school_id
-        // it('can render Student index page as Sempoa Staff', function (User $user) {
-        //     $response = $this
-        //         ->actingAs($user)
-        //         ->get(route('students.index'));
+    it('can render Student index page as Sempoa Staff', function (User $user) {
+        $response = $this
+            ->actingAs($user)
+            ->get(route('students.index'));
 
-        //     $response->assertOk();
-        // })->with('sempoa_staff');
+        $response->assertOk();
+    })->with('sempoa_staff');
 
     it('can render Student index page as School Staff', function (User $user) {
         $response = $this
@@ -42,13 +44,13 @@ beforeEach(function () {
     })->with('school_staff');
 
     // It Will Throw Error because doesn't have school_id
-        // it('can render Student create page as Sempoa Staff', function (User $user) {
-        //     $response = $this
-        //         ->actingAs($user)
-        //         ->get(route('students.create'));
+    it('can render Student create page as Sempoa Staff', function (User $user) {
+        $response = $this
+            ->actingAs($user)
+            ->get(route('students.create'));
 
-        //     $response->assertOk();
-        // })->with('sempoa_staff');
+        $response->assertOk();
+    })->with('sempoa_staff');
 
     it('can render Student create page', function (User $user) {
         $response = $this
@@ -73,41 +75,32 @@ beforeEach(function () {
         User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
     ]);
 
+    it('can render Student edit page', function (User $user) {
+        $student = Student::factory()->create();
+        $response = $this
+            ->actingAs($user)
+            ->get(route('students.edit', $student->getKey()));
+
+        $response->assertOk();
+    })->with([
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara]
+    ]);
+
+    it('can not render Student edit page', function (User $user) {
+        $student = Student::factory()->create();
+        $response = $this
+            ->actingAs($user)
+            ->get(route('students.edit', $student->getKey()));
+
+        $response->assertNotFound();
+    })->with([
+        User::ROLE_ADMIN_YAYASAN => [fn () => $this->adminYayasan],
+        User::ROLE_ADMIN_SEKOLAH => [fn () => $this->adminSekolah],
+        User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
+    ]);
+
 // End Check Page Response
-    
-
-            // it('numeric validation on create student', function () {
-            //     $this->actingAs($this->tataUsaha)
-            //         ->post(route('students.store'), [
-            //             'school_id' => 2,
-            //             'academic_year_id' => $this->faker->numberBetween(1, 10),
-            //             'name' => $this->faker->name(),
-            //             'gender' => $this->faker->randomElement(['L', 'P']),
-            //             'address' => $this->faker->address(),
-            //             'dob' => '2023-03-27 22:29:17',
-            //             'religion' => 'Kristen',
-            //             'phone_number' => $this->faker->randomNumber(9, true),
-            //             'nik' => $this->faker->randomNumber(9, true),
-            //             'nisn' => $this->faker->randomNumber(9, true),
-            //             'nis' => $this->faker->randomNumber(9, true),
-            //             'father_name' => $this->faker->name('male'),
-            //             'father_dob' => '2023-03-27 22:29:17',
-            //             'father_work' => $this->faker->jobTitle(),
-            //             'father_education' => "SMA",
-            //             'father_income' => $this->faker->randomNumber(7, false),
-            //             'mother_name' => $this->faker->name('female'),
-            //             'mother_dob' => '2023-03-27 22:29:17',
-            //             'mother_work' => $this->faker->jobTitle(),
-            //             'mother_education' => "SMA",
-            //             'mother_income' => $this->faker->randomNumber(7, false),
-            //             'guardian_name' => $this->faker->name('female'),
-            //             'guardian_dob' => '2023-03-27 22:29:17',
-            //             'guardian_work' => $this->faker->jobTitle(),
-            //             'guardian_education' => "S1",
-            //             'guardian_income' => $this->faker->randomNumber(7, false),
-            //         ])->assertInvalid(['name' => 'required']);
-            // });
-
     
 // Check Store Data
     it('require validation on create student', function () {
@@ -135,7 +128,7 @@ beforeEach(function () {
                 'mother_education' => "SMA",
                 'mother_income' => $this->faker->randomNumber(7, false),
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_dob' => '2023-03-27 22:29:17',
+                'guardian_dob' => $this->faker->date(),
                 'guardian_work' => $this->faker->jobTitle(),
                 'guardian_education' => "S1",
                 'guardian_income' => $this->faker->randomNumber(7, false),
@@ -162,24 +155,24 @@ beforeEach(function () {
                 'name' => $this->faker->name(),
                 'gender' => 'Love Live',
                 'address' => $this->faker->address(),
-                'dob' => '2023-03-27 22:29:17',
-                'religion' => 'Kristen',
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
                 'phone_number' => 103945751937593345234,
                 'nik' => 10394575193759334523442345645345645634545756757,
                 'nisn' => 10394575193759334523442345645345645634545756757,
                 'nis' => 10394575193759334523442345645345645634545756757,
                 'father_name' => $this->faker->name('male'),
-                'father_dob' => '2023-03-27 22:29:17',
+                'father_dob' => $this->faker->date(),
                 'father_work' => $this->faker->jobTitle(),
                 'father_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.", 
                 'father_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
                 'mother_name' => $this->faker->name('female'),
-                'mother_dob' => '2023-03-27 22:29:17',
+                'mother_dob' => $this->faker->date(),
                 'mother_work' => $this->faker->jobTitle(),
                 'mother_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.",
                 'mother_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_dob' => '2023-03-27 22:29:17',
+                'guardian_dob' => $this->faker->date(),
                 'guardian_work' => $this->faker->jobTitle(),
                 'guardian_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.",
                 'guardian_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
@@ -194,24 +187,24 @@ beforeEach(function () {
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
                 'address' => $this->faker->address(),
-                'dob' => '2023-03-27 22:29:17',
-                'religion' => 'Kristen',
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
                 'phone_number' => $this->faker->randomNumber(9, true),
                 'nik' => "string  desu!",
                 'nisn' => "string  desu!",
                 'nis' => "string  desu!",
                 'father_name' => $this->faker->name('male'),
-                'father_dob' => '2023-03-27 22:29:17',
+                'father_dob' => $this->faker->date(),
                 'father_work' => $this->faker->jobTitle(),
                 'father_education' => "SMA",
                 'father_income' => "string  desu!",
                 'mother_name' => $this->faker->name('female'),
-                'mother_dob' => '2023-03-27 22:29:17',
+                'mother_dob' => $this->faker->date(),
                 'mother_work' => $this->faker->jobTitle(),
                 'mother_education' => "SMA",
                 'mother_income' => "string  desu!",
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_dob' => '2023-03-27 22:29:17',
+                'guardian_dob' => $this->faker->date(),
                 'guardian_work' => $this->faker->jobTitle(),
                 'guardian_education' => "S1",
                 'guardian_income' => "string  desu!",
@@ -226,24 +219,24 @@ beforeEach(function () {
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
                 'address' => $this->faker->address(),
-                'dob' => '2023-03-27 22:29:17',
-                'religion' => 'Kristen',
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
                 'phone_number' => $this->faker->randomNumber(9, true),
                 'nik' => $this->faker->randomNumber(9, true),
                 'nisn' => $this->faker->randomNumber(9, true),
                 'nis' => $this->faker->randomNumber(9, true),
                 'father_name' => $this->faker->name('male'),
-                'father_dob' => '2023-03-27 22:29:17',
+                'father_dob' => $this->faker->date(),
                 'father_work' => $this->faker->jobTitle(),
                 'father_education' => "SMA",
                 'father_income' => $this->faker->randomNumber(7, false),
                 'mother_name' => $this->faker->name('female'),
-                'mother_dob' => '2023-03-27 22:29:17',
+                'mother_dob' => $this->faker->date(),
                 'mother_work' => $this->faker->jobTitle(),
                 'mother_education' => "SMA",
                 'mother_income' => $this->faker->randomNumber(7, false),
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_dob' => '2023-03-27 22:29:17',
+                'guardian_dob' => $this->faker->date(),
                 'guardian_work' => $this->faker->jobTitle(),
                 'guardian_education' => "S1",
                 'guardian_income' => $this->faker->randomNumber(7, false),
@@ -259,24 +252,24 @@ beforeEach(function () {
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
                 'address' => $this->faker->address(),
-                'dob' => '2023-03-27 22:29:17',
-                'religion' => 'Kristen',
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
                 'phone_number' => $this->faker->randomNumber(9, true),
                 'nik' => $this->faker->randomNumber(9, true),
                 'nisn' => $this->faker->randomNumber(9, true),
                 'nis' => $this->faker->randomNumber(9, true),
                 'father_name' => $this->faker->name('male'),
-                'father_dob' => '2023-03-27 22:29:17',
+                'father_dob' => $this->faker->date(),
                 'father_work' => $this->faker->jobTitle(),
                 'father_education' => "SMA",
                 'father_income' => $this->faker->randomNumber(7, false),
                 'mother_name' => $this->faker->name('female'),
-                'mother_dob' => '2023-03-27 22:29:17',
+                'mother_dob' => $this->faker->date(),
                 'mother_work' => $this->faker->jobTitle(),
                 'mother_education' => "SMA",
                 'mother_income' => $this->faker->randomNumber(7, false),
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_dob' => '2023-03-27 22:29:17',
+                'guardian_dob' => $this->faker->date(),
                 'guardian_work' => $this->faker->jobTitle(),
                 'guardian_education' => "S1",
                 'guardian_income' => $this->faker->randomNumber(7, false),
@@ -284,137 +277,676 @@ beforeEach(function () {
             ])->assertInvalid(['tuitions.1', 'tuitions.2']);
     });
 
-    // it('can create new Yayasan', function () {
-    //     $name = $this->faker()->company();
-    //     $this->actingAs($this->superAdmin)
-    //         ->post(route('schools.store'), [
-    //             'school_id' => '',
-    //             'name' => $name,
-    //             'pic_name' => "PIC $name",
-    //             'pic_email' => str($name)->slug() . "@gmail.com"
-    //         ])
-    //         ->assertRedirect(route('schools.index'));
+    it('can create new Student', function (User $user) {
+        $school_id = 2;
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
 
-    //     $this->assertDatabaseHas('schools', [
-    //         'name' => $name
-    //     ]);
+        $this->actingAs($user)
+            ->post(route('students.store'), [
+                'school_id' => $school_id,
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+            ])
+            ->assertRedirect(route('students.index'));
 
-    //     $user = User::firstWhere([
-    //         'email' => str($name)->slug() . "@gmail.com"
-    //     ]);
-    //     expect($user->hasRole(User::ROLE_ADMIN_YAYASAN))->toBeTrue();
-    // });
+        $this->assertDatabaseHas('students', [
+            'name' => $name,
+            'gender' => $gender,
+            'address' => $address,
+            'dob' => $dob,
+            'religion' => $religion,
+            'phone_number' => $phone_number,
+            'nik' => $nik,
+            'nisn' => $nisn,
+            'nis' => $nis,
+            'father_name' => $father_name,
+            'father_dob' => $father_dob,
+            'father_work' => $father_work,
+            'father_education' => $father_education,
+            'father_income' => $father_income,
+            'mother_name' => $mother_name,
+            'mother_dob' => $mother_dob,
+            'mother_work' => $mother_work,
+            'mother_education' => $mother_education,
+            'mother_income' => $mother_income,
+            'guardian_name' => $guardian_name,
+            'guardian_dob' => $guardian_dob,
+            'guardian_work' => $guardian_work,
+            'guardian_education' => $guardian_education,
+            'guardian_income' => $guardian_income,
+        ]);
+    })->with([
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+    ]);
 
-    // it('can create new School', function () {
-    //     $yayasan = School::factory()->create();
-    //     $name = $this->faker()->company();
-    //     $this->actingAs($this->superAdmin)
-    //         ->post(route('schools.store'), [
-    //             'school_id' => $yayasan->getKey(),
-    //             'name' => $name,
-    //             'pic_name' => "PIC $name",
-    //             'pic_email' => str($name)->slug() . "@gmail.com"
-    //         ])
-    //         ->assertRedirect(route('schools.index'));
+    it('can create new Student With Tuitions', function (User $user) {
+        $tuitionType1 = TuitionType::factory()->create();
+        $tuitionType2 = TuitionType::factory()->create();
 
-    //     $this->assertDatabaseHas('schools', [
-    //         'name' => $name
-    //     ]);
+        $school_id = 2;
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
 
-    //     $user = User::firstWhere([
-    //         'email' => str($name)->slug() . "@gmail.com"
-    //     ]);
-    //     expect($user->hasRole(User::ROLE_ADMIN_SEKOLAH))->toBeTrue();
-    // });
+        $this->actingAs($user)
+            ->post(route('students.store'), [
+                'school_id' => $school_id,
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+                'tuitions' => [
+                    $tuitionType1->getKey() => 23456789,
+                    $tuitionType2->getKey() => 23456789
+                ],
+            ])->assertRedirect(route('students.index'));
+
+        $this->assertDatabaseHas('student_tuitions', [
+            'tuition_type_id' => $tuitionType1->getKey(),
+            'tuition_type_id' => $tuitionType2->getKey(),
+        ]);
+    })->with([
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+    ]);
+
+    it('forbid create new Student', function (User $user) {
+        $school_id = 2;
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
+
+        $this->actingAs($user)
+            ->post(route('students.store'), [
+                'school_id' => $school_id,
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+            ])
+            ->assertNotFound();
+    })->with([
+        User::ROLE_ADMIN_YAYASAN => [fn () => $this->adminYayasan],
+        User::ROLE_ADMIN_SEKOLAH => [fn () => $this->adminSekolah],
+        User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
+        User::ROLE_MURID => [fn () => $this->murid],
+    ]);
 // End Check Store Data
 
+// Check Delete Data
+    it('can delete Student', function (User $user) {
+        $student = Student::factory()->create();
+        $this->actingAs($user)
+            ->delete(route('students.destroy', $student->getKey()))
+            ->assertStatus(200);
+    })->with([
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+    ]);
 
-// it('can render School edit page as Sempoa Staff', function (User $user) {
-//     $school = School::factory()->create();
-//     $_user = User::factory()->create([
-//         'school_id' => $school->getKey()
-//     ]);
-//     $_staff = Staff::factory()->create([
-//         'school_id' => $school->getKey(),
-//         'user_id' => $_user->getKey()
-//     ]);
-//     $school->staff_id = $_staff->getKey();
-//     $school->save();
+    it('forbid delete Student', function (User $user) {
+        $student = Student::factory()->create();
+        $this->actingAs($user)
+            ->delete(route('students.destroy', $student->getKey()))
+            ->assertNotFound();
+    })->with([
+        User::ROLE_ADMIN_YAYASAN => [fn () => $this->adminYayasan],
+        User::ROLE_ADMIN_SEKOLAH => [fn () => $this->adminSekolah],
+        User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
+        User::ROLE_MURID => [fn () => $this->murid],
+    ]);
+// Check Delete Data
 
-//     $response = $this
-//         ->actingAs($user)
-//         ->get(route('schools.edit', $school->getKey()));
+// Check Update Data
+    it('require validation on update student', function () {
+        $student = Student::factory()->create();
+        $this->actingAs($this->tataUsaha)
+            ->put(route('students.update', $student->getKey()), [
 
-//     $response->assertOk();
-// })->with('sempoa_staff');
+                'academic_year_id' => '',
+                'name' => '',
+                'gender' => '',
+                'address' => '',
+                'dob' => '',
+                'religion' => '',
+                'phone_number' => $this->faker->randomNumber(9, true),
+                'nik' => '',
+                'nisn' => $this->faker->randomNumber(9, true),
+                'nis' => $this->faker->randomNumber(9, true),
+                'father_name' => '',
+                'father_dob' => '',
+                'father_work' => $this->faker->jobTitle(),
+                'father_education' => "SMA",
+                'father_income' => $this->faker->randomNumber(7, false),
+                'mother_name' => '',
+                'mother_dob' => '',
+                'mother_work' => $this->faker->jobTitle(),
+                'mother_education' => "SMA",
+                'mother_income' => $this->faker->randomNumber(7, false),
+                'guardian_name' => $this->faker->name('female'),
+                'guardian_dob' => $this->faker->date(),
+                'guardian_work' => $this->faker->jobTitle(),
+                'guardian_education' => "S1",
+                'guardian_income' => $this->faker->randomNumber(7, false),
+            ])->assertInvalid([
+                'academic_year_id',
+                'name', 
+                'gender', 
+                'address', 
+                'dob', 
+                'religion', 
+                'nik', 
+                'father_name', 
+                'father_dob', 
+                'mother_name',
+                'mother_dob'
+            ]);
+    });
 
-// it('can not render School edit page as School Staff', function (User $user) {
-//     $school = School::factory()->create();
-//     $_user = User::factory()->create([
-//         'school_id' => $school->getKey()
-//     ]);
-//     $_staff = Staff::factory()->create([
-//         'school_id' => $school->getKey(),
-//         'user_id' => $_user->getKey()
-//     ]);
-//     $school->staff_id = $_staff->getKey();
-//     $school->save();
+    it('length validation on update student', function () {
+        $student = Student::factory()->create();
+        $this->actingAs($this->tataUsaha)
+            ->put(route('students.update', $student->getKey()), [
 
-//     $response = $this
-//         ->actingAs($user)
-//         ->get(route('schools.edit', $school->getKey()));
+                'academic_year_id' => 1,
+                'name' => $this->faker->name(),
+                'gender' => 'Love Live',
+                'address' => $this->faker->address(),
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
+                'phone_number' => 103945751937593345234,
+                'nik' => 10394575193759334523442345645345645634545756757,
+                'nisn' => 10394575193759334523442345645345645634545756757,
+                'nis' => 10394575193759334523442345645345645634545756757,
+                'father_name' => $this->faker->name('male'),
+                'father_dob' => $this->faker->date(),
+                'father_work' => $this->faker->jobTitle(),
+                'father_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.", 
+                'father_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
+                'mother_name' => $this->faker->name('female'),
+                'mother_dob' => $this->faker->date(),
+                'mother_work' => $this->faker->jobTitle(),
+                'mother_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.",
+                'mother_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
+                'guardian_name' => $this->faker->name('female'),
+                'guardian_dob' => $this->faker->date(),
+                'guardian_work' => $this->faker->jobTitle(),
+                'guardian_education' => "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem voluptatibus nisi et nemo deleniti dolorum corporis animi dolorem autem reiciendis suscipit, beatae adipisci deserunt cum magnam culpa perspiciatis facere accusamus.",
+                'guardian_income' => 10394575193759334523442345645345645634545756757103945751937593345234423456453456456345457567571039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
+            ])->assertInvalid(['gender', 'phone_number', 'nik', 'nis', 'nisn', 'father_education', 'father_income', 'mother_income', 'mother_education', 'guardian_income', 'guardian_education']);
+    });
 
-//     $response->assertNotFound();
-// })->with('school_staff');
+    it('numeric validation on update student', function () {
+        $student = Student::factory()->create();
+        $this->actingAs($this->tataUsaha)
+            ->put(route('students.update', $student->getKey()), [
+                'school_id' => 2,
+                'academic_year_id' => $this->faker->numberBetween(1, 10),
+                'name' => $this->faker->name(),
+                'gender' => $this->faker->randomElement(['L', 'P']),
+                'address' => $this->faker->address(),
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
+                'phone_number' => $this->faker->randomNumber(9, true),
+                'nik' => "string  desu!",
+                'nisn' => "string  desu!",
+                'nis' => "string  desu!",
+                'father_name' => $this->faker->name('male'),
+                'father_dob' => $this->faker->date(),
+                'father_work' => $this->faker->jobTitle(),
+                'father_education' => "SMA",
+                'father_income' => "string  desu!",
+                'mother_name' => $this->faker->name('female'),
+                'mother_dob' => $this->faker->date(),
+                'mother_work' => $this->faker->jobTitle(),
+                'mother_education' => "SMA",
+                'mother_income' => "string  desu!",
+                'guardian_name' => $this->faker->name('female'),
+                'guardian_dob' => $this->faker->date(),
+                'guardian_work' => $this->faker->jobTitle(),
+                'guardian_education' => "S1",
+                'guardian_income' => "string  desu!",
+            ])->assertInvalid(['nik', 'nis', 'nisn', 'father_income', 'mother_income', 'guardian_income']);
+    });
 
-// it('can edit school', function (User $user) {
-//     $school = School::factory()->create();
-//     $_user = User::factory()->create([
-//         'school_id' => $school->getKey()
-//     ]);
-//     $_staff = Staff::factory()->create([
-//         'school_id' => $school->getKey(),
-//         'user_id' => $_user->getKey()
-//     ]);
-//     $school->staff_id = $_staff->getKey();
-//     $school->save();
+    it('array validation on update student', function () {
+        $student = Student::factory()->create();
+        $this->actingAs($this->tataUsaha)
+            ->put(route('students.update', $student->getKey()), [
+                'school_id' => 2,
+                'academic_year_id' => $this->faker->numberBetween(1, 10),
+                'name' => $this->faker->name(),
+                'gender' => $this->faker->randomElement(['L', 'P']),
+                'address' => $this->faker->address(),
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
+                'phone_number' => $this->faker->randomNumber(9, true),
+                'nik' => $this->faker->randomNumber(9, true),
+                'nisn' => $this->faker->randomNumber(9, true),
+                'nis' => $this->faker->randomNumber(9, true),
+                'father_name' => $this->faker->name('male'),
+                'father_dob' => $this->faker->date(),
+                'father_work' => $this->faker->jobTitle(),
+                'father_education' => "SMA",
+                'father_income' => $this->faker->randomNumber(7, false),
+                'mother_name' => $this->faker->name('female'),
+                'mother_dob' => $this->faker->date(),
+                'mother_work' => $this->faker->jobTitle(),
+                'mother_education' => "SMA",
+                'mother_income' => $this->faker->randomNumber(7, false),
+                'guardian_name' => $this->faker->name('female'),
+                'guardian_dob' => $this->faker->date(),
+                'guardian_work' => $this->faker->jobTitle(),
+                'guardian_education' => "S1",
+                'guardian_income' => $this->faker->randomNumber(7, false),
+                'tuitions' => 'String Desu!',
+                'selected_tuitions' => 'String Desu!',
+            ])->assertInvalid(['tuitions', 'selected_tuitions']);
+    });
 
-//     $name = "Yayasan Edited";
+    it('array items validation on update student', function () {
+        $student = Student::factory()->create();
+        $this->actingAs($this->tataUsaha)
+            ->put(route('students.update', $student->getKey()), [
+                'school_id' => 2,
+                'academic_year_id' => $this->faker->numberBetween(1, 10),
+                'name' => $this->faker->name(),
+                'gender' => $this->faker->randomElement(['L', 'P']),
+                'address' => $this->faker->address(),
+                'dob' => $this->faker->date(),
+                'religion' => 'katolik',
+                'phone_number' => $this->faker->randomNumber(9, true),
+                'nik' => $this->faker->randomNumber(9, true),
+                'nisn' => $this->faker->randomNumber(9, true),
+                'nis' => $this->faker->randomNumber(9, true),
+                'father_name' => $this->faker->name('male'),
+                'father_dob' => $this->faker->date(),
+                'father_work' => $this->faker->jobTitle(),
+                'father_education' => "SMA",
+                'father_income' => $this->faker->randomNumber(7, false),
+                'mother_name' => $this->faker->name('female'),
+                'mother_dob' => $this->faker->date(),
+                'mother_work' => $this->faker->jobTitle(),
+                'mother_education' => "SMA",
+                'mother_income' => $this->faker->randomNumber(7, false),
+                'guardian_name' => $this->faker->name('female'),
+                'guardian_dob' => $this->faker->date(),
+                'guardian_work' => $this->faker->jobTitle(),
+                'guardian_education' => "S1",
+                'guardian_income' => $this->faker->randomNumber(7, false),
+                'tuitions' => ['1' => 'Stering Desu~', '2' => 'mata Stering Desu~'],
+                'selected_tuitions' => ['1' => 'Stering Desu~', '2' => 'mata Stering Desu~']
+            ])->assertInvalid(['tuitions.1', 'tuitions.2', 'selected_tuitions.1', 'selected_tuitions.2']);
+    });
 
-//     $this->actingAs($user)
-//         ->put(route('schools.update', $school->getKey()), [
-//             'name' => $name
-//         ])->assertRedirect(route('schools.index'));
+    it('can update Student', function (User $user) {
+        $student = Student::factory()->create();
 
-//     $this->assertDatabaseHas('schools', [
-//         'name' => $name
-//     ]);
-// })->with('sempoa_staff');
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
 
-// it('can delete School as Super Admin', function () {
-//     $school = School::factory()->create();
+        $this->actingAs($user)
+            ->put(route('students.update', $student->getKey()), [
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+            ])
+            ->assertRedirect(route('students.index'));
 
-//     $this->actingAs($this->superAdmin)
-//         ->delete(route('schools.destroy', $school->getKey()))
-//         ->assertOk();
+        $this->assertDatabaseHas('students', [
+            'name' => $name,
+            'gender' => $gender,
+            'address' => $address,
+            'dob' => $dob,
+            'religion' => $religion,
+            'phone_number' => $phone_number,
+            'nik' => $nik,
+            'nisn' => $nisn,
+            'nis' => $nis,
+            'father_name' => $father_name,
+            'father_dob' => $father_dob,
+            'father_work' => $father_work,
+            'father_education' => $father_education,
+            'father_income' => $father_income,
+            'mother_name' => $mother_name,
+            'mother_dob' => $mother_dob,
+            'mother_work' => $mother_work,
+            'mother_education' => $mother_education,
+            'mother_income' => $mother_income,
+            'guardian_name' => $guardian_name,
+            'guardian_dob' => $guardian_dob,
+            'guardian_work' => $guardian_work,
+            'guardian_education' => $guardian_education,
+            'guardian_income' => $guardian_income,
+        ]);
+    })->with([
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+    ]);
 
-//     $this->assertSoftDeleted($school);
-// });
+    it('can update Student With Tuitions', function (User $user) {
+        $student = Student::factory()->create();
+        $tuitionType1 = TuitionType::factory()->create();
+        $tuitionType2 = TuitionType::factory()->create();
 
-// it('can not delete School as Ops Admin', function () {
-//     $school = School::factory()->create();
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
 
-//     $response = $this->actingAs($this->opsAdmin)
-//         ->delete(route('schools.destroy', $school->getKey()));
+        $this->actingAs($user)
+            ->put(route('students.update', $student->getKey()), [
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+                'tuitions' => [
+                    $tuitionType1->getKey() => 23456789,
+                    $tuitionType2->getKey() => 23456789
+                ],
+            ])->assertRedirect(route('students.index'));
 
-//     $response->assertNotFound();
-// });
+        $this->assertDatabaseHas('student_tuitions', [
+            'tuition_type_id' => $tuitionType1->getKey(),
+            'tuition_type_id' => $tuitionType2->getKey(),
+        ]);
+    })->with([
+        User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+    ]);
 
-// it('can not delete School as School staff', function (User $user) {
-//     $school = School::factory()->create();
+    it('forbid update Student', function (User $user) {
+        $student = Student::factory()->create();
 
-//     $response = $this->actingAs($user)
-//         ->delete(route('schools.destroy', $school->getKey()));
+        $academic_year_id = $this->faker->numberBetween(1, 10);
+        $name = $this->faker->name();
+        $gender = $this->faker->randomElement(['L', 'P']);
+        $address = $this->faker->address();
+        $dob = $this->faker->date();
+        $religion = 'katolik';
+        $phone_number = $this->faker->randomNumber(9, true);
+        $nik = $this->faker->randomNumber(9, true);
+        $nisn = $this->faker->randomNumber(9, true);
+        $nis = $this->faker->randomNumber(9, true);
+        $father_name = $this->faker->name('male');
+        $father_dob = $this->faker->date();
+        $father_work = $this->faker->jobTitle();
+        $father_education = "SMA";
+        $father_income = $this->faker->randomNumber(7, false);
+        $mother_name = $this->faker->name('female');
+        $mother_dob = $this->faker->date();
+        $mother_work = $this->faker->jobTitle();
+        $mother_education = "SMA";
+        $mother_income = $this->faker->randomNumber(7, false);
+        $guardian_name = $this->faker->name('female');
+        $guardian_dob = $this->faker->date();
+        $guardian_work = $this->faker->jobTitle();
+        $guardian_education = "S1";
+        $guardian_income = $this->faker->randomNumber(7, false);
 
-//     $response->assertNotFound();
-// })->with('school_staff');
+        $this->actingAs($user)
+            ->put(route('students.update', $student->getKey()), [
+                'academic_year_id' => $academic_year_id,
+                'name' => $name,
+                'gender' => $gender,
+                'address' => $address,
+                'dob' => $dob,
+                'religion' => $religion,
+                'phone_number' => $phone_number,
+                'nik' => $nik,
+                'nisn' => $nisn,
+                'nis' => $nis,
+                'father_name' => $father_name,
+                'father_dob' => $father_dob,
+                'father_work' => $father_work,
+                'father_education' => $father_education,
+                'father_income' => $father_income,
+                'mother_name' => $mother_name,
+                'mother_dob' => $mother_dob,
+                'mother_work' => $mother_work,
+                'mother_education' => $mother_education,
+                'mother_income' => $mother_income,
+                'guardian_name' => $guardian_name,
+                'guardian_dob' => $guardian_dob,
+                'guardian_work' => $guardian_work,
+                'guardian_education' => $guardian_education,
+                'guardian_income' => $guardian_income,
+            ])
+            ->assertNotFound();
+    })->with([
+        User::ROLE_ADMIN_YAYASAN => [fn () => $this->adminYayasan],
+        User::ROLE_ADMIN_SEKOLAH => [fn () => $this->adminSekolah],
+        User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
+        User::ROLE_MURID => [fn () => $this->murid],
+    ]);
+// End Check Update Data
