@@ -75,3 +75,6 @@ Berikut adalah permissions untuk level manajemen **Sekolah**.
 | Read              | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Update            | ✓ | ✓ |   |   |   |   | ✓ |
 | Delete            | ✓ | ✓ |   |   |   |   | ✓ |
+| **School Config** | **SA** | **OA** | **AS** | **AY** | **KS** | **TU** | **BH** |
+| Create            | ✓ | ✓ | ✓ | ✓ |
+| Read              | ✓ | ✓ | ✓ | ✓ |
