@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class SchoolSeeder extends Seeder
+class MasterConfigSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,14 +19,14 @@ class SchoolSeeder extends Seeder
         $super_admin = Role::whereName(User::ROLE_SUPER_ADMIN)->first();
         $ops_admin = Role::whereName(User::ROLE_OPS_ADMIN)->first();
 
-        // schools
+        // master-configs
         $roles = [
-            'index' => 'schools.index',
-            'create' => 'schools.create',
-            'store' => 'schools.store',
-            'edit' => 'schools.edit',
-            'update' => 'schools.update',
-            'destroy' => 'schools.destroy'
+            'index' => 'master-configs.index',
+            'create' => 'master-configs.create',
+            'store' => 'master-configs.store',
+            'edit' => 'master-configs.edit',
+            'update' => 'master-configs.update',
+            'destroy' => 'master-configs.destroy'
         ];
 
         // index
@@ -41,12 +41,12 @@ class SchoolSeeder extends Seeder
             'name' => $roles['create'],
             'guard_name' => 'web'
         ]);
-        $permission->syncRoles([$super_admin]);
+        $permission->syncRoles([$super_admin, $ops_admin]);
         $permission = Permission::firstOrCreate([
             'name' => $roles['store'],
             'guard_name' => 'web'
         ]);
-        $permission->syncRoles([$super_admin]);
+        $permission->syncRoles([$super_admin, $ops_admin]);
 
         // update
         $permission = Permission::firstOrCreate([

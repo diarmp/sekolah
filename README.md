@@ -20,11 +20,16 @@ Berikut adalah permissions untuk level manajemen **Sempoa**.
 
 | Fitur             | SA | OA |
 | ---               | :-: | :-: |
-| **Schools**        |
+| **Schools** |
 | Create            | ✓ |
 | Read              | ✓ | ✓ |
 | Update            | ✓ | ✓ |
 | Delete            | ✓
+| **Master Config** |
+| Create            | ✓ | ✓ |
+| Read              | ✓ | ✓ |
+| Update            | ✓ | ✓ |
+| Delete            | ✓ |
 
 Berikut adalah permissions untuk level manajemen **Sekolah**.
 
@@ -70,3 +75,6 @@ Berikut adalah permissions untuk level manajemen **Sekolah**.
 | Read              | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Update            | ✓ | ✓ |   |   |   |   | ✓ |
 | Delete            | ✓ | ✓ |   |   |   |   | ✓ |
+| **School Config** | **SA** | **OA** | **AS** | **AY** | **KS** | **TU** | **BH** |
+| Create            | ✓ | ✓ | ✓ | ✓ |
+| Read              | ✓ | ✓ | ✓ | ✓ |
