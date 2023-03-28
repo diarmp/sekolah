@@ -32,12 +32,11 @@ class GradeRequest extends FormRequest
     public function postMethod(): array
     {
         return [
-            'school_id' => 'required|exists:schools,id',
             'name'      => [
                 'required',
                 Rule::unique('grades')->where(function ($q) {
                     $q->where('name', $this->name);
-                    $q->where('school_id', $this->school_id);
+                    $q->where('school_id',$this->school_id);
                 })
             ]
         ];
@@ -47,12 +46,11 @@ class GradeRequest extends FormRequest
     {
 
         return [
-            'school_id' => 'required|exists:schools,id',
             'name'      => [
                 'required',
                 Rule::unique('grades')->where(function ($q) {
                     $q->where('name', $this->name);
-                    $q->where('school_id', $this->school_id);
+                    $q->where('school_id',$this->school_id);
                 })->ignore($this->grade->id)
             ]
         ];
