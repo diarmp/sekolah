@@ -61,3 +61,7 @@ Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
     Route::get('/', [ConfigSchoolController::class, 'index'])->name('index');
     Route::post('/save', [ConfigSchoolController::class, 'save'])->name('save');
 });
+
+Route::fallback(function () {
+    abort(404);
+});
