@@ -34,12 +34,14 @@ class StudentsRequest extends FormRequest
 
             'name' => 'required',
             'dob' => 'required',
+            'religion' => 'required',
             'gender' => 'required|max:1',
             'address' => 'required',
             'phone_number' => 'nullable|max:15',
             'nik' => 'required|numeric|max_digits:16',
             'nis' => 'nullable|numeric|max_digits:20',
             'nisn' => 'nullable|numeric|max_digits:10',
+            
 
             'father_name' => 'required',
             'father_dob' => 'required',

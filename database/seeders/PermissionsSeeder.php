@@ -2,12 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Database\Seeders\Permissions\SchoolSeeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\Permissions\StudentSeeder;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class PermissionsSeeder extends Seeder
 {
@@ -26,7 +23,8 @@ class PermissionsSeeder extends Seeder
         // $kepala_sekolah = Role::whereName(User::ROLE_KEPALA_SEKOLAH)->first();
 
         $this->call([
-            SchoolSeeder::class
+            SchoolSeeder::class,
+            StudentSeeder::class
         ]);
     }
 }
