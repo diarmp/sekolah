@@ -36,7 +36,7 @@ class GradeRequest extends FormRequest
                 'required',
                 Rule::unique('grades')->where(function ($q) {
                     $q->where('name', $this->name);
-                    $q->where('school_id', session('school_id'));
+                    $q->where('school_id',$this->school_id);
                 })
             ]
         ];
@@ -50,7 +50,7 @@ class GradeRequest extends FormRequest
                 'required',
                 Rule::unique('grades')->where(function ($q) {
                     $q->where('name', $this->name);
-                    $q->where('school_id', session('school_id'));
+                    $q->where('school_id',$this->school_id);
                 })->ignore($this->grade->id)
             ]
         ];
