@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Database\Seeders\Permissions\AcademicYearSeeder;
 use Database\Seeders\Permissions\ClassroomSeeder;
 use Database\Seeders\Permissions\GradeSeeder;
+use Database\Seeders\Permissions\MasterConfigSeeder;
 use Database\Seeders\Permissions\SchoolSeeder;
 use Database\Seeders\Permissions\SchoolSelectorSeeder;
 use Database\Seeders\Permissions\TuitionTypeSeeder;
@@ -36,6 +37,7 @@ class PermissionsSeeder extends Seeder
             AcademicYearSeeder::class,
             ClassroomSeeder::class,
             SchoolSelectorSeeder::class,
+            MasterConfigSeeder::class,
         ]);
     }
 }
