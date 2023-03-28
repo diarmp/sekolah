@@ -4,13 +4,13 @@ Projek "School Management System", dengan kode projek **SMS**.
 
 ## User Roles
 
-- Super Admin* (SA)
-- Ops Admin* (OA)
-- Admin Sekolah (AS)
-- Admin Yayasan (AY)
-- Tata Usaha (TU)
-- Bendahara (BH)
-- Kepala Sekolah (KS)
+- Super Admin* (SA) (:envelope: admin@sempoa.id)
+- Ops Admin* (OA) (:envelope: ops@sempoa.id)
+- Admin Sekolah (AS) (:envelope: admin-sekolah@sekolah.com)
+- Admin Yayasan (AY) (:envelope: admin-yayasan@sekolah.com)
+- Tata Usaha (TU) (:envelope: tata-usaha@sekolah.com)
+- Bendahara (BH) (:envelope: bendahara@sekolah.com)
+- Kepala Sekolah (KS) (:envelope: kepala-sekolah@sekolah.com)
 
 > Yang bertanda asterisk adalah untuk level manajemen **Sempoa**
 
@@ -20,11 +20,16 @@ Berikut adalah permissions untuk level manajemen **Sempoa**.
 
 | Fitur             | SA | OA |
 | ---               | :-: | :-: |
-| **Schools**        |
+| **Schools** |
 | Create            | ✓ |
 | Read              | ✓ | ✓ |
 | Update            | ✓ | ✓ |
 | Delete            | ✓
+| **Master Config** |
+| Create            | ✓ | ✓ |
+| Read              | ✓ | ✓ |
+| Update            | ✓ | ✓ |
+| Delete            | ✓ |
 
 Berikut adalah permissions untuk level manajemen **Sekolah**.
 
@@ -70,3 +75,6 @@ Berikut adalah permissions untuk level manajemen **Sekolah**.
 | Read              | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Update            | ✓ | ✓ |   |   |   |   | ✓ |
 | Delete            | ✓ | ✓ |   |   |   |   | ✓ |
+| **School Config** | **SA** | **OA** | **AS** | **AY** | **KS** | **TU** | **BH** |
+| Create            | ✓ | ✓ | ✓ | ✓ |
+| Read              | ✓ | ✓ | ✓ | ✓ |
