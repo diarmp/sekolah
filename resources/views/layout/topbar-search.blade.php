@@ -4,36 +4,37 @@
       class="form-control select2 @error('school_selector') is-invalid @enderror" required>
       <option value="">Pilih Sekolah ...</option>
       @foreach ($school_selectors as $school_selector)
-        <option value="{{ $school_selector->getKey() }}" @selected($school_selector->getKey() == session('school_selector_id'))>{{ $school_selector->name }}</option>
+        <option value="{{ $school_selector->getKey() }}" @selected($school_selector->getKey() == session('school_id'))>{{ $school_selector->name }}</option>
       @endforeach
     </select>
   </form>
-@endrole
-
-@push('js')
-  <script>
-    $(function() {
-      $('#school_selector').change(function() {
-        const token = $('meta[name="csrf-token"]').attr('content');
-        const data = {
-          _token: token,
-          school_selector: $(this).val()
-        };
-        fetch(route('school_selector'), {
-            method: "POST", // or 'PUT'
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log("Success:", data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+  @push('js')
+    <script>
+      $(function() {
+        $('#school_selector').change(function() {
+          const token = $('meta[name="csrf-token"]').attr('content');
+          const data = {
+            _token: token,
+            school_selector: $(this).val()
+          };
+          fetch(route('school_selector'), {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Success:", data);
+              window.location.reload()
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              window.location.reload()
+            });
+        });
       });
-    });
-  </script>
-@endpush
+    </script>
+  @endpush
+@endrole
