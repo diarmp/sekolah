@@ -8,12 +8,9 @@ use App\Models\AcademicYear;
 use App\Models\Student;
 use App\Models\StudentTuition;
 use App\Models\TuitionType;
-use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Excel;
 
 class StudentsController extends Controller
@@ -58,14 +55,15 @@ class StudentsController extends Controller
                 $student->academic_year_id          = $request->academic_year_id;
 
                 $student->name                      = $request->name;
+                $student->email                     = $request->email;
                 $student->gender                    = $request->gender;
                 $student->address                   = $request->address;
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
                 $student->nik                       = $request->nik;
-                $student->nis                       = $request->nis ?? null;
-                $student->nisn                      = $request->nisn ?? null;
+                $student->nis                       = $request->nis;
+                $student->nisn                      = $request->nisn;
                 $student->father_name               = $request->father_name;
                 $student->father_dob                = $request->father_dob;
                 $student->father_work               = $request->father_work;
@@ -155,7 +153,7 @@ class StudentsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(StudentsRequest $request, Student $student)
     {
         try {
             DB::beginTransaction();
@@ -164,14 +162,15 @@ class StudentsController extends Controller
                 $student->academic_year_id          = $request->academic_year_id;
 
                 $student->name                      = $request->name;
+                $student->email                     = $request->email;
                 $student->gender                    = $request->gender;
                 $student->address                   = $request->address;
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
                 $student->nik                       = $request->nik;
-                $student->nis                       = $request->nis ?? null;
-                $student->nisn                      = $request->nisn ?? null;
+                $student->nis                       = $request->nis;
+                $student->nisn                      = $request->nisn;
                 $student->father_name               = $request->father_name;
                 $student->father_dob                = $request->father_dob;
                 $student->father_work               = $request->father_work;
