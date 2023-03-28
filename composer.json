@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -15,6 +18,7 @@
         "opcodesio/log-viewer": "^2.3",
         "realrashid/sweet-alert": "^6.0",
         "spatie/laravel-permission": "^5.9",
+        "tightenco/ziggy": "^1.5",
         "yajra/laravel-datatables": "^10.0"
     },
     "require-dev": {
@@ -32,7 +36,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helper/globals.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
