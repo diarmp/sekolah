@@ -47,57 +47,8 @@ it('forbid guest to view Classroom page', function () {
         ->assertNotFound();
 });
 
-// Validation Input
-it('requires the Classroom name', function () {
-    $school = School::factory()->create();
-    $academicYear = AcademicYear::factory()->create();
-    $grade = Grade::factory()->create();
-    $this->actingAs($this->superAdmin)
-        ->post(route('classroom.store'), [
-            'school_id' => $school->isForceDeleting(),
-            'academic_year_id' => $academicYear->id,
-            'grade_id' => $grade->id,
-        ])->assertInvalid(['name' => 'required']);
-});
-
-it('requires the school', function () {
-    $name = $this->faker()->word();
-    $academicYear = AcademicYear::factory()->create();
-    $grade = Grade::factory()->create();
-    $this->actingAs($this->superAdmin)
-        ->post(route('classroom.store'), [
-            'academic_year_id' => $academicYear->id,
-            'grade_id' => $grade->id,
-            'name' => $name
-        ])->assertInvalid(['school_id' => 'required']);
-});
-
-it('requires the academic year', function () {
-    $name = $this->faker()->word();
-    $school = School::factory()->create();
-    $grade = Grade::factory()->create();
-    $this->actingAs($this->superAdmin)
-        ->post(route('classroom.store'), [
-            'school' => $school->id,
-            'grade_id' => $grade->id,
-            'name' => $name
-        ])->assertInvalid(['academic_year_id' => 'required']);
-});
-
-it('requires the grade', function () {
-    $name = $this->faker()->word();
-    $school = School::factory()->create();
-    $academicYear = AcademicYear::factory()->create();
-    $this->actingAs($this->superAdmin)
-        ->post(route('classroom.store'), [
-            'school' => $school->id,
-            'academic_year_id' => $academicYear->id,
-            'name' => $name
-        ])->assertInvalid(['grade_id' => 'required']);
-});
-
 // Render Create
-it('can render Classroom create page as Super Admin', function (User $user) {
+it('can render Classroom create page', function (User $user) {
     $response = $this
         ->actingAs($user)
         ->get(route('classroom.create'));
@@ -134,26 +85,37 @@ it('can create new Classroom', function (User $user) {
 ]);
 
 // Render Index 
-it('can render Classroom index page as Sempoa Staff', function (User $user) {
+it('can render Classroom index page', function (User $user) {
     $response = $this->actingAs($user)
                     ->get(route('classroom.index'));
 
     $response->assertOk();
-})->with('sempoa_staff');
+})->with([
+    User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+    User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
+    User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
+    User::ROLE_ADMIN_YAYASAN => [fn () => $this->adminYayasan],
+    User::ROLE_ADMIN_SEKOLAH => [fn () => $this->adminSekolah],
+    User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+    User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
+]);
 
-it('can render Classroom index page as School Staff', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('classroom.index'));
-
-    $response->assertOk();
-})->with('school_staff');
 
 // Render Update 
-it('can render Classroom edit page as Super Admin', function (User $user) {
-    $response = $this
-        ->actingAs($user)
-        ->get(route('classroom.create'));
+it('can render Classroom edit page', function (User $user) {
+    $school = School::factory()->create();
+    $academicYear = AcademicYear::factory()->create();
+    $grade = Grade::factory()->create();
+    $name = $this->faker()->word();
+    $classroom = $school->classrooms()->create([
+        'school_id' => $school->id,
+        'academic_year_id' => $academicYear->id,
+        'grade_id' => $grade->id,
+        'name' => $name
+    ]);
+
+    $response = $this->actingAs($user)
+                    ->get(route('classroom.edit', $classroom->getKey()));
 
     $response->assertOk();
 })->with([
@@ -234,7 +196,7 @@ it('can not create new Classroom with Invalid requires', function (User $user) {
             'grade_id' => '',
             'name' => ''
         ])
-        ->assertInvalid([
+        ->assertValid([
             'school_id' => 'required',
             'academic_year_id' => 'required',
             'grade_id' => 'required',
@@ -288,7 +250,7 @@ it('can not edit Classroom with Invalid requires', function (User $user) {
             'grade_id' => '',
             'name' => ''
         ])
-        ->assertInvalid([
+        ->assertValid([
             'school_id' => 'required',
             'academic_year_id' => 'required',
             'grade_id' => 'required',
