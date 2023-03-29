@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\User;
 use App\Models\School;
 use App\Models\AcademicYear;
+use App\Models\Scopes\StudentScope;
 use App\Models\StudentTuition;
 
 use Carbon\Carbon;
@@ -57,6 +58,12 @@ class Student extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new StudentScope);
     }
 
     public static function boot()

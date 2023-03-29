@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\School;
 use App\Models\Student;
 use App\Models\TuitionType;
 use App\Models\User;
@@ -26,7 +27,6 @@ beforeEach(function () {
             ->assertNotFound();
     });
 
-    // It Will Throw Error because doesn't have school_id
     it('can render Student index page as Sempoa Staff', function (User $user) {
         $response = $this
             ->actingAs($user)
@@ -43,7 +43,6 @@ beforeEach(function () {
         $response->assertOk();
     })->with('school_staff');
 
-    // It Will Throw Error because doesn't have school_id
     it('can render Student create page as Sempoa Staff', function (User $user) {
         $response = $this
             ->actingAs($user)
@@ -60,7 +59,9 @@ beforeEach(function () {
         $response->assertOk();
     })->with([
         User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
-        User::ROLE_BENDAHARA => [fn () => $this->bendahara]
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
     ]);
 
     it('can not render Student create page', function (User $user) {
@@ -76,6 +77,8 @@ beforeEach(function () {
     ]);
 
     it('can render Student edit page', function (User $user) {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
         $response = $this
             ->actingAs($user)
@@ -84,7 +87,9 @@ beforeEach(function () {
         $response->assertOk();
     })->with([
         User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
-        User::ROLE_BENDAHARA => [fn () => $this->bendahara]
+        User::ROLE_BENDAHARA => [fn () => $this->bendahara],
+        User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
+        User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
     ]);
 
     it('can not render Student edit page', function (User $user) {
@@ -513,6 +518,8 @@ beforeEach(function () {
 
 // Check Delete Data
     it('can delete Student', function (User $user) {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
         $this->actingAs($user)
             ->delete(route('students.destroy', $student->getKey()))
@@ -524,6 +531,8 @@ beforeEach(function () {
     ]);
 
     it('forbid delete Student', function (User $user) {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
         $this->actingAs($user)
             ->delete(route('students.destroy', $student->getKey()))
@@ -538,10 +547,13 @@ beforeEach(function () {
 
 // Check Update Data
     it('require validation on update student', function () {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
+
         $this->actingAs($this->tataUsaha)
             ->put(route('students.update', $student->getKey()), [
-
+                'school_id' => $school->getKey(),
                 'academic_year_id' => '',
                 'name' => '',
                 'gender' => '',
@@ -583,10 +595,13 @@ beforeEach(function () {
     });
 
     it('length validation on update student', function () {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
+
         $this->actingAs($this->tataUsaha)
             ->put(route('students.update', $student->getKey()), [
-
+                'school_id' => $school->getKey(),
                 'academic_year_id' => 1,
                 'name' => $this->faker->name(),
                 'gender' => 'Love Live',
@@ -616,10 +631,13 @@ beforeEach(function () {
     });
 
     it('numeric validation on update student', function () {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
+        
         $this->actingAs($this->tataUsaha)
             ->put(route('students.update', $student->getKey()), [
-                'school_id' => 2,
+                'school_id' => $school->getKey(),
                 'academic_year_id' => $this->faker->numberBetween(1, 10),
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
@@ -649,10 +667,12 @@ beforeEach(function () {
     });
 
     it('array validation on update student', function () {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
         $this->actingAs($this->tataUsaha)
             ->put(route('students.update', $student->getKey()), [
-                'school_id' => 2,
+                'school_id' => $school->getKey(),
                 'academic_year_id' => $this->faker->numberBetween(1, 10),
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
@@ -684,10 +704,13 @@ beforeEach(function () {
     });
 
     it('array items validation on update student', function () {
+        $school = School::factory()->create();
+        session(['school_id' => $school->getKey()]);
         $student = Student::factory()->create();
+
         $this->actingAs($this->tataUsaha)
             ->put(route('students.update', $student->getKey()), [
-                'school_id' => 2,
+                'school_id' => $school->getKey(),
                 'academic_year_id' => $this->faker->numberBetween(1, 10),
                 'name' => $this->faker->name(),
                 'gender' => $this->faker->randomElement(['L', 'P']),
@@ -720,6 +743,7 @@ beforeEach(function () {
 
     it('can update Student', function (User $user) {
         $student = Student::factory()->create();
+        session(['school_id' => $user->school_id ?? 2]);
 
         $academic_year_id = $this->faker->numberBetween(1, 10);
         $name = $this->faker->name();
@@ -812,6 +836,7 @@ beforeEach(function () {
 
     it('can update Student With Tuitions', function (User $user) {
         $student = Student::factory()->create();
+        session(['school_id' => $user->school_id ?? 2]);
         $tuitionType1 = TuitionType::factory()->create();
         $tuitionType2 = TuitionType::factory()->create();
 
