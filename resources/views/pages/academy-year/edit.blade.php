@@ -9,6 +9,12 @@
 
         {{-- start table academy years --}}
         <div class="col-lg-6">
+            @error('school_id')
+                <div class="alert alert-danger" role="alert">
+                    {{ $message }}
+                </div>
+            @enderror
+
             <div class="card">
                 <div class="card-header d-flex">
                     <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
@@ -19,24 +25,7 @@
                     <form action="{{ route('academy-year.update', ['academy_year' => $academyYear->id]) }}" method="post">
                         @method('PUT')
                         @csrf
-                        <div class="form-group">
-                            <label for="school-select">Sekolah</label>
-                            <select class="form-control  @error('school_id') is-invalid @enderror" name="school_id"
-                                id="school-select">
-                                <option value="">-</option>
-                                @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($academyYear->school_id === $school->id) selected @endif>
-                                        {{ $school->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('school_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
+                        <input type="hidden" name="school_id" value="{{ session('school_id') }}">
                         <div class="form-group">
                             <label for="year-academy-input">Tahun Akademik</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
