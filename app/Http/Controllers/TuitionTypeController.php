@@ -26,8 +26,7 @@ class TuitionTypeController extends Controller
     public function create()
     {
         $title = "Tambah Tipe Biaya";
-        $schools = School::all();
-        return view('pages.tuition-type.create', compact('schools', 'title'));
+        return view('pages.tuition-type.create', compact('title'));
     }
 
     /**
@@ -42,13 +41,14 @@ class TuitionTypeController extends Controller
             $tuitionType            = new TuitionType();
             $tuitionType->school_id = $request->school_id;
             $tuitionType->name      = $request->name;
-            $tuitionType->generatable = $request->generatable;
+            $tuitionType->generatable = $request->generatable ?? false;
             $tuitionType->save();
 
             DB::commit();
         } catch (\Throwable $th) {
+            dd($th);
             DB::rollback();
-            return redirect()->route('tuition-type.index')->withToastError('Ops Gagal Tambah Tipe Biaya!');
+            return redirect()->route('tuition-type.create')->withToastError('Ops Gagal Tambah Tipe Biaya!');
         }
 
         return redirect()->route('tuition-type.index')->withToastSuccess('Tambah Tipe Biaya Berhasil!');
@@ -61,9 +61,8 @@ class TuitionTypeController extends Controller
     public function edit(TuitionType $tuitionType)
     {
 
-        $schools = School::all();
         $title = "Ubah Tipe Biaya";
-        return view('pages.tuition-type.edit', compact('schools', 'tuitionType', 'title'));
+        return view('pages.tuition-type.edit', compact('tuitionType', 'title'));
     }
 
     /**
@@ -77,13 +76,13 @@ class TuitionTypeController extends Controller
 
             $tuitionType->school_id = $request->school_id;
             $tuitionType->name      = $request->name;
-            $tuitionType->generatable = $request->generatable;
+            $tuitionType->generatable = $request->generatable ?? false;
             $tuitionType->save();
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('tuition-type.index')->withToastError('Ops Gagal ubah Tipe Biaya!');
+            return redirect()->route('tuition-type.edit', $tuitionType->id)->withToastError('Ops Gagal ubah Tipe Biaya!');
         }
 
 
