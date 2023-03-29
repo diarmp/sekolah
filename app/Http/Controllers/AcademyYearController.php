@@ -27,8 +27,7 @@ class AcademyYearController extends Controller
     public function create()
     {
         $title = "Tambah Tahun Akademik";
-        $schools = School::all();
-        return view('pages.academy-year.create', compact('schools', 'title'));
+        return view('pages.academy-year.create', compact('title'));
     }
 
     /**
@@ -60,10 +59,8 @@ class AcademyYearController extends Controller
      */
     public function edit(AcademicYear $academyYear)
     {
-
-        $schools = School::all();
         $title = "Ubah Tahun Akademik";
-        return view('pages.academy-year.edit', compact('schools', 'academyYear', 'title'));
+        return view('pages.academy-year.edit', compact('academyYear', 'title'));
     }
 
     /**
