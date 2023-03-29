@@ -104,13 +104,23 @@ it('can render Classroom index page', function (User $user) {
 // Render Update 
 it('can render Classroom edit page', function (User $user) {
     $school = School::factory()->create();
-    $academicYear = AcademicYear::factory()->create();
-    $grade = Grade::factory()->create();
+    session(['school_id' => $school->getKey()]);
+    $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
+    $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
     $name = $this->faker()->word();
+    
     $classroom = $school->classrooms()->create([
-        'school_id' => $school->id,
-        'academic_year_id' => $academicYear->id,
-        'grade_id' => $grade->id,
+        'school_id' => $school->getKey(),
+        'academic_year_id' => $academicYear->getKey(),
+        'grade_id' => $grade->getKey(),
+        'name' => $name
+    ]);
+
+    $this->assertDatabaseHas('classrooms', [
+        'id' => $classroom->getKey(),
+        'school_id' => $school->getKey(),
+        'academic_year_id' => $academicYear->getKey(),
+        'grade_id' => $grade->getKey(),
         'name' => $name
     ]);
 
@@ -126,6 +136,7 @@ it('can render Classroom edit page', function (User $user) {
 
 it('can edit classroom', function (User $user) {
     $school = School::factory()->create();
+    session(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create();
     $grade = Grade::factory()->create();
     $name = $this->faker()->word();
@@ -156,6 +167,7 @@ it('can edit classroom', function (User $user) {
 // Render Delete
 it('can delete Classroom', function (User $user) {
     $school = School::factory()->create();
+    session(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create();
     $grade = Grade::factory()->create();
     $name = $this->faker()->word();
@@ -190,18 +202,9 @@ it('can not render Classroom create page', function (User $user) {
 
 it('can not create new Classroom with Invalid requires', function (User $user) {
     $this->actingAs($user)
-        ->post(route('classroom.store'), [
-            'school_id' => '',
-            'academic_year_id' => '',
-            'grade_id' => '',
-            'name' => ''
-        ])
-        ->assertValid([
-            'school_id' => 'required',
-            'academic_year_id' => 'required',
-            'grade_id' => 'required',
-            'name' => 'required'
-        ]);
+        ->post(route('classroom.store'))
+        ->assertSessionHasErrors(['academic_year_id', 'grade_id', 'name']);
+        
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
     User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
@@ -233,6 +236,7 @@ it('can not render Classroom edit page', function (User $user) {
 
 it('can not edit Classroom with Invalid requires', function (User $user) {
     $school = School::factory()->create();
+    session(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create();
     $grade = Grade::factory()->create();
     $name = $this->faker()->word();
@@ -249,13 +253,8 @@ it('can not edit Classroom with Invalid requires', function (User $user) {
             'academic_year_id' => '',
             'grade_id' => '',
             'name' => ''
-        ])
-        ->assertValid([
-            'school_id' => 'required',
-            'academic_year_id' => 'required',
-            'grade_id' => 'required',
-            'name' => 'required'
-        ]);
+        ])  
+        ->assertSessionHasErrors(['academic_year_id', 'grade_id', 'name']);;
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
     User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
@@ -264,6 +263,7 @@ it('can not edit Classroom with Invalid requires', function (User $user) {
 
 it('can not delete Classroom', function (User $user) {
     $school = School::factory()->create();
+    session(['school_id' => $school->getKey()]);
     $classroom = $school->classrooms()->create();
 
     $response = $this->actingAs($user)
