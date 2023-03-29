@@ -17,7 +17,7 @@
                     <x-datatable :tableId="'tuition'" 
                     :tableHeaders="['Tipe Biaya', 'Tahun Akademik', 'Tingkat', 'Periode', 'Nominal', 'Aksi']" 
                     :tableColumns="[
-                        ['data' => 'tuition_type', 'name' => 'period'], 
+                        ['data' => 'tuition_type', 'name' => 'price'], 
                         ['data' => 'academic_year'], 
                         ['data' => 'grade'], 
                         ['data' => 'period'], 
