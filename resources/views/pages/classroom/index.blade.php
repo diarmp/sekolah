@@ -14,9 +14,8 @@
                     <a href="{{ route('classroom.create') }}" class="btn btn-primary btn-sm">TAMBAH</a>
                 </div>
                 <div class="card-body">
-                    <x-datatable :tableId="'classroom'" :tableHeaders="['Sekolah', 'Tahun Akademik', 'Tingkat', 'Kelas', 'Aksi']" 
+                    <x-datatable :tableId="'classroom'" :tableHeaders="['Tahun Akademik', 'Tingkat', 'Kelas', 'Aksi']" 
                     :tableColumns="[
-                        ['data' => 'school.name', 'name' => 'name'], 
                         ['data' => 'academic_year.name', 'name' => 'name'], 
                         ['data' => 'grade.name', 'name' => 'name'],  
                         ['data' => 'name'], 
