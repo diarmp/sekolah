@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Type;
 use App\Models\School;
+use App\Models\Scopes\StudentTuitionScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,5 +29,11 @@ class StudentTuition extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new StudentTuitionScope);
     }
 }

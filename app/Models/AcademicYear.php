@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\School;
+use App\Models\Scopes\AcademicYearScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,11 @@ class AcademicYear extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new AcademicYearScope);
+    }
 
     public function students(): HasMany
     {
