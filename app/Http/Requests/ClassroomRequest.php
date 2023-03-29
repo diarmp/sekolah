@@ -32,7 +32,6 @@ class ClassroomRequest extends FormRequest
     public function postMethod(): array
     {
         return [
-            'school_id' => 'required|exists:schools,id',
             'academic_year_id' => 'required|exists:academic_years,id',
             'grade_id' => 'required|exists:grades,id',
             'name'      => [
@@ -51,7 +50,6 @@ class ClassroomRequest extends FormRequest
     {
 
         return [
-            'school_id' => 'required|exists:schools,id',
             'academic_year_id' => 'required|exists:academic_years,id',
             'grade_id' => 'required|exists:grades,id',
             'name'      => [
