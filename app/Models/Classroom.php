@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\AcademicYear;
+use App\Models\Scopes\GradeScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -17,6 +18,11 @@ class Classroom extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+    
+    protected static function booted()
+    {
+        static::addGlobalScope(new GradeScope);
+    }
 
     public function academic_year(): BelongsTo
     {

@@ -46,7 +46,7 @@ class ClassroomController extends Controller
         try {
             
             $classroom                      = new Classroom();
-            $classroom->school_id           = $request->school_id;
+            $classroom->school_id           = session('school_id');
             $classroom->academic_year_id    = $request->academic_year_id;
             $classroom->grade_id            = $request->grade_id;
             $classroom->name                = $request->name;
@@ -93,7 +93,7 @@ class ClassroomController extends Controller
 
         try {
 
-            $classroom->school_id           = $request->school_id;
+            $classroom->school_id           = session('school_id');
             $classroom->academic_year_id    = $request->academic_year_id;
             $classroom->grade_id            = $request->grade_id;
             $classroom->name                = $request->name;
