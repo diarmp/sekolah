@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Permissions\StudentSeeder;
 use Database\Seeders\Permissions\AcademicYearSeeder;
 use Database\Seeders\Permissions\ClassroomSeeder;
 use Database\Seeders\Permissions\GradeSeeder;
@@ -33,6 +34,7 @@ class PermissionsSeeder extends Seeder
 
         $this->call([
             SchoolSeeder::class,
+            StudentSeeder::class,
             GradeSeeder::class,
             TuitionTypeSeeder::class,
             AcademicYearSeeder::class,

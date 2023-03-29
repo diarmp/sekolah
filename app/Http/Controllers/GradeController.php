@@ -42,7 +42,7 @@ class GradeController extends Controller
         try {
             
             $grade              = new Grade();
-            $grade->school_id   = $request->school_id;
+            $grade->school_id   = session('school_id');
             $grade->name        = $request->name;
             $grade->save();
 
@@ -76,7 +76,7 @@ class GradeController extends Controller
 
         try {
 
-            $grade->school_id   = $request->school_id;
+            $grade->school_id   = session('school_id');
             $grade->name        = $request->name;
             $grade->save();
             

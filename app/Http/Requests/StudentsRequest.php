@@ -33,13 +33,16 @@ class StudentsRequest extends FormRequest
             'academic_year_id' => 'required|exists:academic_years,id',
 
             'name' => 'required',
+            'email' => 'nullable|email',
             'dob' => 'required',
+            'religion' => 'required',
             'gender' => 'required|max:1',
             'address' => 'required',
             'phone_number' => 'nullable|max:15',
             'nik' => 'required|numeric|max_digits:16',
             'nis' => 'nullable|numeric|max_digits:20',
             'nisn' => 'nullable|numeric|max_digits:10',
+            
 
             'father_name' => 'required',
             'father_dob' => 'required',
@@ -67,9 +70,11 @@ class StudentsRequest extends FormRequest
             'academic_year_id' => 'required|exists:academic_years,id',
 
             'name' => 'required',
+            'email' => 'nullable|email',
             'dob' => 'required',
             'gender' => 'required|max:1',
             'address' => 'required',
+            'religion' => 'required',
             'phone_number' => 'nullable|max:15',
             'nik' => 'required|numeric|max_digits:16',
             'nis' => 'nullable|numeric|max_digits:20',
