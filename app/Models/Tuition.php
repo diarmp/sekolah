@@ -16,6 +16,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Tuition extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $guarded = [];
     
     protected static function booted()
     {

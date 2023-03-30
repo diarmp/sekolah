@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('classroom_staff', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(School::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Staff::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
