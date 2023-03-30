@@ -45,6 +45,7 @@ Route::group([], function () {
 
     // Student
     Route::resource('students', StudentsController::class)->except(['show']);
+    Route::get('students/import', [StudentsController::class, 'importStudent'])->name('students.importStudent');
     Route::post('students/import-excel', [StudentsController::class, 'importStudentByExcel'])->name('students.importStudentByExcel');
 
     // Tuition Type
