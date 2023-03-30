@@ -10,6 +10,7 @@ use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SchoolsController;
 use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
 
 /*
@@ -56,6 +57,9 @@ Route::group([], function () {
 
     // Assign Classroom student
     Route::get('assign-classroom-student', AssignClassroomStudentController::class)->name(('assign-classroom-student'));
+
+    // Transactions
+    Route::resource("transactions", TransactionController::class);
 });
 
 Route::group([], function () {
