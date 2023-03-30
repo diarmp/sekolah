@@ -11,6 +11,7 @@
             <div class="card">
                 <div class="card-header d-flex">
                     <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
+                    <a href="{{ route('publish-tuition.index') }}" class="btn btn-primary btn-sm mr-2">TERBITKAN</a>
                     <a href="{{ route('tuition.create') }}" class="btn btn-primary btn-sm">TAMBAH</a>
                 </div>
                 <div class="card-body">

@@ -1,9 +1,5 @@
 <?php
 
-use App\Http\Controllers\AcademyYearController;
-use App\Http\Controllers\AssignClassroomStudentController;
-use App\Http\Controllers\ConfigController;
-use App\Http\Controllers\ConfigSchoolController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SchoolsController;
@@ -11,7 +7,10 @@ use App\Http\Controllers\TuitionController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
+use App\Http\Controllers\ConfigSchoolController;
+use App\Http\Controllers\PublishTuitionController;
 use App\Http\Controllers\SchoolSelectorController;
+use App\Http\Controllers\AssignClassroomStudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +59,11 @@ Route::group([], function () {
 
     // Transactions
     Route::resource("transactions", TransactionController::class);
+
+    // Tuition
+    Route::resource('tuition', TuitionController::class)->except(['show']);
+    Route::resource('publish-tuition', PublishTuitionController::class)->except(['show']);
+
 });
 
 Route::group([], function () {
