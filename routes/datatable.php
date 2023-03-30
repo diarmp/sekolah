@@ -23,6 +23,9 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('classroom', [App\Http\Controllers\Datatables\ClassroomDatatables::class, 'index'])->name('classroom');
 
     Route::get('tuition-type', [App\Http\Controllers\Datatables\TuitionTypeDatatables::class, 'index'])->name('tuition-type');
+    
+    Route::get('tuition', [App\Http\Controllers\Datatables\TuitionDatatables::class, 'index'])->name('tuition');
 });
+
 
 

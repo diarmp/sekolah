@@ -100,7 +100,6 @@ it('can render Classroom index page', function (User $user) {
     User::ROLE_KEPALA_SEKOLAH => [fn () => $this->kepalaSekolah],
 ]);
 
-
 // Render Update 
 it('can render Classroom edit page', function (User $user) {
     $school = School::factory()->create();
