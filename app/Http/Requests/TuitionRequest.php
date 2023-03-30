@@ -46,7 +46,7 @@ class TuitionRequest extends FormRequest
                     $q->where('grade_id', $this->grade_id);
                 })
             ],
-            'price' => 'required|numeric'
+            'price' => 'required|numeric|gt:0'
         ];
     }
 
@@ -67,7 +67,7 @@ class TuitionRequest extends FormRequest
                     $q->where('grade_id', $this->grade_id);
                 })->ignore($this->tuition->id)
             ],
-            'price' => 'required|numeric'
+            'price' => 'required|numeric|gt:0'
         ];
     }
 }

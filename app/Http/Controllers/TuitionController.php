@@ -30,11 +30,10 @@ class TuitionController extends Controller
     {
         //
         $title = "Tambah Biaya";
-        $schools = School::all();
         $tuitionTypes = TuitionType::all();
         $academicYears = AcademicYear::all();
         $grades = Grade::all();
-        return view('pages.tuition.create', compact('schools', 'tuitionTypes', 'academicYears', 'grades', 'title'));
+        return view('pages.tuition.create', compact('tuitionTypes', 'academicYears', 'grades', 'title'));
     }
 
     /**
@@ -79,11 +78,10 @@ class TuitionController extends Controller
     public function edit(Tuition $tuition)
     {
         $title = 'Ubah Biaya';
-        $schools = School::all();
         $tuitionTypes = TuitionType::all();
         $academicYears = AcademicYear::all();
         $grades = Grade::all();
-        return view('pages.tuition.edit', compact('schools', 'tuitionTypes', 'tuition', 'academicYears', 'grades', 'title'));
+        return view('pages.tuition.edit', compact('tuitionTypes', 'tuition', 'academicYears', 'grades', 'title'));
     }
 
     /**

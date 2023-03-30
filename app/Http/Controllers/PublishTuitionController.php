@@ -73,7 +73,6 @@ class PublishTuitionController extends Controller
             DB::commit();
             
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             DB::rollBack();
             return redirect()->route('publish-tuition.index')->withToastError('Eror Terbitkan Biaya!');
         }
