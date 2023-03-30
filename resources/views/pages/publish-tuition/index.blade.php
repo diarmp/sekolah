@@ -11,6 +11,7 @@
             <div class="card">
                 <div class="card-header d-flex">
                     <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
+                    <a href="{{ route('tuition.index') }}" class="btn btn-secondary btn-sm">Kembali</a>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('publish-tuition.store') }}" method="post">
@@ -21,7 +22,7 @@
                                 <tr>
                                     <th>Periode</th>
                                     <th>
-                                        <button type="submit" class="btn btn-primary float-right">Terbitkan</button>
+                                        <button type="submit" class="btn btn-primary float-right btn-sm">Terbitkan</button>
                                     </th>
                                 </tr>
                             </thead>
@@ -32,7 +33,7 @@
                                             <label for="checkbox{{$tuition->id}}">{{$tuition->period}}</label>
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="periods[]" id="checkbox{{$tuition->id}}" value="{{$tuition->id}}">
+                                            <input type="checkbox" name="tuitions[]" id="checkbox{{$tuition->id}}" value="{{$tuition->id}}">
                                         </td>
                                     </tr>
                                 @endforeach

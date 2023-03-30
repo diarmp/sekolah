@@ -1,7 +1,6 @@
 <?php
 
-use App\Models\Classroom;
-use App\Models\Student;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,11 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classroom_students', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Student::class)->nullable()->constrained()->nullOnDelete();
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('status')->default(Transaction::UNPAID)->nullable()->change();
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classroom_students');
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->string('status')->default(Transaction::UNPAID)->nullable()->change();
+        });
     }
 };
