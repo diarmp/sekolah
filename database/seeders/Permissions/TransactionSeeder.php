@@ -24,14 +24,14 @@ class TransactionSeeder extends Seeder
         $tata_usaha = Role::whereName(User::ROLE_TATA_USAHA)->first();
         $kepala_sekolah = Role::whereName(User::ROLE_KEPALA_SEKOLAH)->first();
 
-        // schools
+        // transactions
         $roles = [
-            'index' => 'schools.index',
-            'create' => 'schools.create',
-            'store' => 'schools.store',
-            'edit' => 'schools.edit',
-            'update' => 'schools.update',
-            'destroy' => 'schools.destroy'
+            'index' => 'transactions.index',
+            'create' => 'transactions.create',
+            'store' => 'transactions.store',
+            'edit' => 'transactions.edit',
+            'update' => 'transactions.update',
+            'destroy' => 'transactions.destroy'
         ];
 
         // index
