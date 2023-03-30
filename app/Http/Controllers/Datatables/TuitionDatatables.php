@@ -13,7 +13,7 @@ class TuitionDatatables extends Controller
 
     public function index()
     {
-        $tuition = Tuition::with('school', 'tuition_type', 'academic_year', 'grade');
+        $tuition = Tuition::with('tuition_type', 'academic_year', 'grade');
         return DataTables::of($tuition)
             ->editColumn('tuition_type', function ($row) {
                 return $row->tuition_type ? $row->tuition_type->name : '-' ; 
