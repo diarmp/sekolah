@@ -6,6 +6,7 @@ use App\Models\Grade;
 use App\Models\School;
 use App\Models\TuitionType;
 use App\Models\AcademicYear;
+use App\Models\Scopes\TuitionScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +16,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Tuition extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $guarded = [];
+    
+    protected static function booted()
+    {
+        static::addGlobalScope(new TuitionScope);
+    }
 
     public function tuition_type(): BelongsTo
     {
@@ -33,7 +41,7 @@ class Tuition extends Model
 
     public function transactions(): HasMany
     {
-        return $this->hasMany(Grade::class);
+        return $this->hasMany(Transaction::class);
     }
 
     public function school(): BelongsTo
