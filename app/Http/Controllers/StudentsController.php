@@ -32,12 +32,16 @@ class StudentsController extends Controller
      */
     public function create()
     {     
+        if(Auth::user()->school_id){
+            $school_id = Auth::user()->school_id;
+        }else{
+            $school_id = session('school_id');
+        }
         $data = [
-            'academic_years' => AcademicYear::where('school_id', Auth::user()->school_id)->orderByDesc('created_at')->get(),
-            'tuition_types' => TuitionType::where('school_id', Auth::user()->school_id)->get(),
+            'academic_years' => AcademicYear::where('school_id', $school_id)->orderByDesc('created_at')->get(),
+            'tuition_types' => TuitionType::where('school_id', $school_id)->get(),
             'title' => "Tambah Murid",
         ];
-
         return view('pages.students.create', $data);
     }
 
