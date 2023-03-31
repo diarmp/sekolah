@@ -14,6 +14,13 @@ class AcademyYearDatatables extends Controller
     {
         $academyYear = AcademicYear::with('school');
         return DataTables::of($academyYear)
+            ->editColumn('status_years', function ($row) {
+                $academyYearStatus = [
+                    AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
+                    AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
+                ];
+                return in_array($row->status_years, array_keys($academyYearStatus)) ? $academyYearStatus[$row->status_years] : '-';
+            })
             ->addColumn('action', function (AcademicYear $row) {
                 $data = [
                     'edit_url'     => route('academy-year.edit', ['academy_year' => $row->id]),

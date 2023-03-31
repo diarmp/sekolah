@@ -33,6 +33,17 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="year-academy-input">Status Tahun Ajaran</label>
+                            <select name="status_years" id="" class="form-control">
+                                <option value="">-</option>
+                                @foreach ($academyYearStatus as $key => $status)
+                                    <option value="{{ $key }}">{{ $status }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

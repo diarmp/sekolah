@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Datatables\StudentDatatables;
 use App\Http\Controllers\Datatables\SchoolsDatatables;
@@ -23,6 +22,6 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('classroom', [App\Http\Controllers\Datatables\ClassroomDatatables::class, 'index'])->name('classroom');
 
     Route::get('tuition-type', [App\Http\Controllers\Datatables\TuitionTypeDatatables::class, 'index'])->name('tuition-type');
+
+    Route::get('assign-classroom-student', App\Http\Controllers\Datatables\AssignClassroomStudenDatatables::class)->name('assign-classroom-student');
 });
-
-
