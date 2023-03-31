@@ -33,24 +33,25 @@ class StudentFactory extends Factory
             'dob' => $faker->dateTimeBetween('-20 years', '-18 years'),
             'religion' => 'katolik',
             'phone_number' => $faker->randomNumber(9, true),
+            'no_kartu_keluarga' => $faker->randomNumber(9, true),
             'nik' => $faker->randomNumber(9, true),
             'nisn' => $faker->randomNumber(9, true),
             'nis' => $faker->randomNumber(9, true),
+
             'father_name' => $faker->name('male'),
-            'father_dob' => $faker->dateTimeBetween('-40 years', '-30 years'),
             'father_work' => $faker->jobTitle(),
-            'father_education' => "SMA",
-            'father_income' => $faker->randomNumber(7, false),
+            'father_address' => $faker->address(),
+            'father_phone_number' => $faker->randomNumber(9, true),
+
             'mother_name' => $faker->name('female'),
-            'mother_dob' => $faker->dateTimeBetween('-40 years', '-30 years'),
             'mother_work' => $faker->jobTitle(),
-            'mother_education' => "SMA",
-            'mother_income' => $faker->randomNumber(7, false),
-            'guardian_name' => $faker->name('female'),
-            'guardian_dob' => $faker->dateTimeBetween('-40 years', '-30 years'),
+            'mother_address' => $faker->address(),
+            'mother_phone_number' => $faker->randomNumber(9, true),
+
+            'guardian_name' => $faker->name(),
             'guardian_work' => $faker->jobTitle(),
-            'guardian_education' => "S1",
-            'guardian_income' => $faker->randomNumber(7, false),
+            'guardian_address' => $faker->address(),
+            'guardian_phone_number' => $faker->randomNumber(9, true),
         ];
 
     }
