@@ -102,7 +102,7 @@ class Student extends Model
         self::deleted(function(Student $student){
 
             // Delete User
-                User::findOrFail($student->user_id)->delete();
+                // User::findOrFail($student->user_id)->delete();
             // End Delete User
 
         });
