@@ -7,11 +7,13 @@
 
     {{-- start table academy years --}}
     <div class="col-lg-6">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h1>
+        <a href="{{ route('schools.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-default shadow-sm">
+            Kembali
+          </a>
+      </div>
       <div class="card">
-        <div class="card-header d-flex">
-          <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-
-        </div>
         <div class="card-body">
           <form action="{{ route('schools.store') }}" method="post">
             @csrf
@@ -67,7 +69,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('schools.index') }}" class="btn btn-default">Batal</a>
+            <button type="reset" class="btn btn-default">Batal</button>
           </form>
         </div>
       </div>

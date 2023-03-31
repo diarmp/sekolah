@@ -7,11 +7,13 @@
 
     {{-- start table academy years --}}
     <div class="col-lg-6">
+      <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h1>
+        <a href="{{ route('schools.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-default shadow-sm">
+          Kembali
+        </a>
+      </div>
       <div class="card">
-        <div class="card-header d-flex">
-          <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-
-        </div>
         <div class="card-body">
           <form action="{{ route('schools.update', $school->getKey()) }}" method="post">
             @csrf
@@ -46,11 +48,12 @@
 
             <div class="form-group">
               <label for="user_id-select">Nama PIC</label>
-              <input type="text" readonly class="form-control-plaintext" id="staticUserId" value="{{ $school->staf->name }}">
+              <input type="text" readonly class="form-control-plaintext" id="staticUserId"
+                value="{{ $school->staf->name }}">
             </div>
 
             <button type="submit" class="btn btn-primary">Simpan</button>
-            <a href="{{ route('schools.index') }}" class="btn btn-default">Batal</a>
+            <button type="reset" class="btn btn-default">Batal</button>
           </form>
         </div>
       </div>
@@ -72,8 +75,8 @@
       h6.text("Ubah Sekolah");
 
       if (opsiSekolah.val() == "") {
-          h6.text("Ubah Yayasan");
-          labelNamaSekolah.text("Nama Yayasan");
+        h6.text("Ubah Yayasan");
+        labelNamaSekolah.text("Nama Yayasan");
       }
 
       opsiSekolah.change(function() {
