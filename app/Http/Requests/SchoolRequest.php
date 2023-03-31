@@ -31,7 +31,7 @@ class SchoolRequest extends FormRequest
     {
         return [
             'school_id' => 'nullable|exists:schools,id',
-            'name' => 'required|string|max:30',
+            'name' => 'required|string|max:255',
             'pic_name' => 'required|string|max:100',
             'pic_email' => 'required|string|max:100',
         ];
@@ -41,7 +41,7 @@ class SchoolRequest extends FormRequest
     {
         return [
             'school_id' => 'nullable|exists:schools,id',
-            'name' => 'required|string|max:30',
+            'name' => 'required|string|max:255',
         ];
     }
 }

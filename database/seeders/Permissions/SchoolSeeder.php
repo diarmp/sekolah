@@ -29,14 +29,14 @@ class SchoolSeeder extends Seeder
             'destroy' => 'schools.destroy'
         ];
 
-        // index school
+        // index
         $permission = Permission::firstOrCreate([
             'name' => $roles['index'],
             'guard_name' => 'web'
         ]);
         $permission->syncRoles([$super_admin, $ops_admin]);
 
-        // create school
+        // create
         $permission = Permission::firstOrCreate([
             'name' => $roles['create'],
             'guard_name' => 'web'
@@ -48,7 +48,7 @@ class SchoolSeeder extends Seeder
         ]);
         $permission->syncRoles([$super_admin]);
 
-        // update school
+        // update
         $permission = Permission::firstOrCreate([
             'name' => $roles['edit'],
             'guard_name' => 'web'
@@ -60,7 +60,7 @@ class SchoolSeeder extends Seeder
         ]);
         $permission->syncRoles([$super_admin, $ops_admin]);
 
-        // destroy school
+        // destroy
         $permission = Permission::firstOrCreate([
             'name' => $roles['destroy'],
             'guard_name' => 'web'

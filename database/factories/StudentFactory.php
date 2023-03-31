@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Faker\Factory as Faker;
 use Illuminate\Support\Str;
@@ -21,21 +22,16 @@ class StudentFactory extends Factory
     {
         $faker = Faker::create('id_ID');
         $gender = $faker->randomElement(['L', 'P']);
-        $name = $faker->name($gender);
 
         return [
-            'user_id' => User::factory()->create([
-                'name' => $name,
-                'email' => Str::slug($name, '-').'@gmail.com',
-                'password' => bcrypt('password'),
-            ]),
-            'school_id' => 2,
+            'school_id' => session('school_id') ?? 2,
             'academic_year_id' => $faker->numberBetween(1, 10),
-            'name' => $name,
+            'name' => $faker->name($gender),
+            'email' => $faker->safeEmail(),
             'gender' => $gender,
             'address' => $faker->address(),
             'dob' => $faker->dateTimeBetween('-20 years', '-18 years'),
-            'religion' => 'Kristen',
+            'religion' => 'katolik',
             'phone_number' => $faker->randomNumber(9, true),
             'nik' => $faker->randomNumber(9, true),
             'nisn' => $faker->randomNumber(9, true),

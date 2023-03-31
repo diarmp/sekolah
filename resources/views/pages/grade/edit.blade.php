@@ -20,25 +20,7 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
-                            <label for="school-select">School</label>
-                            <select class="form-control  @error('school_id') is-invalid @enderror" name="school_id"
-                                id="school-select">
-                                <option value="">-</option>
-                                @foreach ($schools as $school)
-                                    <option value="{{ $school->id }}" @if ($grade->school_id === $school->id) selected @endif>
-                                        {{ $school->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('school_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-
-                        </div>
-                        <div class="form-group">
-                            <label for="grade-input">Grade</label>
+                            <label for="grade-input">Tingkat</label>
                             <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
                                 value="{{ $grade->name }}" id="grade-input" placeholder="">
                             @error('name')

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\AcademicYear;
+use App\Models\Grade;
+use App\Models\School;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
