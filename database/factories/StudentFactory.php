@@ -24,7 +24,7 @@ class StudentFactory extends Factory
         $gender = $faker->randomElement(['L', 'P']);
 
         return [
-            'school_id' => session('school_id') ?? 2,
+            'school_id' => session('school_id') ?? 1,
             'academic_year_id' => $faker->numberBetween(1, 10),
             'name' => $faker->name($gender),
             'email' => $faker->safeEmail(),

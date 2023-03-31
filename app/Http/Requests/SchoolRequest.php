@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class SchoolRequest extends FormRequest
 {
@@ -30,8 +31,21 @@ class SchoolRequest extends FormRequest
     protected function postMethod(): array
     {
         return [
-            'school_id' => 'nullable|exists:schools,id',
             'name' => 'required|string|max:255',
+            'grade' => [
+                'required',
+                Rule::notIn(["-"]),
+            ],
+            'address' => 'required|max:255',
+            'city' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'phone' => 'required|numeric',
+            'email' => 'required|email|max:255',
+            'owner' => [
+                'required',
+                'numeric',
+                Rule::notIn(["-"]),
+            ],
             'pic_name' => 'required|string|max:100',
             'pic_email' => 'required|string|max:100',
         ];
@@ -40,8 +54,21 @@ class SchoolRequest extends FormRequest
     protected function putMethod(): array
     {
         return [
-            'school_id' => 'nullable|exists:schools,id',
             'name' => 'required|string|max:255',
+            'grade' => [
+                'required',
+                Rule::notIn(["-"]),
+            ],
+            'address' => 'required|max:255',
+            'city' => 'required|string|max:255',
+            'province' => 'required|string|max:255',
+            'phone' => 'required|numeric',
+            'email' => 'required|email|max:255',
+            'owner' => [
+                'required',
+                'numeric',
+                Rule::notIn(["-"]),
+            ],
         ];
     }
 }

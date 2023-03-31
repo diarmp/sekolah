@@ -46,10 +46,10 @@ class UserSeeder extends Seeder
             $user->assignRole($role);
 
             // Yayasan
-            $yayasan = School::updateOrCreate([
-                'name' => 'Yayasan Karmel Malang',
-                'type' => School::TYPE_YAYASAN,
-            ]);
+            // $yayasan = School::updateOrCreate([
+            //     'name' => 'Yayasan Karmel Malang',
+            //     'type' => School::TYPE_YAYASAN,
+            // ]);
             $role = User::ROLE_ADMIN_YAYASAN;
             $user = User::updateOrCreate(
                 [
@@ -58,28 +58,26 @@ class UserSeeder extends Seeder
                 [
                     'name' => str($role)->title(),
                     'password' => bcrypt('password'),
-                    'email_verified_at' => now(),
-                    'school_id' => $yayasan->getKey()
+                    'email_verified_at' => now()
                 ]
             );
             $user->assignRole($role);
-            $staff = Staff::updateOrCreate(
-                [
-                    'school_id' => $yayasan->getKey(),
-                    'user_id' => $user->getKey(),
-                ],
-                [
-                    'name' => $user->name
-                ]
-            );
-            $yayasan->staff_id = $staff->getKey();
-            $yayasan->save();
+            // $staff = Staff::updateOrCreate(
+            //     [
+            //         'school_id' => $yayasan->getKey(),
+            //         'user_id' => $user->getKey(),
+            //     ],
+            //     [
+            //         'name' => $user->name
+            //     ]
+            // );
+            // $yayasan->staff_id = $staff->getKey();
+            // $yayasan->save();
 
             // Sekolah
             $sekolah = School::updateOrCreate([
                 'name' => 'Sekolah SD Karmel',
-                'type' => School::TYPE_SEKOLAH,
-                'school_id' => $yayasan->getKey(),
+                'grade' => "SD"
             ]);
             $roles = [
                 User::ROLE_ADMIN_SEKOLAH,

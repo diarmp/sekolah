@@ -29,8 +29,9 @@ class SchoolsController extends Controller
     public function create()
     {
         $title = "Tambah Sekolah";
-        $schools = School::induk()->get();
-        return view('pages.school.create', compact('schools', 'title'));
+        $owner = User::whereNull('school_id')->get();
+        $grade = ["TK","SD","SMP","SMA","SMK"];
+        return view('pages.school.create', compact('grade', 'title',"owner"));
     }
 
     /**
@@ -39,21 +40,20 @@ class SchoolsController extends Controller
     public function store(SchoolRequest $request)
     {
         $type = School::TYPE_SEKOLAH;
-        $school_id = $request->school_id;
         $role = User::ROLE_ADMIN_SEKOLAH;
-        if ($request->school_id == "") {
-            $type = School::TYPE_YAYASAN;
-            $school_id = null;
-            $role = User::ROLE_ADMIN_YAYASAN;
-        }
 
         DB::beginTransaction();
         try {
             // sekolah
             $school = new School();
             $school->name = $request->name;
-            $school->school_id = $school_id;
-            $school->type = $type;
+            $school->address = $request->address;
+            $school->grade = $request->grade;
+            $school->city = $request->city;
+            $school->province = $request->province;
+            $school->phone = $request->phone;
+            $school->email = $request->email;
+            $school->owner_id = $request->owner;
             $school->save();
 
             // PIC
@@ -98,9 +98,10 @@ class SchoolsController extends Controller
      */
     public function edit(School $school)
     {
-        $schools = School::whereNotIn('id', [$school->getKey()])->get();
+        $owner = User::whereNull('school_id')->get();
+        $grade = ["TK","SD","SMP","SMA","SMK"];
         $title = "Ubah Sekolah";
-        return view('pages.school.edit', compact('schools', 'school', 'title'));
+        return view('pages.school.edit', compact('owner', 'grade',"school", 'title'));
     }
 
     /**
@@ -110,17 +111,22 @@ class SchoolsController extends Controller
     {
         $type = School::TYPE_SEKOLAH;
         $school_id = $request->school_id;
-        if ($request->school_id == "") {
-            $type = School::TYPE_YAYASAN;
-            $school_id = null;
-        }
+        // if ($request->school_id == "") {
+        //     $type = School::TYPE_YAYASAN;
+        //     $school_id = null;
+        // }
 
         DB::beginTransaction();
         try {
             $school->name = $request->name;
-            $school->school_id = $school_id;
-            $school->type = $type;
-            $school->staff_id = $request->user_id;
+            $school->address = $request->address;
+            $school->grade = $request->grade;
+            $school->city = $request->city;
+            $school->province = $request->province;
+            $school->phone = $request->phone;
+            $school->email = $request->email;
+            $school->owner_id = $request->owner;
+            // $school->staff_id = $request->user_id;
             $school->save();
 
             DB::commit();

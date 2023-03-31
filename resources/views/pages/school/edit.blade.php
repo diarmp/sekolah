@@ -18,22 +18,7 @@
           <form action="{{ route('schools.update', $school->getKey()) }}" method="post">
             @csrf
             @method('put')
-            <div class="form-group">
-              <label for="school-select">Yayasan</label>
-              <select class="form-control @error('school_id') is-invalid @enderror" name="school_id" id="school-select">
-                <option value="">-</option>
-                @foreach ($schools as $sekolah)
-                  <option value="{{ $sekolah->id }}" @selected(old('school_id', $sekolah->id) == $school->school_id)>
-                    {{ $sekolah->name }}
-                  </option>
-                @endforeach
-              </select>
-              @error('school_id')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
-              @enderror
-            </div>
+            
 
             <div class="form-group">
               <label for="name-input">Nama Sekolah</label>
@@ -45,6 +30,97 @@
                 </div>
               @enderror
             </div>
+
+            <div class="form-group">
+              <label for="school-select">Tingkatan Sekolah</label>
+              <select class="form-control @error('grade') is-invalid @enderror" name="grade" >
+                <option value="-">-</option>
+                @foreach ($grade as $row)
+                  <option value="{{$row}}" @selected(old('grade', $row) == $school->grade)>
+                    {{ $row }}
+                  </option>
+                @endforeach
+              </select>
+              @error('owner')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="name-input">Alamat</label>
+              <input type="text" class="form-control @error('address') is-invalid @enderror" name="address"
+                id="name-input" autocomplete="off" value="{{ old('address', $school->address) }}">
+              @error('address')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="name-input">Kota / Kabupaten</label>
+              <input type="text" class="form-control @error('city') is-invalid @enderror" name="city"
+                id="name-input" autocomplete="off" value="{{ old('city', $school->city) }}">
+              @error('city')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="name-input">Provinsi</label>
+              <input type="text" class="form-control @error('province') is-invalid @enderror" name="province"
+                id="name-input" autocomplete="off" value="{{ old('province', $school->province) }}">
+              @error('province')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="name-input">No Telepon</label>
+              <input type="text" class="form-control @error('phone') is-invalid @enderror" name="phone"
+                id="name-input" autocomplete="off" value="{{ old('phone', $school->phone) }}">
+              @error('phone')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="name-input">Email</label>
+              <input type="text" class="form-control @error('email') is-invalid @enderror" name="email"
+                id="name-input" autocomplete="off" value="{{ old('email', $school->email) }}">
+              @error('email')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            <div class="form-group">
+              <label for="school-select">Pemilik</label>
+              <select class="form-control @error('owner') is-invalid @enderror" name="owner" >
+                <option value="-">-</option>
+                @foreach ($owner as $row)
+                  <option value="{{$row->id}}" @selected(old('owner', $row->id) == $school->owner_id)>
+                    {{ $row->name }}
+                  </option>
+                @endforeach
+              </select>
+              @error('owner')
+                <div class="invalid-feedback">
+                  {{ $message }}
+                </div>
+              @enderror
+            </div>
+
+            
 
             <div class="form-group">
               <label for="user_id-select">Nama PIC</label>
@@ -65,7 +141,7 @@
 @endsection
 
 @push('js')
-  <script>
+  {{-- <script>
     $(document).ready(function() {
       let h6 = $('h6.text-primary')
       let labelNamaSekolah = $('label[for="name-input"]')
@@ -88,5 +164,5 @@
         }
       })
     });
-  </script>
+  </script> --}}
 @endpush

@@ -17,7 +17,7 @@ class StudentTuitionFactory extends Factory
     public function definition(): array
     {
         return [
-            'school_id' => 2,
+            'school_id' => 1,
             'student_id' => fake()->numberBetween(1, 100),
             'tuition_type_id' => fake()->numberBetween(1, 10),
             'price' => fake()->numberBetween(100000, 500000),
