@@ -19,6 +19,8 @@ class Grade extends Model
 
     protected $guarded = [];
 
+    protected $table = 'grades';
+
     protected static function booted()
     {
         static::addGlobalScope(new GradeScope);

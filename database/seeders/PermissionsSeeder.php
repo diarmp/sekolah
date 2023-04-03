@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\Permissions\GradeSeeder;
 use Database\Seeders\Permissions\SchoolSeeder;
 use Database\Seeders\Permissions\StudentSeeder;
+use Database\Seeders\Permissions\TuitionSeeder;
 use Database\Seeders\Permissions\ClassroomSeeder;
 use Database\Seeders\Permissions\TransactionSeeder;
 use Database\Seeders\Permissions\TuitionTypeSeeder;
@@ -45,7 +46,8 @@ class PermissionsSeeder extends Seeder
             MasterConfigSeeder::class,
             SchoolConfigSeeder::class,
             TransactionSeeder::class,
-            AssignClassroomStudentSeeder::class
+            AssignClassroomStudentSeeder::class,
+            TuitionSeeder::class,
         ]);
     }
 }

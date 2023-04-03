@@ -8,30 +8,28 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class TransactionSeeder extends Seeder
+class TuitionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        // role users
         $super_admin = Role::whereName(User::ROLE_SUPER_ADMIN)->first();
         $ops_admin = Role::whereName(User::ROLE_OPS_ADMIN)->first();
-        $admin_yayasan = Role::whereName(User::ROLE_ADMIN_YAYASAN)->first();
         $admin_sekolah = Role::whereName(User::ROLE_ADMIN_SEKOLAH)->first();
-        $bendahara = Role::whereName(User::ROLE_BENDAHARA)->first();
+        $admin_yayasan = Role::whereName(User::ROLE_ADMIN_YAYASAN)->first();
         $tata_usaha = Role::whereName(User::ROLE_TATA_USAHA)->first();
+        $bendahara = Role::whereName(User::ROLE_BENDAHARA)->first();
         $kepala_sekolah = Role::whereName(User::ROLE_KEPALA_SEKOLAH)->first();
 
-        // transactions
         $roles = [
-            'index' => 'transactions.index',
-            'create' => 'transactions.create',
-            'store' => 'transactions.store',
-            'edit' => 'transactions.edit',
-            'update' => 'transactions.update',
-            'destroy' => 'transactions.destroy'
+            'index' => 'tuition.index',
+            'create' => 'tuition.create',
+            'store' => 'tuition.store',
+            'edit' => 'tuition.edit',
+            'update' => 'tuition.update',
+            'destroy' => 'tuition.destroy'
         ];
 
         // index
@@ -39,9 +37,9 @@ class TransactionSeeder extends Seeder
             'name' => $roles['index'],
             'guard_name' => 'web'
         ]);
-        $permission->syncRoles([$super_admin, $ops_admin, $admin_yayasan, $admin_sekolah, $kepala_sekolah, $tata_usaha, $bendahara]);
+        $permission->syncRoles([$super_admin, $ops_admin, $admin_sekolah, $admin_yayasan, $kepala_sekolah, $tata_usaha, $bendahara]);
 
-        // create
+        // create school
         $permission = Permission::firstOrCreate([
             'name' => $roles['create'],
             'guard_name' => 'web'
@@ -53,7 +51,7 @@ class TransactionSeeder extends Seeder
         ]);
         $permission->syncRoles([$super_admin, $ops_admin, $bendahara]);
 
-        // update
+        // update school
         $permission = Permission::firstOrCreate([
             'name' => $roles['edit'],
             'guard_name' => 'web'
@@ -65,7 +63,7 @@ class TransactionSeeder extends Seeder
         ]);
         $permission->syncRoles([$super_admin, $ops_admin, $bendahara]);
 
-        // destroy
+        // destroy school
         $permission = Permission::firstOrCreate([
             'name' => $roles['destroy'],
             'guard_name' => 'web'

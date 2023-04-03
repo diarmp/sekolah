@@ -14,7 +14,12 @@ class Transaction extends Model
 {
     use HasFactory, SoftDeletes;
 
+    const PAID      = "paid";
+    const UNPAID    = "unpaid";
+
     protected $guarded = [];
+
+    protected $table = 'transactions';
 
     
     public function tuition(): BelongsTo
