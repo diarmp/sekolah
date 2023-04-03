@@ -43,7 +43,7 @@
                 {{-- START SELECT CLASS  --}}
                 <div class="d-flex justify-content-between ">
                     <div class="w-75 d-flex py-4">
-                        <h6 class="font-weight-bold">Tahun Ajaran : {{ $academy_year->name }}</h6>
+                        <h6 class="font-weight-bold">Tahun Ajaran : {{ $academy_year?->name }}</h6>
                     </div>
                     {{--  START SELECT CLASS COMPONENT TETAPKAN KELAS DAN HAPUS KELAS --}}
                     <div class="w-75 ml-5  d-flex flex-column">
@@ -185,7 +185,7 @@
     @push('js')
         <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-
+        {{-- <script src="{{ asset('page/assign-classroom-student/index.js') }}"></script> --}}
         <script>
             var coulmns = [{
                 "data": "id"
