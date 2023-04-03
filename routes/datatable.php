@@ -17,11 +17,14 @@ Route::middleware(['web', 'auth'])->group(function () {
     Route::get('master-configs', [App\Http\Controllers\Datatables\MasterConfigDatatables::class, 'index'])->name('master-configs');
 
     Route::get('grade', [App\Http\Controllers\Datatables\GradeDatatables::class, 'index'])->name('grade');
+    
     Route::get('students', [StudentDatatables::class, 'index'])->name('students');
 
     Route::get('classroom', [App\Http\Controllers\Datatables\ClassroomDatatables::class, 'index'])->name('classroom');
 
     Route::get('tuition-type', [App\Http\Controllers\Datatables\TuitionTypeDatatables::class, 'index'])->name('tuition-type');
-
+    
     Route::get('assign-classroom-student', App\Http\Controllers\Datatables\AssignClassroomStudenDatatables::class)->name('assign-classroom-student');
+    
+    Route::get('tuition', [App\Http\Controllers\Datatables\TuitionDatatables::class, 'index'])->name('tuition');
 });
