@@ -5,6 +5,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SchoolsController;
 use App\Http\Controllers\TuitionController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
@@ -67,7 +68,6 @@ Route::group([], function () {
     // Tuition
     Route::resource('tuition', TuitionController::class)->except(['show']);
     Route::resource('publish-tuition', PublishTuitionController::class)->except(['show']);
-
 });
 
 Route::group([], function () {
