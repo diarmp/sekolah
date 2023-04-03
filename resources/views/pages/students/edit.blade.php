@@ -16,14 +16,14 @@
           @method('PUT')
           @csrf
 
-          {{-- Informasi Murid Accordion --}}
+          {{-- Informasi Siswa Accordion --}}
           <div class="card">
 
             {{-- Accordion Button --}}
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#informationAccordion" aria-expanded="true" aria-controls="informationAccordion">
-                  <span class="text-lg text-dark">Informasi Murid</span>
+                  <span class="text-lg text-dark">Informasi Siswa</span>
                 </button>
               </h2>
             </div>
@@ -38,7 +38,7 @@
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
-                        <label for="academic_year_id">Tahun Akademik<span class="text-small text-danger">*</span></label>
+                        <label for="academic_year_id">Tahun Masuk Akademik<span class="text-small text-danger">*</span></label>
                         <select id="academic_year_id" name="academic_year_id" class="form-control select2 @error('academic_year_id') is-invalid @enderror" required>
                           <option value="">--- Pilih ---</option>
                           @foreach ($academic_years as $academic_year)
@@ -512,7 +512,7 @@
             {{-- End Accordion Content --}}
 
           </div>
-          {{-- End Informasi Murid Accordion --}}
+          {{-- End Informasi Siswa Accordion --}}
 
           {{-- Tuitions Accordion --}}
           <div class="card">
@@ -521,7 +521,7 @@
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#tuitionAccordion" aria-expanded="true" aria-controls="tuitionAccordion">
-                  <span class="text-lg text-dark">Biaya Sekolah Murid</span>
+                  <span class="text-lg text-dark">Biaya Sekolah Siswa</span>
                 </button>
               </h2>
             </div>

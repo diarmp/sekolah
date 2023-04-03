@@ -79,7 +79,7 @@ class Student extends Model
                 $user->email        = Str::slug($student->name. Carbon::parse($student->created_at)->format('dmy'), '-').'@gmail.com';
                 $user->password     = bcrypt('password');
                 $user->save();
-                $user->assignRole(User::ROLE_MURID);
+                $user->assignRole(User::ROLE_SISWA);
             // End Save User
 
             // Update Student's User ID

@@ -3,7 +3,7 @@
 @section('title', $title)
 
 @section('content')
-    <h1 class="h3 mb-4 text-gray-800">Data Murid</h1>
+    <h1 class="h3 mb-4 text-gray-800">Data Siswa</h1>
 
     {{-- start Datatable --}}
     <div class="col-lg-10">

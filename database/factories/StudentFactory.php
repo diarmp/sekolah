@@ -33,7 +33,7 @@ class StudentFactory extends Factory
             'dob' => $faker->dateTimeBetween('-20 years', '-18 years'),
             'religion' => 'katolik',
             'phone_number' => $faker->randomNumber(9, true),
-            'no_kartu_keluarga' => $faker->randomNumber(9, true),
+            'family_card_number' => $faker->randomNumber(9, true),
             'nik' => $faker->randomNumber(9, true),
             'nisn' => $faker->randomNumber(9, true),
             'nis' => $faker->randomNumber(9, true),

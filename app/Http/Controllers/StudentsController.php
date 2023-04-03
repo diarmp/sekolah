@@ -20,7 +20,7 @@ class StudentsController extends Controller
     public function index()
     {
         $data = [
-            'title' => "Murid"
+            'title' => "Siswa"
         ];
 
         return view('pages.students.index', $data);
@@ -34,7 +34,7 @@ class StudentsController extends Controller
         $data = [
             'academic_years' => AcademicYear::where('school_id', session('school_id'))->orderByDesc('created_at')->get(),
             'tuition_types' => TuitionType::where('school_id', session('school_id'))->get(),
-            'title' => "Tambah Murid",
+            'title' => "Tambah Siswa",
         ];
 
         return view('pages.students.create', $data);
@@ -60,7 +60,7 @@ class StudentsController extends Controller
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
-                $student->no_kartu_keluarga         = $request->no_kartu_keluarga;
+                $student->family_card_number        = $request->family_card_number;
                 $student->nik                       = $request->nik;
                 $student->nis                       = $request->nis;
                 $student->nisn                      = $request->nisn;
@@ -104,10 +104,10 @@ class StudentsController extends Controller
 
             DB::commit();
 
-            return redirect()->route('students.index')->withToastSuccess('Berhasil menambahkan data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil menambahkan data siswa!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat menambahkan data murid!');
+            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat menambahkan data siswa!');
         }
     }
 
@@ -144,7 +144,7 @@ class StudentsController extends Controller
             'academic_years' => AcademicYear::where('school_id', session('school_id'))->orderByDesc('created_at')->get(),
             'student_tuitions' => $studentTuitions,
             'tuition_types' => $tuitions,
-            'title' => "Ubah Data Murid",
+            'title' => "Ubah Data Siswa",
         ];
 
         return view('pages.students.edit', $data);
@@ -168,7 +168,7 @@ class StudentsController extends Controller
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
-                $student->no_kartu_keluarga         = $request->no_kartu_keluarga;
+                $student->family_card_number        = $request->family_card_number;
                 $student->nik                       = $request->nik;
                 $student->nis                       = $request->nis;
                 $student->nisn                      = $request->nisn;
@@ -229,10 +229,10 @@ class StudentsController extends Controller
 
             DB::commit();
 
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengubah data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengubah data siswa!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengubah data murid!');
+            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengubah data siswa!');
         }
     }
 
@@ -247,11 +247,11 @@ class StudentsController extends Controller
             $student->delete();
 
             return response()->json([
-                'msg' => 'Berhasil menghapus data murid!'
+                'msg' => 'Berhasil menghapus data siswa!'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'msg' => 'Gagal menghapus data murid!'
+                'msg' => 'Gagal menghapus data siswa!'
             ], 400);
         }
     }
@@ -260,7 +260,7 @@ class StudentsController extends Controller
     {
         try {
             $excel = Excel::import(new StudentsImport(1, 1), public_path('excel_import_template/students_import.xlsx'));
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
 
@@ -273,7 +273,7 @@ class StudentsController extends Controller
                 return redirect()->route('students.index')->withToastError("Terjadi kesalahan pada Baris $row, Kolom $column, dengan pesan $error[0]");
             }
         } catch (\Throwable $th) {
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         }
     }
 
@@ -281,7 +281,7 @@ class StudentsController extends Controller
     {
         try {
             $excel = Excel::import(new StudentsImport(session('school_id'), $request->academic_year_id), $request->file('excel'));
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             $failures = $e->failures();
 
@@ -294,7 +294,7 @@ class StudentsController extends Controller
                 return redirect()->route('students.index')->withToastError("Terjadi kesalahan pada Baris $row, Kolom $column, dengan pesan $error[0]");
             }
         } catch (\Throwable $th) {
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         }
     }
 }

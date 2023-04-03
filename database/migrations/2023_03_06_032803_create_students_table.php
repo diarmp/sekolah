@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('guardian_work')->nullable();
             $table->string('guardian_education', 50)->nullable();
             $table->string('guardian_income', 50)->nullable();
-            $table->foreignIdFor(AcademicYear::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignIdFor(AcademicYear::class)->nullable()->comment('First Academic Year')->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -6,9 +6,7 @@ use App\Models\Student;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 
@@ -30,8 +28,8 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
     {
 
         try {
+
             DB::beginTransaction();
-            
 
             foreach ($collection as $key => $item) {
                 // Save Student
@@ -44,41 +42,37 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
                     $student->address                   = $item['alamat'];
                     $student->dob                       = date('Y-m-d H:i:s', strtotime($item['tanggal_lahir']));
                     $student->religion                  = $item['agama'];
-                    $student->phone_number              = $item['no_telepon'];
+                    $student->phone_number              = $item['nomor_telepon'];
+                    $student->family_card_number        = $item['nomor_kartu_keluarga'];
                     $student->nik                       = $item['nik'];
                     $student->nis                       = $item['nis'];
                     $student->nisn                      = $item['nisn'];
     
                     $student->father_name               = $item['nama_ayah'];
-                    $student->father_dob                = date('Y-m-d H:i:s', strtotime($item['tanggal_lahir_ayah']));
                     $student->father_work               = $item['pekerjaan_ayah'];
-                    $student->father_education          = $item['edukasi_terakhir_ayah'];
-                    $student->father_income             = $item['pendapatan_ayah'];
+                    $student->father_address            = $item['alamat_ayah'];
+                    $student->father_phone_number       = $item['nomor_telepon_ayah'];
     
                     $student->mother_name               = $item['nama_ibu'];
-                    $student->mother_dob                = date('Y-m-d H:i:s', strtotime($item['tanggal_lahir_ibu']));
                     $student->mother_work               = $item['pekerjaan_ibu'];
-                    $student->mother_education          = $item['edukasi_terakhir_ibu'];
-                    $student->mother_income             = $item['pendapatan_ibu'];
+                    $student->mother_address            = $item['alamat_ibu'];
+                    $student->mother_phone_number       = $item['nomor_telepon_ibu'];
     
                     $student->guardian_name             = $item['nama_wali'];
-                    $student->guardian_dob              = date('Y-m-d H:i:s', strtotime($item['tanggal_lahir_wali']));
                     $student->guardian_work             = $item['pekerjaan_wali'];
-                    $student->guardian_education        = $item['edukasi_terakhir_wali'];
-                    $student->guardian_income           = $item['pendapatan_wali'];
+                    $student->guardian_address          = $item['alamat_wali'];
+                    $student->guardian_phone_number     = $item['nomor_telepon_wali'];
     
                     $student->save();
                 // End Save Student
             }
             DB::commit();
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
             
         } catch (\Throwable $th) {
-            dd($th);
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError("Ops, ada kesalahan saat mengimpor data murid!");
+            return redirect()->back()->withInput()->withToastError("Ops, ada kesalahan saat mengimpor data siswa!");
         }
-
     }
 
     public function rules(): array
@@ -89,25 +83,25 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
             'jenis_kelamin' => 'required|max:1',
             'alamat' => 'required',
             'agama' => 'required',
-            'no_telepon' => 'nullable|max:15',
+            'no_telepon' => 'nullable|max:20',
             'nik' => 'required|numeric|max_digits:16',
             'nis' => 'nullable|numeric|max_digits:20',
             'nisn' => 'nullable|numeric|max_digits:10',
 
             'nama_ayah' => 'required',
-            'tanggal_lahir_ayah' => 'required',
-            'edukasi_terakhir_ayah' => 'nullable|max:50',
-            'pendapatan_ayah' => 'nullable|numeric|max_digits:50',
+            'pekerjaan_ayah' => 'required',
+            'alamat_ayah' => 'nullable',
+            'nomor_telepon_ayah' => 'nullable|max:20',
 
             'nama_ibu' => 'required',
-            'tanggal_lahir_ibu' => 'required',
-            'pendapatan_ibu' => 'nullable|numeric|max_digits:50',
-            'edukasi_terakhir_ibu' => 'nullable|max:50',
+            'pekerjaan_ibu' => 'required',
+            'alamat_ibu' => 'nullable',
+            'nomor_telepon_ibu' => 'nullable|max:20',
 
             'nama_wali' => 'nullable',
-            'tanggal_lahir_wali' => 'nullable',
-            'pendapatan_wali' => 'nullable|numeric|max_digits:50',
-            'edukasi_terakhir_wali' => 'nullable|max:50',
+            'pekerjaan_wali' => 'nullable',
+            'alamat_wali' => 'nullable',
+            'nomor_telepon_wali' => 'nullable|max:20',
         ];
     }
 }

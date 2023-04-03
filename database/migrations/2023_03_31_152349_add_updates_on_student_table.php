@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->string('no_kartu_keluarga', 25)->nullable()->after('phone_number');
+            $table->string('family_card_number', 25)->nullable()->after('nik');
+            $table->string('file_photo')->nullable()->after('nis');
+            $table->string('file_birth_certificate')->nullable()->after('nis');
+            $table->string('file_family_card')->nullable()->after('nis');
+
+            $table->string('phone_number', 20)->change();
 
             $table->string('father_phone_number')->nullable()->after('father_name');
             $table->text('father_address')->nullable()->after('father_name');
@@ -40,7 +45,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('students', function (Blueprint $table) {
-            $table->dropColumn('no_kartu_keluarga');
+            $table->dropColumn('family_card_number');
+            $table->dropColumn('file_photo');
+            $table->dropColumn('file_birth_certificate');
+            $table->dropColumn('file_family_card');
 
             $table->dropColumn('father_phone_number');
             $table->dropColumn('father_address');
