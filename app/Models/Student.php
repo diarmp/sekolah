@@ -45,10 +45,10 @@ class Student extends Model
         return $this->hasMany(StudentTuition::class);
     }
 
-    public function academic_year(): HasOne
-    {
-        return $this->hasOne(AcademicYear::class);
-    }
+    // public function academic_year(): HasOne
+    // {
+    //     return $this->hasOne(AcademicYear::class);
+    // }
 
     public function user(): BelongsTo
     {
@@ -58,6 +58,11 @@ class Student extends Model
     public function school(): BelongsTo
     {
         return $this->belongsTo(School::class);
+    }
+
+    public function student_tuition_masters(): HasMany
+    {
+        return $this->hasMany(School::class);
     }
 
 
