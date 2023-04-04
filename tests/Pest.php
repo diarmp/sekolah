@@ -11,6 +11,10 @@
 |
 */
 
+use App\Models\Student;
+use App\Models\Tuition;
+use Illuminate\Support\Carbon;
+
 uses(
     Tests\TestCase::class,
     // Illuminate\Foundation\Testing\RefreshDatabase::class,
@@ -49,7 +53,13 @@ function something()
     // ..
 }
 
-function sum(int $a, int $b)
+function publishTuition(Tuition $tuition)
 {
-    return (int) $a + $b;
+    // todo publish tuition to transaction
+}
+
+function checkTransaction(Student $student, Tuition $tuition, Carbon $tanggal_bayar)
+{
+    // todo memeriksa transaksi atas nama student terpilih untuk tuition terpilih
+    // harus actingAs dan post/put
 }

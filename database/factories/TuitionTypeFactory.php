@@ -19,7 +19,10 @@ class TuitionTypeFactory extends Factory
     {
         return [
             'school_id' => School::latest()->first(),
-            'name' => fake()->name()
+            'name' => fake()->name(),
+            'generatable' => false,
+            'penalty_price' => fake()->numberBetween(100000, 500000),
+            'penalty_dates' => '14, 28'
         ];
     }
 }

@@ -2,17 +2,19 @@
 
 namespace Database\Seeders;
 
-use Database\Seeders\Permissions\StudentSeeder;
-use Database\Seeders\Permissions\AcademicYearSeeder;
-use Database\Seeders\Permissions\ClassroomSeeder;
+use Illuminate\Database\Seeder;
 use Database\Seeders\Permissions\GradeSeeder;
+use Database\Seeders\Permissions\SchoolSeeder;
+use Database\Seeders\Permissions\StudentSeeder;
+use Database\Seeders\Permissions\TuitionSeeder;
+use Database\Seeders\Permissions\ClassroomSeeder;
+use Database\Seeders\Permissions\TransactionSeeder;
+use Database\Seeders\Permissions\TuitionTypeSeeder;
+use Database\Seeders\Permissions\AcademicYearSeeder;
 use Database\Seeders\Permissions\MasterConfigSeeder;
 use Database\Seeders\Permissions\SchoolConfigSeeder;
-use Database\Seeders\Permissions\SchoolSeeder;
 use Database\Seeders\Permissions\SchoolSelectorSeeder;
-use Database\Seeders\Permissions\TuitionTypeSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 
 class PermissionsSeeder extends Seeder
 {
@@ -42,6 +44,8 @@ class PermissionsSeeder extends Seeder
             SchoolSelectorSeeder::class,
             MasterConfigSeeder::class,
             SchoolConfigSeeder::class,
+            TransactionSeeder::class,
+            TuitionSeeder::class,
         ]);
     }
 }
