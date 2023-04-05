@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('academic_years', function (Blueprint $table) {
-            $table->string('status_years')->nullable();
+        Schema::table('grades', function (Blueprint $table) {
+            //
+            $table->string('name')->nullable()->renameTo('grade_name')->change();
         });
     }
 
@@ -21,9 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('academic_years', function (Blueprint $table) {
-            //
-            $table->dropColumn('status_years');
+        Schema::table('grades', function (Blueprint $table) {
+            $table->string('grade_name')->nullable()->renameTo('name')->change();
         });
     }
 };

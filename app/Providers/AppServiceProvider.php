@@ -22,6 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (Schema::hasTable('schools')) View::share('school_selectors', School::orderBy('name')->get());
+        if (Schema::hasTable('schools')) View::share('school_selectors', School::get());
     }
 }
