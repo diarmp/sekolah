@@ -66,17 +66,14 @@ class StudentsController extends Controller
                 $student->nisn                      = $request->nisn;
 
                 $student->father_name               = $request->father_name;
-                $student->father_work               = $request->father_work;
                 $student->father_phone_number       = $request->father_phone_number;
                 $student->father_address            = $request->father_address;
 
                 $student->mother_name               = $request->mother_name;
-                $student->mother_work               = $request->mother_work;
                 $student->mother_phone_number       = $request->mother_phone_number;
                 $student->mother_address            = $request->mother_address;
 
                 $student->guardian_name             = $request->guardian_name;
-                $student->guardian_work             = $request->guardian_work;
                 $student->guardian_phone_number     = $request->guardian_phone_number;
                 $student->guardian_address          = $request->guardian_address;
 
@@ -174,17 +171,14 @@ class StudentsController extends Controller
                 $student->nisn                      = $request->nisn;
 
                 $student->father_name               = $request->father_name;
-                $student->father_work               = $request->father_work;
                 $student->father_phone_number       = $request->father_phone_number;
                 $student->father_address            = $request->father_address;
 
                 $student->mother_name               = $request->mother_name;
-                $student->mother_work               = $request->mother_work;
                 $student->mother_phone_number       = $request->mother_phone_number;
                 $student->mother_address            = $request->mother_address;
 
                 $student->guardian_name             = $request->guardian_name;
-                $student->guardian_work             = $request->guardian_work;
                 $student->guardian_phone_number     = $request->guardian_phone_number;
                 $student->guardian_address          = $request->guardian_address;
                 
