@@ -13,7 +13,7 @@ class AcademicYearScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('school_id', session('school_id'));
+        $builder->where('academic_years.school_id', session('school_id'));
         //
     }
 }

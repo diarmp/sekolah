@@ -12,14 +12,15 @@ class AcademyYearDatatables extends Controller
     //
     public function index()
     {
-        $academyYear = AcademicYear::with('school');
+        $academyYear = AcademicYear::with('school')->orderBy('status_years');
+
         return DataTables::of($academyYear)
             ->editColumn('status_years', function ($row) {
-                $academyYearStatus = [
-                    AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
-                    AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
-                ];
-                return in_array($row->status_years, array_keys($academyYearStatus)) ? $academyYearStatus[$row->status_years] : '-';
+                return match ($row->status_years) {
+                    AcademicYear::STATUS_STARTED => '<span class="badge badge-success">Aktif</span>',
+                    AcademicYear::STATUS_REGISTRATION => '<span class="badge badge-warning">Register</span>',
+                    AcademicYear::STATUS_CLOSED => '<span class="badge badge-danger">Ditutup</span>'
+                };
             })
             ->addColumn('action', function (AcademicYear $row) {
                 $data = [
@@ -28,6 +29,8 @@ class AcademyYearDatatables extends Controller
                     'redirect_url' => route('academy-year.index')
                 ];
                 return view('components.datatable-action', $data);
-            })->toJson();
+            })
+            ->rawColumns(['status_years', 'action'])
+            ->toJson();
     }
 }
