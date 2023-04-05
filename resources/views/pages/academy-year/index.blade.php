@@ -14,12 +14,7 @@
                     <a href="{{ route('academy-year.create') }}" class="btn btn-primary btn-sm">Tambah</a>
                 </div>
                 <div class="card-body">
-                    <x-datatable :tableId="'academy-year'" :tableHeaders="['Sekolah', 'Tahun Akademik', 'Status Tahun Ajaran', 'Aksi']" :tableColumns="[
-                        ['data' => 'school.name', 'name' => 'name'],
-                        ['data' => 'name'],
-                        ['data' => 'status_years'],
-                        ['data' => 'action'],
-                    ]" :getDataUrl="route('datatable.academy-year')" />
+                    <x-datatable :tableId="'academy-year'" :tableHeaders="['Tahun Akademik', 'Status Tahun Ajaran', 'Aksi']" :tableColumns="[['data' => 'academic_year_name'], ['data' => 'status_years'], ['data' => 'action']]" :getDataUrl="route('datatable.academy-year')" />
                 </div>
             </div>
         </div>

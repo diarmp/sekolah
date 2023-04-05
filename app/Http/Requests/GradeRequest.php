@@ -32,10 +32,10 @@ class GradeRequest extends FormRequest
     public function postMethod(): array
     {
         return [
-            'name'      => [
+            'grade_name'      => [
                 'required',
                 Rule::unique('grades')->where(function ($q) {
-                    $q->where('name', $this->name);
+                    $q->where('grade_name', $this->grade_name);
                     $q->where('school_id',$this->school_id);
                 })
             ]
@@ -46,10 +46,10 @@ class GradeRequest extends FormRequest
     {
 
         return [
-            'name'      => [
+            'grade_name'      => [
                 'required',
                 Rule::unique('grades')->where(function ($q) {
-                    $q->where('name', $this->name);
+                    $q->where('grade_name', $this->grade_name);
                     $q->where('school_id',$this->school_id);
                 })->ignore($this->grade->id)
             ]

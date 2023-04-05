@@ -42,7 +42,6 @@ Route::group([], function () {
 
     // School
     Route::resource('schools', SchoolsController::class)->except('show');
-
     // Classroom
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
@@ -83,3 +82,4 @@ Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
 Route::fallback(function () {
     abort(404);
 });
+
