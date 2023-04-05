@@ -7,18 +7,12 @@ use App\Http\Controllers\TuitionController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
-<<<<<<< HEAD
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
 use App\Http\Controllers\ConfigSchoolController;
 use App\Http\Controllers\PublishTuitionController;
 use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\AssignClassroomStudentController;
-=======
-use App\Http\Controllers\SchoolsController;
-use App\Http\Controllers\StudentController;
-use App\Http\Controllers\TuitionTypeController;
->>>>>>> a2827b6 (Hot Fix (#23))
 
 /*
 |--------------------------------------------------------------------------
@@ -48,10 +42,6 @@ Route::group([], function () {
 
     // School
     Route::resource('schools', SchoolsController::class)->except('show');
-<<<<<<< HEAD
-=======
-
->>>>>>> a2827b6 (Hot Fix (#23))
     // Classroom
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
