@@ -14,7 +14,6 @@ class ClassroomScope implements Scope
     public function apply(Builder $builder, Model $model): void
     {
 
-        $builder->where('school_id', session('school_id'));
-        $builder->where('academic_year_id', session('academic_year_id'));
+        $builder->where('classrooms.school_id', session('school_id'));
     }
 }
