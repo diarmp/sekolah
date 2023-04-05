@@ -21,7 +21,6 @@ class GradeTest extends TestCase
         
         $grade = $school->grades()->create([
             'school_id' => $school->id,
-            'name' => $this->faker->numberBetween(1, 12)
         ]);
 
         $this->assertDatabaseHas('grades', [
@@ -38,10 +37,9 @@ class GradeTest extends TestCase
         
         $grade = $school->grades()->create([
             'school_id' => $school->id,
-            'name' => $this->faker->numberBetween(1, 12)
         ]);
 
-        $newGrade = $this->faker->numberBetween(1, 12);
+        $newGrade = $this->faker->randomElement(['TK', 'SD', 'SMP', 'SMA', 'SMK']);
         
         $grade = $school->grades()->update([
             'name' => $newGrade
@@ -59,8 +57,7 @@ class GradeTest extends TestCase
         $school = School::factory()->create();
         
         $grade = $school->grades()->create([
-            'school_id' => $school->id,
-            'name' => $this->faker->numberBetween(1, 12)
+            'school_id' => $school->id
         ]);
         
         $grade->delete();
