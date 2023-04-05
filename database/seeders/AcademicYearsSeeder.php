@@ -19,7 +19,7 @@ class AcademicYearsSeeder extends Seeder
 
 
         AcademicYear::factory()->create([
-            'status_years' => AcademicYear::STATUS_ACTIVE_YEAR
+            'status_years' => AcademicYear::STATUS_STARTED
         ]);
     }
 }

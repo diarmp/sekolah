@@ -15,9 +15,11 @@ class AcademicYear extends Model
 {
     use HasFactory, SoftDeletes;
 
-    const STATUS_ACTIVE_YEAR = "active_year";
+    const STATUS_STARTED = "started";
 
-    const STATUS_PPDB_YEAR   = "active_ppdb";
+    const STATUS_REGISTRATION   = "registration";
+
+    const STATUS_CLOSED   = "closed";
 
     protected $guarded = [];
 
@@ -29,7 +31,7 @@ class AcademicYear extends Model
 
     public function scopeActive(Builder $query): void
     {
-        $query->where('status_years', AcademicYear::STATUS_ACTIVE_YEAR)->latest();
+        $query->where('status_years', AcademicYear::STATUS_STARTED)->latest();
     }
 
     public function scopePPDB(Builder $query): void
