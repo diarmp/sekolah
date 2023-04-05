@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->string('name')->nullable()->renameTo('academic_year_name')->change();
             $table->after('academic_year_name', function ($table) {
-                $table->enum('status_years', ['registration', 'started', 'closed'])->change();
+                $table->enum('status_years', ['registration', 'started', 'closed'])->default('closed')->change();
                 $table->date('year_start')->nullable();
                 $table->date('year_end')->nullable();
             });
