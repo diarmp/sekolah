@@ -83,3 +83,4 @@ Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
 Route::fallback(function () {
     abort(404);
 });
+
