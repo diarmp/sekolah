@@ -16,8 +16,8 @@
                 <div class="card-body">
                     <x-datatable :tableId="'classroom'" :tableHeaders="['Tahun Akademik', 'Tingkat', 'Kelas', 'Aksi']" 
                     :tableColumns="[
-                        ['data' => 'academic_year.name', 'name' => 'name'], 
-                        ['data' => 'grade.name', 'name' => 'name'],  
+                        ['data' => 'academic_year.academic_year_name'], 
+                        ['data' => 'grade.grade_name'],  
                         ['data' => 'name'], 
                         ['data' => 'action']
                     ]" :getDataUrl="route('datatable.classroom')" />
