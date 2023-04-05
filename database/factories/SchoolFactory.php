@@ -19,7 +19,6 @@ class SchoolFactory extends Factory
     {
         return [
             "school_name" => fake()->name(),
-            // 'type' => School::TYPE_YAYASAN
         ];
     }
 }

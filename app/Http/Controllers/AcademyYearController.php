@@ -28,8 +28,9 @@ class AcademyYearController extends Controller
     public function create()
     {
         $academyYearStatus = [
-            AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
-            AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
+            AcademicYear::STATUS_STARTED => 'Aktif',
+            AcademicYear::STATUS_REGISTRATION => 'Register',
+            AcademicYear::STATUS_CLOSED => 'Ditutup'
         ];
         $title = "Tambah {$this->title}";
         return view('pages.academy-year.create', compact('title', 'academyYearStatus'));
@@ -41,13 +42,16 @@ class AcademyYearController extends Controller
     public function store(AcademyYearRequest $request)
     {
 
+
         DB::beginTransaction();
         try {
 
-            $academyYear               = new AcademicYear();
-            $academyYear->school_id    = $request->school_id;
-            $academyYear->name         = $request->name;
-            $academyYear->status_years = $request->status_years ?? null;
+            $academyYear                     = new AcademicYear();
+            $academyYear->year_start         = $request->year_start;
+            $academyYear->year_end           = $request->year_end;
+            $academyYear->school_id          = $request->school_id;
+            $academyYear->academic_year_name = $request->academic_year_name;
+            $academyYear->status_years       = $request->status_years ?? null;
             $academyYear->save();
 
             DB::commit();
@@ -67,8 +71,9 @@ class AcademyYearController extends Controller
     {
         $title = "Ubah {$this->title}";
         $academyYearStatus = [
-            AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
-            AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
+            AcademicYear::STATUS_STARTED => 'Aktif',
+            AcademicYear::STATUS_REGISTRATION => 'Register',
+            AcademicYear::STATUS_CLOSED => 'Ditutup'
         ];
         return view('pages.academy-year.edit', compact('academyYear', 'title', 'academyYearStatus'));
     }
@@ -83,7 +88,9 @@ class AcademyYearController extends Controller
         try {
 
             $academyYear->school_id = $request->school_id;
-            $academyYear->name      = $request->name;
+            $academyYear->year_start         = $request->year_start;
+            $academyYear->year_end           = $request->year_end;
+            $academyYear->academic_year_name = $request->academic_year_name;
             $academyYear->status_years = $request->status_years ?? null;
             $academyYear->save();
 
