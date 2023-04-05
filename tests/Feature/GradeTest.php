@@ -12,7 +12,7 @@ beforeEach(function () {
     $this->bendahara = User::role(User::ROLE_BENDAHARA)->first();
     $this->tataUsaha = User::role(User::ROLE_TATA_USAHA)->first();
     $this->kepalaSekolah = User::role(User::ROLE_KEPALA_SEKOLAH)->first();
-    $this->murid = User::role(User::ROLE_MURID)->first();
+    $this->murid = User::role(User::ROLE_SISWA)->first();
     $this->alumni = User::role(User::ROLE_ALUMNI)->first();
     $this->setupFaker();
 });
@@ -37,15 +37,15 @@ test('can render create page as School Staff', function (User $user) {
     User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
 ]);
 
-it('requires the name on create', function () {
+it('requires the grade name on create', function () {
     // $name = $this->faker()->company();
     $school = School::factory()->create();
     session(['school_id' => $school->getKey()]);
     $this->actingAs($this->superAdmin)
         ->post(route('grade.store'), [
             'school_id' => session('school_id'),
-            'name' => '',
-        ])->assertInvalid(['name' => 'required']);
+            'grade_name' => '',
+        ])->assertInvalid(['grade_name' => 'required']);
 });
 
 test('can create grade as Sempoa Staff', function (User $user) {
@@ -54,7 +54,7 @@ test('can create grade as Sempoa Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
         ->post(route('grade.store'), $data);
@@ -69,7 +69,7 @@ test('can create grade as School Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
         ->post(route('grade.store'), $data);
@@ -115,7 +115,7 @@ test('can render edit page as Sempoa Staff', function (User $user) {
         ->get(route('grade.edit', $grade->getKey()))
         ->assertOk();
 
-    $response->assertSee($grade->name);
+    $response->assertSee($grade->grade_name);
 })->with('sempoa_staff');
 
 test('can render edit page as School Staff', function (User $user) {
@@ -126,19 +126,19 @@ test('can render edit page as School Staff', function (User $user) {
         ->get(route('grade.edit', $grade->getKey()))
         ->assertOk();
 
-    $response->assertSee($grade->name);
+    $response->assertSee($grade->grade_name);
 })->with([
     User::ROLE_TATA_USAHA => [fn () => $this->tataUsaha],
 ]);
 
-it('requires the name on update', function () {
+it('requires the grade name on update', function () {
     $school = School::factory()->create();
     session(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
     $this->actingAs($this->superAdmin)
         ->put(route('grade.update', $grade->getKey()), [
-            'name' => '',
-        ])->assertInvalid(['name' => 'required']);
+            'grade_name' => '',
+        ])->assertInvalid(['grade_name' => 'required']);
 });
 
 test('can update grade as Sempoa Staff', function (User $user) {
@@ -148,7 +148,7 @@ test('can update grade as Sempoa Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
         ->put(route('grade.update', $grade->getKey()), $data);
@@ -164,7 +164,7 @@ test('can update grade as School Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
         ->put(route('grade.update', $grade->getKey()), $data);
@@ -225,7 +225,7 @@ test('can not create grade as School Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
     ->post(route('grade.store'), $data);
@@ -265,7 +265,7 @@ test('can not update grade as School Staff', function (User $user) {
 
     $data = [
         'school_id' => $school->getKey(),
-        'name' => fake()->name()
+        'grade_name' => fake()->name()
     ];
     $response = $this->actingAs($user)
         ->put(route('grade.update', $grade->getKey()), $data);

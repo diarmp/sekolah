@@ -5,7 +5,7 @@
         class="form-control select2 @error('school_selector') is-invalid @enderror" required>
         <option value="">Pilih Sekolah ...</option>
         @foreach ($school_selectors as $school_selector)
-          <option value="{{ $school_selector->getKey() }}" @selected($school_selector->getKey() == session('school_id'))>{{ $school_selector->name }}
+          <option value="{{ $school_selector->getKey() }}" @selected($school_selector->getKey() == session('school_id'))>{{ $school_selector->school_name }}
           </option>
         @endforeach
       </select>

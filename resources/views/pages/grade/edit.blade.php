@@ -21,9 +21,9 @@
                         @csrf
                         <div class="form-group">
                             <label for="grade-input">Tingkat</label>
-                            <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name"
-                                value="{{ $grade->name }}" id="grade-input" placeholder="">
-                            @error('name')
+                            <input type="text" class="form-control  @error('grade_name') is-invalid @enderror" name="grade_name"
+                                value="{{ $grade->grade_name }}" id="grade-input" placeholder="1, 2, 3, dsb">
+                            @error('grade_name')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
