@@ -16,14 +16,14 @@
           @method('PUT')
           @csrf
 
-          {{-- Informasi Murid Accordion --}}
+          {{-- Informasi Siswa Accordion --}}
           <div class="card">
 
             {{-- Accordion Button --}}
             <div class="card-header" id="headingOne">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#informationAccordion" aria-expanded="true" aria-controls="informationAccordion">
-                  <span class="text-lg text-dark">Informasi Murid</span>
+                  <span class="text-lg text-dark">Informasi Siswa</span>
                 </button>
               </h2>
             </div>
@@ -38,7 +38,7 @@
                   <div class="row">
                     <div class="col">
                       <div class="form-group">
-                        <label for="academic_year_id">Tahun Akademik<span class="text-small text-danger">*</span></label>
+                        <label for="academic_year_id">Tahun Masuk Akademik<span class="text-small text-danger">*</span></label>
                         <select id="academic_year_id" name="academic_year_id" class="form-control select2 @error('academic_year_id') is-invalid @enderror" required>
                           <option value="">--- Pilih ---</option>
                           @foreach ($academic_years as $academic_year)
@@ -136,6 +136,40 @@
                     
                   </div>
                   {{-- End Gender & Address --}}
+
+                  {{-- No Kartu Keluarga & Email --}}
+                  <div class="row">
+          
+                    {{-- KK --}}
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="no_kartu_keluarga">Nomor Kartu Keluarga<span class="text-small text-danger">*</span></label>
+                        <input type="number" name="no_kartu_keluarga" id="no_kartu_keluarga" value="{{ old('no_kartu_keluarga', $student->no_kartu_keluarga) }}" class="form-control @error('no_kartu_keluarga') is-invalid @enderror" required>
+                        @error('no_kartu_keluarga')
+                          <div class="invalid-feedback">
+                              {{ $message }}
+                          </div>
+                        @enderror
+                      </div>
+                    </div>
+                    {{-- End KK --}}
+        
+                    {{-- Email --}}
+                    <div class="col">
+                      <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" value="{{ old('email', $student->email) }}" id="email" class="form-control @error('email') is-invalid @enderror">
+                        @error('email')
+                          <div class="invalid-feedback">
+                              {{ $message }}
+                          </div>
+                        @enderror
+                      </div>
+                    </div>
+                    {{-- End Email --}}
+                    
+                  </div>
+                  {{-- End No Kartu Keluarga & Email --}}
         
                   {{-- NIK & Phone --}}
                   <div class="row">
@@ -202,7 +236,6 @@
                     </div>
                     {{-- End NISN --}}
                     
-        
                   </div>
                   {{-- End NIS & NISN --}}
         
@@ -225,7 +258,8 @@
                   <div class="dropdown-divider"></div>
     
                   {{-- Father Information Section --}}
-                    {{-- Name & Date Of Birth --}}
+
+                    {{-- Work & Name --}}
                     <div class="row">
           
                       {{-- Name --}}
@@ -242,69 +276,30 @@
                       </div>
                       {{-- End Name --}}
                       
-                      {{-- Date Of Birth --}}
+                      {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="father_dob">Tanggal Lahir Ayah<span class="text-small text-danger">*</span> </label>
-                          <input type="date" name="father_dob" id="father_dob" value="{{ old('father_dob', $student->father_dob) }}" class="form-control @error('father_dob') is-invalid @enderror" required>
-                          @error('father_dob')
+                          <label for="father_phone_number">No Telpon Ayah</label>
+                          <input type="text" name="father_phone_number" value="{{ old('father_phone_number', $student->father_phone_number) }}" id="father_phone_number" class="form-control @error('father_phone_number') is-invalid @enderror">
+                          @error('father_phone_number')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                           @enderror
                         </div>
                       </div>
-                      {{-- End Date Of Birth --}}
+                      {{-- End Phone --}}
           
                     </div>
-                    {{-- End Name & Date Of Birth --}}
-    
-                    {{-- Work & Education --}}
+                    {{-- End Work & Name --}}
+
+                    {{-- Address --}}
                     <div class="row">
-          
-                      {{-- Work --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="father_work">Pekerjaan Ayah</label>
-                          <input type="text" name="father_work" id="father_work" value="{{ old('father_work', $student->father_work) }}" class="form-control @error('father_work') is-invalid @enderror">
-                          @error('father_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
-                      {{-- Education --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="father_education">Edukasi Terakhir Ayah</label>
-                          <input type="text" name="father_education" id="father_education" value="{{ old('father_education', $student->father_education) }}" class="form-control @error('father_education') is-invalid @enderror">
-                          @error('father_education')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Education --}}
-          
-                    </div>
-                    {{-- End Work & Education --}}
-    
-                    {{-- Income --}}
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="father_income">Pendapatan Ayah</label>
-                          <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="addon-wrapping">Rp</span>
-                            </div>
-                            <input type="number" name="father_income" id="father_income" value="{{ old('father_income', $student->father_income) }}" class="form-control @error('father_income') is-invalid @enderror">
-                          </div>
-                          @error('father_income')
+                          <label for="father_address">Alamat Ayah<span class="text-small text-danger">*</span></label>
+                          <textarea name="father_address" id="father_address" rows="4" class="form-control @error('father_address') is-invalid @enderror" required>{{ old('father_address', $student->father_address) }}</textarea>
+                          @error('father_address')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -312,14 +307,15 @@
                         </div>
                       </div>
                     </div>
-                    {{-- End Income --}}
+                    {{-- End Address --}}
     
                   {{-- Father Information Section --}}
     
                   <div class="dropdown-divider"></div>
     
                   {{-- Mother Information Section --}}
-                    {{-- Name & Date Of Birth --}}
+
+                    {{-- Name & Phone --}}
                     <div class="row">
           
                       {{-- Name --}}
@@ -336,70 +332,30 @@
                       </div>
                       {{-- End Name --}}
                       
-                      {{-- Date Of Birth --}}
+                      {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="mother_dob">Tanggal Lahir Ibu<span class="text-small text-danger">*</span> </label>
-                          <input type="date" name="mother_dob" id="mother_dob" value="{{ old('mother_dob', $student->mother_dob) }}" class="form-control @error('mother_dob') is-invalid @enderror" required>
-                          @error('mother_dob')
+                          <label for="mother_phone_number">No Telpon Ibu</label>
+                          <input type="text" name="mother_phone_number" value="{{ old('mother_phone_number', $student->mother_phone_number) }}" id="mother_phone_number" class="form-control @error('mother_phone_number') is-invalid @enderror">
+                          @error('mother_phone_number')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                           @enderror
                         </div>
                       </div>
-                      {{-- End Date Of Birth --}}
+                      {{-- End Phone --}}
           
                     </div>
-                    {{-- End Name & Date Of Birth --}}
+                    {{-- End Name & Phone --}}
     
-                    {{-- Work & Education --}}
+                    {{-- Address --}}
                     <div class="row">
-          
-                      {{-- Work --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="mother_work">Pekerjaan Ibu</label>
-                          <input type="text" name="mother_work" id="mother_work" value="{{ old('mother_work', $student->mother_work) }}" class="form-control @error('mother_work') is-invalid @enderror">
-                          @error('mother_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
-                      {{-- Education --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="mother_education">Edukasi Terakhir Ibu</label>
-                          <input type="text" name="mother_education" id="mother_education" value="{{ old('mother_education', $student->mother_education) }}" class="form-control @error('mother_education') is-invalid @enderror">
-                          @error('mother_education')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Education --}}
-          
-                    </div>
-                    {{-- End Work & Education --}}
-    
-                    {{-- Income --}}
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="mother_income">Pendapatan Ibu</label>
-                          <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="addon-wrapping">Rp</span>
-                            </div>
-                            <input type="number" name="mother_income" id="mother_income" value="{{ old('mother_income', $student->mother_income) }}" class="form-control @error('mother_income') is-invalid @enderror">
-                          </div>
-                          
-                          @error('mother_income')
+                          <label for="mother_address">Alamat Ibu<span class="text-small text-danger">*</span></label>
+                          <textarea name="mother_address" id="mother_address" rows="4" class="form-control @error('mother_address') is-invalid @enderror" required>{{ old('mother_address', $student->mother_address) }}</textarea>
+                          @error('mother_address')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -407,16 +363,17 @@
                         </div>
                       </div>
                     </div>
-                    {{-- End Income --}}
+                    {{-- End Address --}}
     
                   {{-- Mother Information Section --}}
     
                   <div class="dropdown-divider"></div>
     
                   {{-- Guardian Information Section --}}
-                    {{-- Name & Date Of Birth --}}
+    
+                    {{-- Name & Phone --}}
                     <div class="row">
-          
+
                       {{-- Name --}}
                       <div class="col">
                         <div class="form-group">
@@ -430,71 +387,31 @@
                         </div>
                       </div>
                       {{-- End Name --}}
-                      
-                      {{-- Date Of Birth --}}
+          
+                      {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="guardian_dob">Tanggal Lahir Wali</label>
-                          <input type="date" name="guardian_dob" id="guardian_dob" value="{{ old('guardian_dob', $student->guardian_dob) }}" class="form-control @error('guardian_dob') is-invalid @enderror">
-                          @error('guardian_dob')
+                          <label for="guardian_phone_number">No Telpon Wali</label>
+                          <input type="text" name="guardian_phone_number" value="{{ old('guardian_phone_number', $student->guardian_phone_number) }}" id="guardian_phone_number" class="form-control @error('guardian_phone_number') is-invalid @enderror">
+                          @error('guardian_phone_number')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
                           @enderror
                         </div>
                       </div>
-                      {{-- End Date Of Birth --}}
+                      {{-- End Phone --}}
           
                     </div>
-                    {{-- End Name & Date Of Birth --}}
+                    {{-- End Name & Phone --}}
     
-                    {{-- Work & Education --}}
+                    {{-- Address --}}
                     <div class="row">
-          
-                      {{-- Work --}}
                       <div class="col">
                         <div class="form-group">
-                          <label for="guardian_work">Pekerjaan Wali</label>
-                          <input type="text" name="guardian_work" id="guardian_work" value="{{ old('guardian_work', $student->guardian_work) }}" class="form-control @error('guardian_work') is-invalid @enderror">
-                          @error('guardian_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
-                      {{-- Education --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="guardian_education">Edukasi Terakhir Wali</label>
-                          <input type="text" name="guardian_education" id="guardian_education" value="{{ old('guardian_education', $student->guardian_education) }}" class="form-control @error('guardian_education') is-invalid @enderror">
-                          @error('guardian_education')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Education --}}
-          
-                    </div>
-                    {{-- End Work & Education --}}
-    
-                    {{-- Income --}}
-                    <div class="row">
-                      <div class="col-lg-6">
-                        <div class="form-group">
-                          <label for="guardian_income">Pendapatan Wali</label>
-                          <div class="input-group flex-nowrap">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text" id="addon-wrapping">Rp</span>
-                            </div>
-                            <input type="number" name="guardian_income" id="guardian_income" value="{{ old('guardian_income', $student->guardian_income) }}" class="form-control @error('guardian_income') is-invalid @enderror">
-                          </div>
-                          
-                          @error('guardian_income')
+                          <label for="guardian_address">Alamat Wali<span class="text-small text-danger">*</span></label>
+                          <textarea name="guardian_address" id="guardian_address" rows="4" class="form-control @error('guardian_address') is-invalid @enderror" required>{{ old('guardian_address', $student->guardian_address) }}</textarea>
+                          @error('guardian_address')
                             <div class="invalid-feedback">
                                 {{ $message }}
                             </div>
@@ -502,7 +419,7 @@
                         </div>
                       </div>
                     </div>
-                    {{-- End Income --}}
+                    {{-- End Address --}}
     
                   {{-- Guardian Information Section --}}
                     
@@ -512,7 +429,7 @@
             {{-- End Accordion Content --}}
 
           </div>
-          {{-- End Informasi Murid Accordion --}}
+          {{-- End Informasi Siswa Accordion --}}
 
           {{-- Tuitions Accordion --}}
           <div class="card">
@@ -521,7 +438,7 @@
             <div class="card-header" id="headingTwo">
               <h2 class="mb-0">
                 <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#tuitionAccordion" aria-expanded="true" aria-controls="tuitionAccordion">
-                  <span class="text-lg text-dark">Biaya Sekolah Murid</span>
+                  <span class="text-lg text-dark">Biaya Sekolah Siswa</span>
                 </button>
               </h2>
             </div>

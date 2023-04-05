@@ -11,13 +11,14 @@ use App\Http\Requests\AcademyYearRequest;
 
 class AcademyYearController extends Controller
 {
+    private $title = "Tahun Akademik";
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         //
-        $title = "Tahun Akademik";
+        $title = "{$this->title}";
         return view('pages.academy-year.index', compact('title'));
     }
 
@@ -26,8 +27,12 @@ class AcademyYearController extends Controller
      */
     public function create()
     {
-        $title = "Tambah Tahun Akademik";
-        return view('pages.academy-year.create', compact('title'));
+        $academyYearStatus = [
+            AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
+            AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
+        ];
+        $title = "Tambah {$this->title}";
+        return view('pages.academy-year.create', compact('title', 'academyYearStatus'));
     }
 
     /**
@@ -39,18 +44,19 @@ class AcademyYearController extends Controller
         DB::beginTransaction();
         try {
 
-            $academyYear            = new AcademicYear();
-            $academyYear->school_id = $request->school_id;
-            $academyYear->name      = $request->name;
+            $academyYear               = new AcademicYear();
+            $academyYear->school_id    = $request->school_id;
+            $academyYear->name         = $request->name;
+            $academyYear->status_years = $request->status_years ?? null;
             $academyYear->save();
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('academy-year.index')->withToastError('Ops Gagal Tambah  Tahun Akademik !');
+            return redirect()->route('academy-year.index')->withToastError("Ops Gagal Tambah  {$this->title} !");
         }
 
-        return redirect()->route('academy-year.index')->withToastSuccess('Tambah Tahun Akademik  Berhasil!');
+        return redirect()->route('academy-year.index')->withToastSuccess("Tambah {$this->title}  Berhasil!");
     }
 
 
@@ -59,8 +65,12 @@ class AcademyYearController extends Controller
      */
     public function edit(AcademicYear $academyYear)
     {
-        $title = "Ubah Tahun Akademik";
-        return view('pages.academy-year.edit', compact('academyYear', 'title'));
+        $title = "Ubah {$this->title}";
+        $academyYearStatus = [
+            AcademicYear::STATUS_ACTIVE_YEAR => 'Berjalan',
+            AcademicYear::STATUS_PPDB_YEAR => 'PPDB'
+        ];
+        return view('pages.academy-year.edit', compact('academyYear', 'title', 'academyYearStatus'));
     }
 
     /**
@@ -74,16 +84,17 @@ class AcademyYearController extends Controller
 
             $academyYear->school_id = $request->school_id;
             $academyYear->name      = $request->name;
+            $academyYear->status_years = $request->status_years ?? null;
             $academyYear->save();
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('academy-year.index')->withToastError('Ops Gagal ubah Tahun Akademik !');
+            return redirect()->route('academy-year.index')->withToastError("Ops Gagal ubah {$this->title} !");
         }
 
 
-        return redirect()->route('academy-year.index')->withToastSuccess('ubah Tahun Akademik  Berhasil!');
+        return redirect()->route('academy-year.index')->withToastSuccess("ubah {$this->title}  Berhasil!");
     }
 
     /**
@@ -98,13 +109,13 @@ class AcademyYearController extends Controller
             $academyYear->delete();
             DB::commit();
             return response()->json([
-                'msg' => 'Berhasil Hapus Tahun Akademik'
+                'msg' => "Berhasil Hapus {$this->title}"
             ], 200);
         } catch (\Throwable $th) {
 
             DB::rollback();
             return response()->json([
-                'msg' => 'Ops Gagal Hapus Tahun Akademik!'
+                'msg' => "Ops Gagal Hapus {$this->title}!"
             ], 400);
         }
     }

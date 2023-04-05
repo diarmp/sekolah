@@ -12,7 +12,7 @@ beforeEach(function () {
     $this->bendahara = User::role(User::ROLE_BENDAHARA)->first();
     $this->tataUsaha = User::role(User::ROLE_TATA_USAHA)->first();
     $this->kepalaSekolah = User::role(User::ROLE_KEPALA_SEKOLAH)->first();
-    $this->murid = User::role(User::ROLE_MURID)->first();
+    $this->siswa = User::role(User::ROLE_SISWA)->first();
     $this->alumni = User::role(User::ROLE_ALUMNI)->first();
     $this->setupFaker();
 });

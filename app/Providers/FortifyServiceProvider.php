@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\AcademicYear;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -58,6 +59,13 @@ class FortifyServiceProvider extends ServiceProvider
                 if (!is_null($user->school_id)) {
                     session(['school_id' => $user->school_id]);
                 }
+
+                $academicYears = AcademicYear::active()->first();
+
+                if (!is_null($academicYears)) {
+                    session(['academic_year_id' => $academicYears->id]);
+                }
+
                 return $user;
             }
         });

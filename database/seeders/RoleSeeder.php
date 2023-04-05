@@ -23,7 +23,7 @@ class RoleSeeder extends Seeder
             User::ROLE_BENDAHARA,
             User::ROLE_KEPALA_SEKOLAH,
             
-            User::ROLE_MURID,
+            User::ROLE_SISWA,
             User::ROLE_ALUMNI,
         ];
 
