@@ -3,7 +3,7 @@
 @section('title', $title)
 
 @section('content')
-    <h1 class="h3 mb-4 text-gray-800">Data Siswa</h1>
+    <h1 class="h3 mb-4 text-gray-800">Impor Data Siswa</h1>
 
     {{-- start Datatable --}}
     <div class="col-lg-10">
@@ -12,7 +12,7 @@
                 <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
                 <div class="">
                     <a href="{{ route('students.create') }}" class="btn btn-primary btn-sm">Tambah</a>
-                    <a href="{{ route('students.import') }}" class="btn btn-success btn-sm">Impor Excel</a>
+                    {{-- <a href="{{ route('students.import') }}" class="btn btn-success btn-sm">Impor Excel</a> --}}
                 </div>
             </div>
 

@@ -3,18 +3,14 @@
 namespace App\Imports;
 
 use App\Models\Student;
-use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\ToCollection;
-use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
-use Maatwebsite\Excel\Imports\HeadingRowFormatter;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class StudentsImport implements ToCollection, WithHeadingRow
+class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
 {
     private $school_id;
     private $academic_year;
@@ -28,82 +24,84 @@ class StudentsImport implements ToCollection, WithHeadingRow
     /**
     * @param Collection $collection
     */
-    public function collection(Collection $row)
+    public function collection(Collection $collection)
     {
-        Validator::make($row->toArray(), [
-            'Nama' => 'required',
-            'Tanggal_Lahir' => 'required',
-            'Jenis_Kelamin' => 'required|max:1',
-            'Alamat' => 'required',
-            'Agama' => 'required',
-            'No_Telepon' => 'nullable|max:15',
-            'NIK' => 'required|numeric|max_digits:16',
-            'NIS' => 'nullable|numeric|max_digits:20',
-            'NISN' => 'nullable|numeric|max_digits:10',
-
-            'Nama_Ayah' => 'required',
-            'Tanggal_Lahir_Ayah' => 'required',
-            'Edukasi_Terakhir_Ayah' => 'nullable|max:50',
-            'Pendapatan_Ayah' => 'nullable|numeric|max_digits:50',
-
-            'Nama_Ibu' => 'required',
-            'Tanggal_Lahir_Ibu' => 'required',
-            'Pendapatan_Ibu' => 'nullable|numeric|max_digits:50',
-            'Edukasi_Terakhir_Ibu' => 'nullable|max:50',
-
-            'Nama_Wali' => 'nullable',
-            'Tanggal_Lahir_Wali' => 'nullable',
-            'Pendapatan_Wali' => 'nullable|numeric|max_digits:50',
-            'Edukasi_Terakhir_Wali' => 'nullable|max:50',
-        ])->validate();
-
 
         try {
-            
+
             DB::beginTransaction();
-    
+
+            foreach ($collection as $key => $item) {
                 // Save Student
                     $student                            = new Student;
                     $student->school_id                 = $this->school_id;
                     $student->academic_year_id          = $this->academic_year;
     
-                    $student->name                      = $row['Nama'];
-                    $student->gender                    = $row['Jenis_Kelamin'];
-                    $student->address                   = $row['Alamat'];
-                    $student->dob                       = $row['Tanggal_Lahir'];
-                    $student->religion                  = $row['Agama'];
-                    $student->phone_number              = $row['No_Telepon'];
-                    $student->nik                       = $row['NIK'];
-                    $student->nis                       = $row['NIS'];
-                    $student->nisn                      = $row['NISN'];
-                    $student->father_name               = $row['Nama_Ayah'];
-                    $student->father_dob                = $row['Tanggal_Lahir_Ayah'];
-                    $student->father_work               = $row['Pekerjaan_Ayah'];
-                    $student->father_education          = $row['Edukasi_Terakhir_Ayah'];
-                    $student->father_income             = $row['Pendapatan_Ayah'];
-                    $student->mother_name               = $row['Nama_Ibu'];
-                    $student->mother_dob                = $row['Tanggal_Lahir_Ibu'];
-                    $student->mother_work               = $row['Pekerjaan_Ibu'];
-                    $student->mother_education          = $row['Edukasi_Terakhir_Ibu'];
-                    $student->mother_income             = $row['Pendapatan_Ibu'];
-                    $student->guardian_name             = $row['Nama_Wali'];
-                    $student->guardian_dob              = $row['Tanggal_Lahir_Wali'];
-                    $student->guardian_work             = $row['Pekerjaan_Wali'];
-                    $student->guardian_education        = $row['Edukasi_Terakhir_Wali'];
-                    $student->guardian_income           = $row['Pendapatan_Wali'];
+                    $student->name                      = $item['nama'];
+                    $student->gender                    = $item['jenis_kelamin'];
+                    $student->address                   = $item['alamat'];
+                    $student->dob                       = date('Y-m-d H:i:s', strtotime($item['tanggal_lahir']));
+                    $student->religion                  = $item['agama'];
+                    $student->phone_number              = $item['nomor_telepon'];
+                    $student->family_card_number        = $item['nomor_kartu_keluarga'];
+                    $student->nik                       = $item['nik'];
+                    $student->nis                       = $item['nis'];
+                    $student->nisn                      = $item['nisn'];
+    
+                    $student->father_name               = $item['nama_ayah'];
+                    $student->father_work               = $item['pekerjaan_ayah'];
+                    $student->father_address            = $item['alamat_ayah'];
+                    $student->father_phone_number       = $item['nomor_telepon_ayah'];
+    
+                    $student->mother_name               = $item['nama_ibu'];
+                    $student->mother_work               = $item['pekerjaan_ibu'];
+                    $student->mother_address            = $item['alamat_ibu'];
+                    $student->mother_phone_number       = $item['nomor_telepon_ibu'];
+    
+                    $student->guardian_name             = $item['nama_wali'];
+                    $student->guardian_work             = $item['pekerjaan_wali'];
+                    $student->guardian_address          = $item['alamat_wali'];
+                    $student->guardian_phone_number     = $item['nomor_telepon_wali'];
     
                     $student->save();
                 // End Save Student
-    
+            }
             DB::commit();
-
-        } catch (ValidationException $th) {
-            DB::rollBack();
-            return redirect()->back()->withInput()->withToastError($th->getMessage());
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
+            
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengimpor data murid!');
+            return redirect()->back()->withInput()->withToastError("Ops, ada kesalahan saat mengimpor data siswa!");
         }
+    }
 
+    public function rules(): array
+    {
+        return [
+            'nama' => 'required',
+            'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required|max:1',
+            'alamat' => 'required',
+            'agama' => 'required',
+            'no_telepon' => 'nullable|max:20',
+            'nik' => 'required|numeric|max_digits:16',
+            'nis' => 'nullable|numeric|max_digits:20',
+            'nisn' => 'nullable|numeric|max_digits:10',
+
+            'nama_ayah' => 'required',
+            'pekerjaan_ayah' => 'required',
+            'alamat_ayah' => 'nullable',
+            'nomor_telepon_ayah' => 'nullable|max:20',
+
+            'nama_ibu' => 'required',
+            'pekerjaan_ibu' => 'required',
+            'alamat_ibu' => 'nullable',
+            'nomor_telepon_ibu' => 'nullable|max:20',
+
+            'nama_wali' => 'nullable',
+            'pekerjaan_wali' => 'nullable',
+            'alamat_wali' => 'nullable',
+            'nomor_telepon_wali' => 'nullable|max:20',
+        ];
     }
 }
