@@ -14,7 +14,7 @@
                     <a href="{{ route('grade.create') }}" class="btn btn-primary btn-sm">TAMBAH</a>
                 </div>
                 <div class="card-body">
-                    <x-datatable :tableId="'grade'" :tableHeaders="['Tingkat', 'Aksi']" :tableColumns="[['data' => 'name'], ['data' => 'action']]" :getDataUrl="route('datatable.grade')" />
+                    <x-datatable :tableId="'grade'" :tableHeaders="['Tingkat', 'Aksi']" :tableColumns="[['data' => 'grade_name'], ['data' => 'action']]" :getDataUrl="route('datatable.grade')" />
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Classroom;
+use App\Models\School;
 use App\Models\Student;
 use App\Models\Classroom;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('classroom_students', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(School::class)->nullable()->constrained()->nullOnDelete();
             $table->foreignIdFor(Student::class)->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
             $table->softDeletes();
