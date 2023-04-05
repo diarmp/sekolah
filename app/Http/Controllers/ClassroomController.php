@@ -30,7 +30,7 @@ class ClassroomController extends Controller
         //
         $title = "Tambah Kelas";
         $schools = School::all();
-        $academicYears = AcademicYear::all();
+        $academicYears = AcademicYear::Active()->first();
         $grades = Grade::all();
         return view('pages.classroom.create', compact('schools', 'academicYears',  'grades', 'title'));
     }
@@ -76,7 +76,7 @@ class ClassroomController extends Controller
     public function edit(Classroom $classroom)
     {
         $schools = School::all();
-        $academicYears = AcademicYear::all();
+        $academicYears = AcademicYear::Active()->first();
         $grades = Grade::all();
 
         $title = "Ubah Kelas";
