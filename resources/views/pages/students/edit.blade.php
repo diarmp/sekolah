@@ -259,7 +259,7 @@
     
                   {{-- Father Information Section --}}
 
-                    {{-- Name --}}
+                    {{-- Work & Name --}}
                     <div class="row">
           
                       {{-- Name --}}
@@ -276,26 +276,6 @@
                       </div>
                       {{-- End Name --}}
                       
-                    </div>
-                    {{-- End Name --}}
-    
-                    {{-- Work & Phone --}}
-                    <div class="row">
-          
-                      {{-- Work --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="father_work">Pekerjaan Ayah</label>
-                          <input type="text" name="father_work" id="father_work" value="{{ old('father_work', $student->father_work) }}" class="form-control @error('father_work') is-invalid @enderror">
-                          @error('father_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
                       {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
@@ -311,7 +291,7 @@
                       {{-- End Phone --}}
           
                     </div>
-                    {{-- End Work & Phone --}}
+                    {{-- End Work & Name --}}
 
                     {{-- Address --}}
                     <div class="row">
@@ -335,7 +315,7 @@
     
                   {{-- Mother Information Section --}}
 
-                    {{-- Name --}}
+                    {{-- Name & Phone --}}
                     <div class="row">
           
                       {{-- Name --}}
@@ -352,26 +332,6 @@
                       </div>
                       {{-- End Name --}}
                       
-                    </div>
-                    {{-- End Name --}}
-    
-                    {{-- Work & Phone --}}
-                    <div class="row">
-          
-                      {{-- Work --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="mother_work">Pekerjaan Ibu</label>
-                          <input type="text" name="mother_work" id="mother_work" value="{{ old('mother_work', $student->mother_work) }}" class="form-control @error('mother_work') is-invalid @enderror">
-                          @error('mother_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
                       {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
@@ -387,7 +347,7 @@
                       {{-- End Phone --}}
           
                     </div>
-                    {{-- End Work & Phone --}}
+                    {{-- End Name & Phone --}}
     
                     {{-- Address --}}
                     <div class="row">
@@ -410,10 +370,10 @@
                   <div class="dropdown-divider"></div>
     
                   {{-- Guardian Information Section --}}
-
-                    {{-- Name --}}
+    
+                    {{-- Name & Phone --}}
                     <div class="row">
-          
+
                       {{-- Name --}}
                       <div class="col">
                         <div class="form-group">
@@ -427,27 +387,7 @@
                         </div>
                       </div>
                       {{-- End Name --}}
-                      
-                    </div>
-                    {{-- End Name --}}
-    
-                    {{-- Work & Phone --}}
-                    <div class="row">
           
-                      {{-- Work --}}
-                      <div class="col">
-                        <div class="form-group">
-                          <label for="guardian_work">Pekerjaan Wali</label>
-                          <input type="text" name="guardian_work" id="guardian_work" value="{{ old('guardian_work', $student->guardian_work) }}" class="form-control @error('guardian_work') is-invalid @enderror">
-                          @error('guardian_work')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                          @enderror
-                        </div>
-                      </div>
-                      {{-- End Work --}}
-                      
                       {{-- Phone --}}
                       <div class="col">
                         <div class="form-group">
@@ -463,7 +403,7 @@
                       {{-- End Phone --}}
           
                     </div>
-                    {{-- End Work & Phone --}}
+                    {{-- End Name & Phone --}}
     
                     {{-- Address --}}
                     <div class="row">

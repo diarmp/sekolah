@@ -25,7 +25,6 @@ class StudentFactory extends Factory
 
         return [
             'school_id' => session('school_id') ?? 2,
-            'academic_year_id' => $faker->numberBetween(1, 10),
             'name' => $faker->name($gender),
             'email' => $faker->safeEmail(),
             'gender' => $gender,
@@ -39,17 +38,14 @@ class StudentFactory extends Factory
             'nis' => $faker->randomNumber(9, true),
 
             'father_name' => $faker->name('male'),
-            'father_work' => $faker->jobTitle(),
             'father_address' => $faker->address(),
             'father_phone_number' => $faker->randomNumber(9, true),
 
             'mother_name' => $faker->name('female'),
-            'mother_work' => $faker->jobTitle(),
             'mother_address' => $faker->address(),
             'mother_phone_number' => $faker->randomNumber(9, true),
 
             'guardian_name' => $faker->name(),
-            'guardian_work' => $faker->jobTitle(),
             'guardian_address' => $faker->address(),
             'guardian_phone_number' => $faker->randomNumber(9, true),
         ];

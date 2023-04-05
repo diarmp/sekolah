@@ -45,17 +45,14 @@ class StudentsRequest extends FormRequest
             'nisn' => 'nullable|numeric|max_digits:10',
             
             'father_name' => 'required',
-            'father_work' => 'nullable',
             'father_address' => 'nullable',
             'father_phone_number' => 'nullable|max:20',
 
             'mother_name' => 'required',
-            'mother_work' => 'nullable',
             'mother_address' => 'nullable',
             'mother_phone_number' => 'nullable|max:20',
 
             'guardian_name' => 'nullable',
-            'guardian_work' => 'nullable',
             'guardian_address' => 'nullable',
             'guardian_phone_number' => 'nullable|max:20',
 
@@ -82,17 +79,14 @@ class StudentsRequest extends FormRequest
             'nisn' => 'nullable|numeric|max_digits:10',
 
             'father_name' => 'required',
-            'father_work' => 'nullable',
             'father_address' => 'nullable',
             'father_phone_number' => 'nullable|max:20',
 
             'mother_name' => 'required',
-            'mother_work' => 'nullable',
             'mother_address' => 'nullable',
             'mother_phone_number' => 'nullable|max:20',
 
             'guardian_name' => 'nullable',
-            'guardian_work' => 'nullable',
             'guardian_address' => 'nullable',
             'guardian_phone_number' => 'nullable|max:20',
 

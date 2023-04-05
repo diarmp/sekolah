@@ -49,17 +49,14 @@ class StudentsImport implements ToCollection, WithHeadingRow, WithValidation
                     $student->nisn                      = $item['nisn'];
     
                     $student->father_name               = $item['nama_ayah'];
-                    $student->father_work               = $item['pekerjaan_ayah'];
                     $student->father_address            = $item['alamat_ayah'];
                     $student->father_phone_number       = $item['nomor_telepon_ayah'];
     
                     $student->mother_name               = $item['nama_ibu'];
-                    $student->mother_work               = $item['pekerjaan_ibu'];
                     $student->mother_address            = $item['alamat_ibu'];
                     $student->mother_phone_number       = $item['nomor_telepon_ibu'];
     
                     $student->guardian_name             = $item['nama_wali'];
-                    $student->guardian_work             = $item['pekerjaan_wali'];
                     $student->guardian_address          = $item['alamat_wali'];
                     $student->guardian_phone_number     = $item['nomor_telepon_wali'];
     

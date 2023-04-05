@@ -125,17 +125,14 @@ beforeEach(function () {
                 'nisn' => $this->faker->randomNumber(9, true),
 
                 'father_name' => '',
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(9, true),
 
                 'mother_name' => '',
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(9, true),
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(9, true),
             ])->assertInvalid([
@@ -170,17 +167,14 @@ beforeEach(function () {
                 'nis' => 1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
             ])->assertInvalid([
@@ -214,17 +208,14 @@ beforeEach(function () {
                 'nis' => "string  desu!",
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => 'string  desu!',
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => "string  desu!",
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => "string  desu!",
             ])->assertInvalid([
@@ -253,17 +244,14 @@ beforeEach(function () {
                 'nis' => $this->faker->randomNumber(9, true),
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(7, false),
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(7, false),
 
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(7, false),
 
@@ -289,17 +277,14 @@ beforeEach(function () {
                 'nis' => $this->faker->randomNumber(9, true),
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(7, false),
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(7, false),
 
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(7, false),
 
@@ -323,17 +308,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -356,17 +338,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
             ])
             ->assertRedirect(route('students.index'));
@@ -385,17 +364,14 @@ beforeEach(function () {
 
             'father_name' => $father_name,
             'father_address' => $father_address,
-            'father_work' => $father_work,
             'father_phone_number' => $father_phone_number,
 
             'mother_name' => $mother_name,
             'mother_address' => $mother_address,
-            'mother_work' => $mother_work,
             'mother_phone_number' => $mother_phone_number,
 
             'guardian_name' => $guardian_name,
             'guardian_address' => $guardian_address,
-            'guardian_work' => $guardian_work,
             'guardian_phone_number' => $guardian_phone_number,
         ]);
     })->with([
@@ -424,17 +400,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -456,17 +429,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
 
                 'tuitions' => [
@@ -502,17 +472,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -534,17 +501,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
             ])
             ->assertNotFound();
@@ -608,17 +572,14 @@ beforeEach(function () {
                 'nisn' => $this->faker->randomNumber(9, true),
 
                 'father_name' => '',
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(9, true),
 
                 'mother_name' => '',
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(9, true),
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(9, true),
             ])->assertInvalid([
@@ -657,17 +618,14 @@ beforeEach(function () {
                 'nis' => 1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757,
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => '1039457519375933452344234564534564563454575675710394575193759334523442345645345645634545756757',
             ])->assertInvalid([
@@ -705,17 +663,14 @@ beforeEach(function () {
                 'nis' => "string  desu!",
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => 'string  desu!',
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => "string  desu!",
 
                 'guardian_name' => $this->faker->name(),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => "string  desu!",
             ])->assertInvalid([
@@ -748,17 +703,14 @@ beforeEach(function () {
                 'nis' => $this->faker->randomNumber(9, true),
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(7, false),
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(7, false),
 
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(7, false),
 
@@ -789,17 +741,14 @@ beforeEach(function () {
                 'nis' => $this->faker->randomNumber(9, true),
 
                 'father_name' => $this->faker->name('male'),
-                'father_work' => $this->faker->jobTitle(),
                 'father_address' => $this->faker->address(),
                 'father_phone_number' => $this->faker->randomNumber(7, false),
 
                 'mother_name' => $this->faker->name('female'),
-                'mother_work' => $this->faker->jobTitle(),
                 'mother_address' => $this->faker->address(),
                 'mother_phone_number' => $this->faker->randomNumber(7, false),
 
                 'guardian_name' => $this->faker->name('female'),
-                'guardian_work' => $this->faker->jobTitle(),
                 'guardian_address' => $this->faker->address(),
                 'guardian_phone_number' => $this->faker->randomNumber(7, false),
                 
@@ -830,17 +779,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -861,17 +807,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
             ])
             ->assertRedirect(route('students.index'));
@@ -890,17 +833,14 @@ beforeEach(function () {
 
             'father_name' => $father_name,
             'father_address' => $father_address,
-            'father_work' => $father_work,
             'father_phone_number' => $father_phone_number,
 
             'mother_name' => $mother_name,
             'mother_address' => $mother_address,
-            'mother_work' => $mother_work,
             'mother_phone_number' => $mother_phone_number,
 
             'guardian_name' => $guardian_name,
             'guardian_address' => $guardian_address,
-            'guardian_work' => $guardian_work,
             'guardian_phone_number' => $guardian_phone_number,
         ]);
     })->with([
@@ -929,17 +869,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -960,17 +897,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
 
                 'tuitions' => [
@@ -1006,17 +940,14 @@ beforeEach(function () {
         $nis = $this->faker->randomNumber(9, true);
 
         $father_name = $this->faker->name('male');
-        $father_work = $this->faker->jobTitle();
         $father_address = $this->faker->address();
         $father_phone_number = $this->faker->randomNumber(7, false);
 
         $mother_name = $this->faker->name('female');
-        $mother_work = $this->faker->jobTitle();
         $mother_address = $this->faker->address();
         $mother_phone_number = $this->faker->randomNumber(7, false);
 
         $guardian_name = $this->faker->name('female');
-        $guardian_work = $this->faker->jobTitle();
         $guardian_address = $this->faker->address();
         $guardian_phone_number = $this->faker->randomNumber(7, false);
 
@@ -1037,17 +968,14 @@ beforeEach(function () {
 
                 'father_name' => $father_name,
                 'father_address' => $father_address,
-                'father_work' => $father_work,
                 'father_phone_number' => $father_phone_number,
 
                 'mother_name' => $mother_name,
                 'mother_address' => $mother_address,
-                'mother_work' => $mother_work,
                 'mother_phone_number' => $mother_phone_number,
 
                 'guardian_name' => $guardian_name,
                 'guardian_address' => $guardian_address,
-                'guardian_work' => $guardian_work,
                 'guardian_phone_number' => $guardian_phone_number,
             ])
             ->assertNotFound();
