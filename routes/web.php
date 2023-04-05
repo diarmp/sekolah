@@ -42,7 +42,6 @@ Route::group([], function () {
 
     // School
     Route::resource('schools', SchoolsController::class)->except('show');
-
     // Classroom
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
