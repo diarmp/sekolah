@@ -16,9 +16,9 @@
                 </div>
                 <div class="card-body">
                     <x-datatable :tableId="'tuition-type-table'" :tableHeaders="['Sekolah', 'Tipe Biaya', 'Rutin', 'Aksi']" :tableColumns="[
-                        ['data' => 'school.name', 'name' => 'name'],
+                        ['data' => 'school.school_name'],
                         ['data' => 'name'],
-                        ['data' => 'generatable'],
+                        ['data' => 'recurring'],
                         ['data' => 'action'],
                     ]" :getDataUrl="route('datatable.tuition-type')" />
                 </div>
