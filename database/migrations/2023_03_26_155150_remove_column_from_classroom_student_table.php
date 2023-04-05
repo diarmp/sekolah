@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('classroom_student', function (Blueprint $table) {
-            $table->foreignIdFor(School::class)->nullable()->after('id')->constrained()->nullOnDelete();
+            $table->foreignIdFor(School::class)->nullable()->after('id')->constrained()->nullOnDelete()->change();
         });
     }
 };

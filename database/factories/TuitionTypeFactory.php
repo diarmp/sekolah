@@ -19,7 +19,8 @@ class TuitionTypeFactory extends Factory
     {
         return [
             'school_id' => School::latest()->first(),
-            'name' => fake()->name()
+            'name' => fake()->name(),
+            'recurring' => false,
         ];
     }
 }

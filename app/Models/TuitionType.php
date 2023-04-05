@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\School;
+use App\Models\Scopes\TuitionTypeScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,6 +15,11 @@ class TuitionType extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new TuitionTypeScope);
+    }
 
     public function student_tuitions(): HasMany
     {

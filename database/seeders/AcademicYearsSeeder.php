@@ -14,7 +14,12 @@ class AcademicYearsSeeder extends Seeder
     public function run(): void
     {
         AcademicYear::factory()
-                ->count(10)
-                ->create();
+            ->count(10)
+            ->create();
+
+
+        AcademicYear::factory()->create([
+            'status_years' => AcademicYear::STATUS_STARTED
+        ]);
     }
 }
