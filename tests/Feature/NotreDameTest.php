@@ -18,7 +18,7 @@ beforeEach(function () {
     $this->bendahara = User::role(User::ROLE_BENDAHARA)->first();
     $this->tataUsaha = User::role(User::ROLE_TATA_USAHA)->first();
     $this->kepalaSekolah = User::role(User::ROLE_KEPALA_SEKOLAH)->first();
-    $this->murid = User::role(User::ROLE_MURID)->first();
+    $this->siswa = User::role(User::ROLE_SISWA)->first();
     $this->setupFaker();
 
     $this->denda = 25000;
@@ -38,7 +38,7 @@ test('siswa memiliki tagihan custom', function (User $user) {
     ]);
     $student_tuition = StudentTuition::factory()->create([
         'school_id' => $school->getKey(),
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'tuition_type_id' => $tuition_type->getKey(),
         'price' => 50000,
         'penalty' => true
@@ -56,7 +56,7 @@ test('siswa memiliki tagihan custom', function (User $user) {
     publishTuition($tuition);
 
     $trasaction = Transaction::where([
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'school_id' => $school->getKey(),
         'tuition_id' => $tuition->getKey(),
     ]);
@@ -101,13 +101,13 @@ test('siswa dapat mencicil dan tagihannya dibebankan ke bulan depan', function (
     // Transaksi
     $this->actingAs($user)
         ->post(route('transactions.store'), [
-            'student_id' => $this->murid->getKey(),
+            'student_id' => $this->siswa->getKey(),
             'tuition_id' => $tuition->getKey(),
             'price' => 50000,
         ]);
 
     $trasaction = Transaction::where([
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'school_id' => $school->getKey(),
         'tuition_id' => $tuition2->getKey(),
     ]);
@@ -129,7 +129,7 @@ test('siswa bisa kena denda', function (User $user) {
     ]);
     StudentTuition::factory()->create([
         'school_id' => $school->getKey(),
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'tuition_type_id' => $tuition_type->getKey(),
         'penalty' => true
     ]);
@@ -148,20 +148,20 @@ test('siswa bisa kena denda', function (User $user) {
     // loncat ke tanggal 15
     $this->travelTo(Carbon::parse('2023-01-15'));
     $trasaction = Transaction::where([
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'school_id' => $school->getKey(),
         'tuition_id' => $tuition->getKey(),
     ]);
-    checkTransaction($this->murid, $tuition, Carbon::parse('2023-01-15'));
+    checkTransaction($this->siswa, $tuition, Carbon::parse('2023-01-15'));
     expect($trasaction->price)->toBe(125000);
 
     // loncat ke tanggal 1 bulan depan
     $this->travelTo(Carbon::parse('2023-02-01'));
     $trasaction = Transaction::where([
-        'student_id' => $this->murid->getKey(),
+        'student_id' => $this->siswa->getKey(),
         'school_id' => $school->getKey(),
         'tuition_id' => $tuition->getKey(),
     ]);
-    checkTransaction($this->murid, $tuition, Carbon::parse('2023-02-01'));
+    checkTransaction($this->siswa, $tuition, Carbon::parse('2023-02-01'));
     expect($trasaction->price)->toBe(150000);
 })->with('sempoa_staff');
