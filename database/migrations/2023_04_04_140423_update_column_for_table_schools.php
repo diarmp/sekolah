@@ -19,7 +19,7 @@ return new class extends Migration
             $table->dropForeignIdFor(User::class, 'staff_id');
             $table->dropColumn(['type', 'staff_id']);
 
-            $table->renameColumn('name', 'school_name');
+            $table->string('name')->nullable()->renameTo('school_name')->change();
             $table->after('id', function ($table) {
                 $table->foreignIdFor(User::class, 'owner_id')->nullable();
                 $table->enum('grade', ["TK", "SD", "SMP", "SMA", "SMK"])->nullable();

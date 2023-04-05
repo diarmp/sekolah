@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tuition_types', function (Blueprint $table) {
-            $table->renameColumn('generatable', 'recurring');
+            $table->string('generatable')->nullable()->renameTo('recurring')->change();
 
             $table->string('requested_by')->nullable();
             $table->string('approved_by')->nullable();
