@@ -10,13 +10,14 @@ use App\Http\Requests\TuitionTypeRequest;
 
 class TuitionTypeController extends Controller
 {
+
+    protected $title = 'Tipe Biaya';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-        $title = "Tipe Biaya";
+        $title = $this->title;
         return view('pages.tuition-type.index', compact('title'));
     }
 
@@ -25,7 +26,7 @@ class TuitionTypeController extends Controller
      */
     public function create()
     {
-        $title = "Tambah Tipe Biaya";
+        $title = "Tambah {$this->title}";
         return view('pages.tuition-type.create', compact('title'));
     }
 
@@ -41,17 +42,17 @@ class TuitionTypeController extends Controller
             $tuitionType            = new TuitionType();
             $tuitionType->school_id = $request->school_id;
             $tuitionType->name      = $request->name;
-            $tuitionType->generatable = $request->generatable ?? false;
+            $tuitionType->recurring = $request->generatable ?? false;
             $tuitionType->save();
 
             DB::commit();
         } catch (\Throwable $th) {
             dd($th);
             DB::rollback();
-            return redirect()->route('tuition-type.create')->withToastError('Ops Gagal Tambah Tipe Biaya!');
+            return redirect()->route('tuition-type.create')->withToastError("Ops Gagal Tambah {$this->title}!");
         }
 
-        return redirect()->route('tuition-type.index')->withToastSuccess('Tambah Tipe Biaya Berhasil!');
+        return redirect()->route('tuition-type.index')->withToastSuccess("Tambah {$this->title} Berhasil!");
     }
 
 
@@ -61,7 +62,7 @@ class TuitionTypeController extends Controller
     public function edit(TuitionType $tuitionType)
     {
 
-        $title = "Ubah Tipe Biaya";
+        $title = "Ubah {$this->title}";
         return view('pages.tuition-type.edit', compact('tuitionType', 'title'));
     }
 
@@ -76,17 +77,17 @@ class TuitionTypeController extends Controller
 
             $tuitionType->school_id = $request->school_id;
             $tuitionType->name      = $request->name;
-            $tuitionType->generatable = $request->generatable ?? false;
+            $tuitionType->recurring = $request->generatable ?? false;
             $tuitionType->save();
 
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollback();
-            return redirect()->route('tuition-type.edit', $tuitionType->id)->withToastError('Ops Gagal ubah Tipe Biaya!');
+            return redirect()->route('tuition-type.edit', $tuitionType->id)->withToastError("Ops Gagal ubah {$this->title}!");
         }
 
 
-        return redirect()->route('tuition-type.index')->withToastSuccess('Ubah Tipe Biaya Berhasil!');
+        return redirect()->route('tuition-type.index')->withToastSuccess("Ubah {$this->title} Berhasil!");
     }
 
     /**
@@ -101,13 +102,13 @@ class TuitionTypeController extends Controller
             $tuitionType->delete();
             DB::commit();
             return response()->json([
-                'msg' => 'Berhasil Hapus Tipe Biaya'
+                'msg' => "Berhasil Hapus {$this->title}"
             ], 200);
         } catch (\Throwable $th) {
 
             DB::rollback();
             return response()->json([
-                'msg' => 'Ops Hapus Tipe Biaya Gagal!'
+                'msg' => "Ops Hapus {$this->title} Gagal!"
             ], 400);
         }
     }

@@ -9,31 +9,17 @@
 
         {{-- start table academy years --}}
         <div class="col-lg-6">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h1>
+                <a href="{{ route('classroom.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-default shadow-sm">
+                    Kembali
+                </a>
+            </div>
             <div class="card">
-                <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-
-                </div>
                 <div class="card-body">
                     <form action="{{ route('classroom.store') }}" method="post">
+                        <input type="hidden" name="academic_year_id" value="{{ $academicYears?->id }}">
                         @csrf
-                        <div class="form-group">
-                            <label for="academic-year-select">Tahun Akademik</label>
-                            <select class="form-control @error('academic_year_id') is-invalid @enderror" name="academic_year_id"
-                                id="academic-year-select">
-                                <option value="">-</option>
-                                @foreach ($academicYears as $academicYear)
-                                    <option value="{{ $academicYear->id }}">
-                                        {{ $academicYear->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('academic_year_id')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        </div>
                         <div class="form-group">
                             <label for="grade-select">Tingkat</label>
                             <select class="form-control @error('grade_id') is-invalid @enderror" name="grade_id"
@@ -41,7 +27,7 @@
                                 <option value="">-</option>
                                 @foreach ($grades as $grade)
                                     <option value="{{ $grade->id }}">
-                                        {{ $grade->name }}
+                                        {{ $grade->grade_name }}
                                     </option>
                                 @endforeach
                             </select>

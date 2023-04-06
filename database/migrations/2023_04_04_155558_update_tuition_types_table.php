@@ -28,7 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('tuition_types', function (Blueprint $table) {
-            $table->renameColumn('recurring', 'generatable');
+            $table->string('recurring')->nullable()->renameTo('generatable')->change();
 
             $table->dropColumn('requested_by');
             $table->dropColumn('approved_by');

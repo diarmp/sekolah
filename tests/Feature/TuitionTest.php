@@ -14,6 +14,8 @@ beforeEach(function () {
     $this->bendahara = User::role(User::ROLE_BENDAHARA)->first();
     $this->tataUsaha = User::role(User::ROLE_TATA_USAHA)->first();
     $this->kepalaSekolah = User::role(User::ROLE_KEPALA_SEKOLAH)->first();
+    $this->siswa = User::role(User::ROLE_SISWA)->first();
+    $this->alumni = User::role(User::ROLE_ALUMNI)->first();
     $this->setupFaker();
 });
 
@@ -65,8 +67,8 @@ it('can create new Tuition', function (User $user) {
     $tuitionType = TuitionType::factory()->create();
     $academicYear = AcademicYear::factory()->create();
     $grade = Grade::factory()->create();
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
 
     $this->actingAs($user)
         ->post(route('tuition.store'), [
@@ -74,14 +76,14 @@ it('can create new Tuition', function (User $user) {
             'tuition_type_id' => $tuitionType->getKey(),
             'academic_year_id' => $academicYear->getKey(),
             'grade_id' => $grade->getKey(),
-            'period' => $period,
-            'price' => $price
+            'price' => $price,
+            'requested_by' => $requestApprovedBy->getKey(),
+            'approved_by' => $requestApprovedBy->getKey(),
         ])
         ->assertRedirect(route('tuition.index'));
     
     $this->assertDatabaseHas('tuitions', [
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
     ]); 
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
@@ -112,16 +114,17 @@ it('can render Tuition edit page', function (User $user) {
     $tuitionType = TuitionType::factory()->create(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
     
     $tuition = $school->tuitions()->create([
         'school_id' => $school->getKey(),
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $this->assertDatabaseHas('tuitions', [
@@ -130,8 +133,9 @@ it('can render Tuition edit page', function (User $user) {
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $response = $this->actingAs($user)
@@ -150,16 +154,17 @@ it('can edit Tuition', function (User $user) {
     $tuitionType = TuitionType::factory()->create(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
     
     $tuition = $school->tuitions()->create([
         'school_id' => $school->getKey(),
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $this->actingAs($user)
@@ -168,13 +173,13 @@ it('can edit Tuition', function (User $user) {
                 'tuition_type_id' => $tuition->tuition_type_id,
                 'academic_year_id' => $tuition->academic_year_id,
                 'grade_id' => $tuition->grade_id,
-                'period' => $tuition->period,
-                'price' => $tuition->price
+                'price' => $tuition->price,
+                'requested_by' => $tuition->request_by,
+                'approved_by' => $tuition->approval_by,
             ])
         ->assertRedirect(route('tuition.index'));
 
     $this->assertDatabaseHas('tuitions', [
-        'period' => $tuition->period,
         'price' => $tuition->price
     ]);
 
@@ -191,16 +196,17 @@ it('can delete Tuition', function (User $user) {
     $tuitionType = TuitionType::factory()->create(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
 
     $tuition = $school->tuitions()->create([
         'school_id' => $school->getKey(),
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $this->actingAs($user)
@@ -229,7 +235,7 @@ it('can not render Tuition create page', function (User $user) {
 it('can not create new Tuition with Invalid requires', function (User $user) {
     $this->actingAs($user)
         ->post(route('tuition.store'))
-        ->assertSessionHasErrors(['tuition_type_id', 'academic_year_id', 'grade_id', 'period', 'price']);
+        ->assertSessionHasErrors(['tuition_type_id', 'academic_year_id', 'grade_id', 'price', 'requested_by', 'approved_by']);
         
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
@@ -242,16 +248,18 @@ it('can not render Tuition edit page', function (User $user) {
     $tuitionType = TuitionType::factory()->create();
     $academicYear = AcademicYear::factory()->create();
     $grade = Grade::factory()->create();
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
+
 
     $tuition = $school->tuitions()->create([
         'school_id' => $school->getKey(),
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $response = $this->actingAs($user)
@@ -271,16 +279,17 @@ it('can not edit Tuition with Invalid requires', function (User $user) {
     $tuitionType = TuitionType::factory()->create(['school_id' => $school->getKey()]);
     $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
-    $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
+    $requestApprovedBy = User::factory()->create();
 
     $tuition = $school->tuitions()->create([
         'school_id' => $school->getKey(),
         'tuition_type_id' => $tuitionType->getKey(),
         'academic_year_id' => $academicYear->getKey(),
         'grade_id' => $grade->getKey(),
-        'period' => $period,
-        'price' => $price
+        'price' => $price,
+        'request_by' => $requestApprovedBy->getKey(),
+        'approval_by' => $requestApprovedBy->getKey(),
     ]);
 
     $this->actingAs($user)
@@ -289,10 +298,11 @@ it('can not edit Tuition with Invalid requires', function (User $user) {
             'tuition_type_id' => '',
             'academic_year_id' => '',
             'grade_id' => '',
-            'period' => '',
-            'price' => ''
+            'price' => '',
+            'request_by' => '',
+            'approval_by' => ''
         ])  
-        ->assertSessionHasErrors(['tuition_type_id', 'academic_year_id', 'grade_id', 'period', 'price']);;
+        ->assertSessionHasErrors(['tuition_type_id', 'academic_year_id', 'grade_id', 'price', 'requested_by', 'approved_by']);;
 })->with([
     User::ROLE_SUPER_ADMIN => [fn () => $this->superAdmin],
     User::ROLE_OPS_ADMIN => [fn () => $this->opsAdmin],
@@ -306,7 +316,7 @@ it('can not delete Tuition', function (User $user) {
     $academicYear = AcademicYear::factory()->create(['school_id' => $school->getKey()]);
     $grade = Grade::factory()->create(['school_id' => $school->getKey()]);
     $period = now();
-    $price = $this->faker()->numberBetween(0, 100);
+    $price = $this->faker()->numberBetween(1, 100);
     $tuition = $school->tuitions()->create();
 
     $response = $this->actingAs($user)

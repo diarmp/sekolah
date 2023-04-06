@@ -12,7 +12,7 @@ class ClassroomDatatables extends Controller
     //
     public function index()
     {
-        $classroom = Classroom::with('school', 'grade', 'academic_year');
+        $classroom = Classroom::with('school', 'grade', 'academic_year')->get();
         return DataTables::of($classroom)
             ->addColumn('action', function (Classroom $row) {
                 $data = [
