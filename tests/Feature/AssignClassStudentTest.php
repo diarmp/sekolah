@@ -147,10 +147,7 @@ it('can  Destroy  Student classroom', function (User $user) {
     $this->actingAs($user)
         ->delete(route('assign-classroom-student.destroy'), $data)
         ->assertRedirect(route('assign-classroom-student.index'));
-
-    })->with('staff_can_crud');
-
-
+})->with('staff_can_crud');
 
 
 it('forbid store as page user', function ($user) {
