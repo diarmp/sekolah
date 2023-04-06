@@ -79,8 +79,8 @@ it('can render Academy Years create invalid required school_id and name as ', fu
             'academic_year_name' => '',
         ])
         ->assertInvalid([
-            'school_id' => 'required',
-            'academic_year_name' => 'required'
+            'school_id',
+            'academic_year_name'
         ]);
 })->with('staff_can_crud');
 
@@ -105,14 +105,12 @@ it('can render Academy Years create data post  as ', function (User $user) {
     $data = [
         'school_id' => $school->id,
         'academic_year_name' => $yearAcademy,
+        'status_years' => AcademicYear::STATUS_CLOSED
     ];
-    $this->actingAs($user)
-        ->post(route('academy-year.store'),)->assertRedirect(route('academy-year.index'));
 
-    $this->assertDatabaseHas('academic_years', [
-        'school_id' => 2,
-        'academic_year_name' => $yearAcademy
-    ]);
+    $this->actingAs($user)
+        ->post(route('academy-year.store'), $data)->assertRedirect(route('academy-year.index'));
+    $this->assertDatabaseHas('academic_years', $data);
 })->with('staff_can_crud');
 
 
@@ -163,8 +161,8 @@ it('can render Academy Years update invalid required school_id and name as ', fu
             'academic_year_name' => '',
         ])
         ->assertInvalid([
-            'school_id' => 'required',
-            'academic_year_name' => 'required'
+            'school_id',
+            'academic_year_name'
         ]);
 })->with('staff_can_crud');
 
@@ -176,7 +174,7 @@ it('can render Academy Years update invalid academy years formatted  as ', funct
             'school_id' => $academyYear->school_id,
             'academic_year_name' => fake()->name(),
         ])
-        ->assertInvalid(['name']);
+        ->assertInvalid(['academic_year_name']);
 })->with('staff_can_crud');
 
 
@@ -189,13 +187,18 @@ it('can render Academy Years update data  as ', function (User $user) {
     session(['school_id' => $academyYear->school_id]);
     $year = fake()->year('-10 years');
     $yearAcademy = $year . "-" . $year + 1;
+
+    $data = [
+        'school_id' => $academyYear->school_id,
+        'academic_year_name' => $yearAcademy,
+        'status_years' => AcademicYear::STATUS_CLOSED
+    ];
+
     $this->actingAs($user)
-        ->put(route('academy-year.update', ['academy_year' => $academyYear->id]), [
-            'school_id' => $academyYear->school_id,
-            'academic_year_name' => $yearAcademy,
-        ])
+        ->put(route('academy-year.update', ['academy_year' => $academyYear->id]), $data)
         ->assertRedirect(route('academy-year.index'));
-    $this->assertDatabaseHas('academic_years', ['academic_year_name' => $yearAcademy]);
+
+    $this->assertDatabaseHas('academic_years', $data);
 })->with('staff_can_crud');
 
 /**

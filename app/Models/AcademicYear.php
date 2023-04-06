@@ -23,6 +23,12 @@ class AcademicYear extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'year_start' => 'date',
+        'year_end'   => 'date',
+    ];
+
+
     protected static function booted()
     {
         static::addGlobalScope(new AcademicYearScope);

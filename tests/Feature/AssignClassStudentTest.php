@@ -83,7 +83,7 @@ it('required  add id students', function (User $user) {
     $school = School::factory()->create();
     session(['school_id' => $school->id]);
     $academicYear = AcademicYear::factory()->create([
-        'status_years' => AcademicYear::STATUS_ACTIVE_YEAR
+        'status_years' => AcademicYear::STATUS_STARTED
     ]);
     session([
         'academic_year_id' => $academicYear->id
@@ -106,7 +106,7 @@ it("can store student classroom", function (User $user) {
     $school = School::factory()->create();
     session(['school_id' => $school->id]);
     $academicYear = AcademicYear::factory()->create([
-        'status_years' => AcademicYear::STATUS_ACTIVE_YEAR
+        'status_years' => AcademicYear::STATUS_STARTED
     ]);
     session([
         'academic_year_id' => $academicYear->id
@@ -135,15 +135,8 @@ it("can store student classroom", function (User $user) {
 it('can  Destroy  Student classroom', function (User $user) {
     $school = School::factory()->create();
     session(['school_id' => $school->id]);
-    $academicYear = AcademicYear::factory()->create([
-        'status_years' => AcademicYear::STATUS_ACTIVE_YEAR
-    ]);
-    session([
-        'academic_year_id' => $academicYear->id
-    ]);
 
-
-
+    Classroom::factory()->create();
     $classroom = Classroom::factory()->has(Student::factory(1))->create();
     $student  = $classroom->students()->first();
     $data = [
@@ -151,19 +144,11 @@ it('can  Destroy  Student classroom', function (User $user) {
         'id' => [$student->id]
     ];
 
-
-
     $this->actingAs($user)
         ->delete(route('assign-classroom-student.destroy'), $data)
         ->assertRedirect(route('assign-classroom-student.index'));
 
-    // dd(ClassroomStudent::all(), $data);
-    // $this->assertSoftDeleted('classroom_student', [
-    //     'classroom_id' => $student->pivot->classroom_id,
-    //     'student_id' => $student->id,
-    //     'deleted_at' => null
-    // ]);
-})->with('staff_can_crud');
+    })->with('staff_can_crud');
 
 
 
