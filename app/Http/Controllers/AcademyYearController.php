@@ -51,7 +51,7 @@ class AcademyYearController extends Controller
             $academyYear->year_end           = $request->year_end;
             $academyYear->school_id          = $request->school_id;
             $academyYear->academic_year_name = $request->academic_year_name;
-            $academyYear->status_years       = $request->status_years ?? null;
+            $academyYear->status_years       = $request->status_years ?? AcademicYear::STATUS_CLOSED;
             $academyYear->save();
 
             DB::commit();
@@ -91,7 +91,7 @@ class AcademyYearController extends Controller
             $academyYear->year_start         = $request->year_start;
             $academyYear->year_end           = $request->year_end;
             $academyYear->academic_year_name = $request->academic_year_name;
-            $academyYear->status_years = $request->status_years ?? null;
+            $academyYear->status_years = $request->status_years ?? AcademicYear::STATUS_CLOSED;
             $academyYear->save();
 
             DB::commit();

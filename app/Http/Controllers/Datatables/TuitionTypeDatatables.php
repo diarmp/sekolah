@@ -13,10 +13,10 @@ class TuitionTypeDatatables extends Controller
 
     public function index()
     {
-        $academyYear = TuitionType::with('school');
+        $academyYear = TuitionType::with('school')->get();
         return DataTables::of($academyYear)
-            ->editColumn('generatable', fn ($item) => $item->generatable == 1 ? 'yes' : 'no')
-            ->addColumn('action', function (TuitionType $row) {
+            ->editColumn('recurring', fn ($item) => $item->recurring == 1 ? 'yes' : 'no')
+            ->addColumn('action', function ($row) {
                 $data = [
                     'edit_url'     => route('tuition-type.edit', ['tuition_type' => $row->id]),
                     'delete_url'   => route('tuition-type.destroy', ['tuition_type' => $row->id]),
