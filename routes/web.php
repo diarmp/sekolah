@@ -13,6 +13,7 @@ use App\Http\Controllers\ConfigSchoolController;
 use App\Http\Controllers\PublishTuitionController;
 use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\AssignClassroomStudentController;
+use App\Http\Controllers\ConfigController;
 
 /*
 |--------------------------------------------------------------------------
