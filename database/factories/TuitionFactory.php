@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\AcademicYear;
+use App\Models\User;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\TuitionType;
+use App\Models\AcademicYear;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,8 +28,9 @@ class TuitionFactory extends Factory
             'tuition_type_id' => TuitionType::factory()->create(['school_id' => $school->getKey()]),
             'academic_year_id' => AcademicYear::factory()->create(['school_id' => $school->getKey()]),
             'grade_id' => Grade::factory()->create(['school_id' => $school->getKey()]),
-            'period' => now(),
-            'price' => 100000
+            'price' => 100000,
+            'request_by' => User::factory()->create(['school_id' => $school->getKey()]),
+            'approval_by' => User::factory()->create(['school_id' => $school->getKey()]),
         ];
     }
 }
