@@ -13,6 +13,7 @@ class ClassroomScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('school_id', session('school_id'));
+
+        $builder->where('classrooms.school_id', session('school_id'));
     }
 }

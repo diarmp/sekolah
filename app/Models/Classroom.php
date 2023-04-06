@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\AcademicYear;
-use App\Models\Scopes\GradeScope;
+use App\Models\Scopes\ClassroomScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -18,10 +18,10 @@ class Classroom extends Model
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
-    
+
     protected static function booted()
     {
-        static::addGlobalScope(new GradeScope);
+        static::addGlobalScope(new ClassroomScope);
     }
 
     public function academic_year(): BelongsTo
@@ -47,5 +47,9 @@ class Classroom extends Model
     public function students(): BelongsToMany
     {
         return $this->belongsToMany(Student::class)->withTimestamps();
+    }
+    public function student(): BelongsTo
+    {
+        return $this->belongsTo(Student::class)->withTimestamps();
     }
 }

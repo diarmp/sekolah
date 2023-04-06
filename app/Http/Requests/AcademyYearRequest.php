@@ -34,11 +34,10 @@ class AcademyYearRequest extends FormRequest
     {
         return [
             'school_id' => 'required',
-            'name'      => [
-                'required',
+            'academic_year_name'      => [
                 Rule::unique('academic_years')->where(function ($q) {
-                    $q->where('name', $this->name);
-                    $q->where('school_id', session('school_id'));
+                    $q->where('academic_year_name', $this->name);
+                    $q->where('school_id', $this->school_id);
                 }),
                 'years_formatted',
                 'valid_year'
@@ -52,11 +51,10 @@ class AcademyYearRequest extends FormRequest
     {
         return [
             'school_id' => 'required',
-            'name'      => [
-                'required',
+            'academic_year_name'      => [
                 Rule::unique('academic_years')->where(function ($q) {
-                    $q->where('name', $this->name);
-                    $q->where('school_id', session('school_id'));
+                    $q->where('academic_year_name', $this->name);
+                    $q->where('school_id', $this->school_id);
                 })->ignore($this->academy_year->id),
                 'years_formatted',
                 'valid_year'
@@ -87,8 +85,8 @@ class AcademyYearRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.years_formatted' => 'The :attribute Invalid Formatted have xxxx - xxxx',
-            'name.valid_year' => 'The :attribute Invalid Academy years Formatted',
+            'academic_year_name.years_formatted' => 'The Invalid Academy years Formatted ',
+            'academic_year_name.valid_year' => 'The  Invalid Academy years Formatted ',
 
         ];
     }
