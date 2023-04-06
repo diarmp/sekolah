@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\TuitionType;
@@ -53,5 +54,15 @@ class Tuition extends Model
     public function student_tuition_masters(): BelongsToMany
     {
         return $this->belongsToMany(StudentTuitionMaster::class);
+    }
+    
+    public function requested_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'request_by');
+    }
+
+    public function approved_by(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'approval_by');
     }
 }
