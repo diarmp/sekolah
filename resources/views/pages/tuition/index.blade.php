@@ -8,21 +8,24 @@
 
         {{-- start table Grade --}}
         <div class="col-lg-10">
-            <div class="card">
-                <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-                    <a href="{{ route('publish-tuition.index') }}" class="btn btn-primary btn-sm mr-2">TERBITKAN</a>
-                    <a href="{{ route('tuition.create') }}" class="btn btn-primary btn-sm">TAMBAH</a>
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h6 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h6>
+                <div>
+                    <a href="{{ route('publish-tuition.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">TERBITKAN</a>
+                    <a href="{{ route('tuition.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">TAMBAH</a>
                 </div>
+            </div>
+            <div class="card">
                 <div class="card-body">
                     <x-datatable :tableId="'tuition'" 
-                    :tableHeaders="['Tipe Biaya', 'Tahun Akademik', 'Tingkat', 'Periode', 'Nominal', 'Aksi']" 
+                    :tableHeaders="['Tipe Biaya', 'Tahun Akademik', 'Tingkat', 'Nominal', 'Permintaan dari', 'Disetujui Oleh', 'Aksi']" 
                     :tableColumns="[
                         ['data' => 'tuition_type', 'name' => 'price'], 
                         ['data' => 'academic_year'], 
                         ['data' => 'grade'], 
-                        ['data' => 'period'], 
                         ['data' => 'price'], 
+                        ['data' => 'request_by'], 
+                        ['data' => 'approval_by'], 
                         ['data' => 'action']
                         ]" 
                     :getDataUrl="route('datatable.tuition')" />

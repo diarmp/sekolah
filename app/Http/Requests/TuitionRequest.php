@@ -35,18 +35,9 @@ class TuitionRequest extends FormRequest
             'tuition_type_id' => 'required|exists:tuition_types,id',
             'academic_year_id' => 'required|exists:academic_years,id',
             'grade_id' => 'required|exists:grades,id',
-            'period'      => [
-                'required',
-                Rule::unique('tuitions')->where(function ($q) {
-                    $q->where('period', $this->period);
-                    $q->where('price', $this->name);
-                    $q->where('school_id', $this->school_id);
-                    $q->where('tuition_type_id', $this->tuition_type_id);
-                    $q->where('academic_year_id', $this->academic_year_id);
-                    $q->where('grade_id', $this->grade_id);
-                })
-            ],
-            'price' => 'required|numeric|gt:0'
+            'price' => 'required|numeric|gt:0',
+            'requested_by' => 'required|exists:users,id',
+            'approved_by' => 'required|exists:users,id',
         ];
     }
 
@@ -57,17 +48,9 @@ class TuitionRequest extends FormRequest
             'tuition_type_id' => 'required|exists:tuition_types,id',
             'academic_year_id' => 'required|exists:academic_years,id',
             'grade_id' => 'required|exists:grades,id',
-            'period'      => [
-                'required',
-                Rule::unique('tuitions')->where(function ($q) {
-                    $q->where('period', $this->period);
-                    $q->where('school_id', $this->school_id);
-                    $q->where('tuition_type_id', $this->tuition_type_id);
-                    $q->where('academic_year_id', $this->academic_year_id);
-                    $q->where('grade_id', $this->grade_id);
-                })->ignore($this->tuition->id)
-            ],
-            'price' => 'required|numeric|gt:0'
+            'price' => 'required|numeric|gt:0',
+            'requested_by' => 'required|exists:users,id',
+            'approved_by' => 'required|exists:users,id',
         ];
     }
 }

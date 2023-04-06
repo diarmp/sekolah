@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Grade;
 use App\Models\School;
 use App\Models\Tuition;
@@ -33,7 +34,10 @@ class TuitionController extends Controller
         $tuitionTypes = TuitionType::all();
         $academicYears = AcademicYear::all();
         $grades = Grade::all();
-        return view('pages.tuition.create', compact('tuitionTypes', 'academicYears', 'grades', 'title'));
+        $users =User::where('school_id', session('school_id'))->whereHas('roles', function($q){
+             $q->whereIn('name',['admin sekolah','admin yayasan','tata usaha','bendahara','kepala sekolah']);
+         })->get();
+        return view('pages.tuition.create', compact('tuitionTypes', 'academicYears', 'grades', 'title', 'users'));
     }
 
     /**
@@ -41,7 +45,6 @@ class TuitionController extends Controller
      */
     public function store(TuitionRequest $request)
     {
-        //
         DB::beginTransaction();
         try {
             
@@ -50,8 +53,9 @@ class TuitionController extends Controller
             $tuition->tuition_type_id   = $request->tuition_type_id;
             $tuition->academic_year_id  = $request->academic_year_id;
             $tuition->grade_id          = $request->grade_id;
-            $tuition->period            = $request->period;
             $tuition->price             = $request->price;
+            $tuition->request_by        = $request->requested_by;
+            $tuition->approval_by       = $request->approved_by;
             $tuition->save();
 
             DB::commit();
@@ -81,7 +85,10 @@ class TuitionController extends Controller
         $tuitionTypes = TuitionType::all();
         $academicYears = AcademicYear::all();
         $grades = Grade::all();
-        return view('pages.tuition.edit', compact('tuitionTypes', 'tuition', 'academicYears', 'grades', 'title'));
+        $users =User::where('school_id', session('school_id'))->whereHas('roles', function($q){
+             $q->whereIn('name',['admin sekolah','admin yayasan','tata usaha','bendahara','kepala sekolah']);
+         })->get();
+        return view('pages.tuition.edit', compact('tuitionTypes', 'tuition', 'academicYears', 'grades', 'title', 'users'));
     }
 
     /**
@@ -97,8 +104,9 @@ class TuitionController extends Controller
             $tuition->tuition_type_id       = $request->tuition_type_id;
             $tuition->academic_year_id      = $request->academic_year_id;
             $tuition->grade_id              = $request->grade_id;
-            $tuition->period                = $request->period;
             $tuition->price                 = $request->price;
+            $tuition->request_by            = $request->requested_by;
+            $tuition->approval_by           = $request->approved_by;
             $tuition->save();
 
             DB::commit();
