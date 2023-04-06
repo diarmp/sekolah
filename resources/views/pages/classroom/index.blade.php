@@ -8,11 +8,11 @@
 
         {{-- start table Grade --}}
         <div class="col-lg-10">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h6 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h6>
+                <a href="{{ route('classroom.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">TAMBAH</a>
+            </div>
             <div class="card">
-                <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-                    <a href="{{ route('classroom.create') }}" class="btn btn-primary btn-sm">TAMBAH</a>
-                </div>
                 <div class="card-body">
                     <x-datatable :tableId="'classroom'" :tableHeaders="['Tahun Akademik', 'Tingkat', 'Kelas', 'Aksi']" 
                     :tableColumns="[

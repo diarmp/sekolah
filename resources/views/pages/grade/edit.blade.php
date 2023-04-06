@@ -9,13 +9,14 @@
 
         {{-- start table grade --}}
         <div class="col-lg-6">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-primary font-weight-bold">{{ $title }}</h1>
+                <a href="{{ route('grade.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-default shadow-sm">
+                    Kembali
+                </a>
+            </div>
             <div class="card">
-                <div class="card-header d-flex">
-                    <h6 class="mr-auto font-weight-bold text-primary">{{ $title }}</h6>
-
-                </div>
                 <div class="card-body">
-
                     <form action="{{ route('grade.update', ['grade' => $grade->id]) }}" method="post">
                         @method('PUT')
                         @csrf
