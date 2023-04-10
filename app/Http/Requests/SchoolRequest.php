@@ -31,44 +31,32 @@ class SchoolRequest extends FormRequest
     protected function postMethod(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'grade' => [
-                'required',
-                Rule::notIn(["-"]),
-            ],
-            'address' => 'required|max:255',
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'phone' => 'required|numeric',
-            'email' => 'required|email|max:255',
-            'owner' => [
-                'required',
-                'numeric',
-                Rule::notIn(["-"]),
-            ],
-            'pic_name' => 'required|string|max:100',
-            'pic_email' => 'required|string|max:100',
+            'school_id'  => 'nullable|exists:schools,id',
+            'school_name' => 'required|string|max:255',
+            'province'   => 'required|string|max:100',
+            'city'  => 'required|string|max:100',
+            'postal_code' => 'required|string|max:255',
+            'address'   => 'required|string|max:100',
+            'grade'  => 'required|string|max:100',
+            'email' => 'required|string|max:255',
+            'phone'   => 'required|string|max:100',
+            'name_pic'  => 'required|string|max:100',
+            'email_pic' => 'required|string|max:255|unique:users,email',
         ];
     }
 
     protected function putMethod(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'grade' => [
-                'required',
-                Rule::notIn(["-"]),
-            ],
-            'address' => 'required|max:255',
-            'city' => 'required|string|max:255',
-            'province' => 'required|string|max:255',
-            'phone' => 'required|numeric',
-            'email' => 'required|email|max:255',
-            'owner' => [
-                'required',
-                'numeric',
-                Rule::notIn(["-"]),
-            ],
+            'school_id' => 'nullable|exists:schools,id',
+            'school_name' => 'required|string|max:255',
+            'province'   => 'required|string|max:100',
+            'city'  => 'required|string|max:100',
+            'postal_code' => 'required|string|max:255',
+            'address'   => 'required|string|max:100',
+            'grade'  => 'required|string|max:100',
+            'email' => 'required|string|max:255',
+            'phone'   => 'required|string|max:100',
         ];
     }
 }

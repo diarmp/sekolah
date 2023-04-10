@@ -7,11 +7,12 @@ use App\Imports\StudentsImport;
 use App\Models\AcademicYear;
 use App\Models\Student;
 use App\Models\StudentTuition;
+use App\Models\StudentTuitionMaster;
 use App\Models\TuitionType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Excel;
+use Illuminate\Support\Facades\Storage;
 
 class StudentsController extends Controller
 {
@@ -21,7 +22,7 @@ class StudentsController extends Controller
     public function index()
     {
         $data = [
-            'title' => "Murid"
+            'title' => "Siswa"
         ];
 
         return view('pages.students.index', $data);
@@ -31,16 +32,10 @@ class StudentsController extends Controller
      * Show the form for creating a new resource.
      */
     public function create()
-    {     
-        if(Auth::user()->school_id){
-            $school_id = Auth::user()->school_id;
-        }else{
-            $school_id = session('school_id');
-        }
+    {
         $data = [
-            'academic_years' => AcademicYear::where('school_id', $school_id)->orderByDesc('created_at')->get(),
-            'tuition_types' => TuitionType::where('school_id', $school_id)->get(),
-            'title' => "Tambah Murid",
+            'tuition_types' => TuitionType::where('school_id', session('school_id'))->get(),
+            'title' => "Tambah Siswa",
         ];
         return view('pages.students.create', $data);
     }
@@ -49,14 +44,13 @@ class StudentsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StudentsRequest $request)
-    {
+    {   
         try {
             DB::beginTransaction();
 
             // Save Student
                 $student                            = new Student;
-                $student->school_id                 = $request->school_id ?? Auth::user()->school_id;
-                $student->academic_year_id          = $request->academic_year_id;
+                $student->school_id                 = session('school_id');
 
                 $student->name                      = $request->name;
                 $student->email                     = $request->email;
@@ -65,53 +59,59 @@ class StudentsController extends Controller
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
+                $student->family_card_number        = $request->family_card_number;
                 $student->nik                       = $request->nik;
                 $student->nis                       = $request->nis;
                 $student->nisn                      = $request->nisn;
+
                 $student->father_name               = $request->father_name;
-                $student->father_dob                = $request->father_dob;
-                $student->father_work               = $request->father_work;
-                $student->father_education          = $request->father_education;
-                $student->father_income             = $request->father_income;
+                $student->father_phone_number       = $request->father_phone_number;
+                $student->father_address            = $request->father_address;
+
                 $student->mother_name               = $request->mother_name;
-                $student->mother_dob                = $request->mother_dob;
-                $student->mother_work               = $request->mother_work;
-                $student->mother_education          = $request->mother_education;
-                $student->mother_income             = $request->mother_income;
+                $student->mother_phone_number       = $request->mother_phone_number;
+                $student->mother_address            = $request->mother_address;
+
                 $student->guardian_name             = $request->guardian_name;
-                $student->guardian_dob              = $request->guardian_dob;
-                $student->guardian_work             = $request->guardian_work;
-                $student->guardian_education        = $request->guardian_education;
-                $student->guardian_income           = $request->guardian_income;
+                $student->guardian_phone_number     = $request->guardian_phone_number;
+                $student->guardian_address          = $request->guardian_address;
+
+                // Upload Student's Photo
+                if ($request->hasFile('file_photo')) {
+                    $uploadedFile = $request->file('file_photo');
+                    if ($student->file_photo) Storage::delete($student->getRawOriginal('file_photo')); // Delete old photo
+                    $student->file_photo = Storage::putFileAs('student_photo', $uploadedFile, $uploadedFile->hashName());
+                } else {
+                    $student->file_photo = 'default-profile.jpg';
+                }
+                // End Upload Student's Photo
+
+                // Upload Student's Birth Certificate
+                if ($request->hasFile('file_birth_certificate')) {
+                    $uploadedFile = $request->file('file_birth_certificate');
+                    if ($student->file_birth_certificate) Storage::delete($student->getRawOriginal('file_birth_certificate')); // Delete old photo
+                    $student->file_birth_certificate = Storage::putFileAs('student_birth_certificate', $uploadedFile, $uploadedFile->hashName());
+                }
+                // End Upload Student's Birth Certificate
+
+                // Upload Student's Family Card
+                if ($request->hasFile('file_family_card')) {
+                    $uploadedFile = $request->file('file_family_card');
+                    if ($student->file_family_card) Storage::delete($student->getRawOriginal('file_family_card')); // Delete old photo
+                    $student->file_family_card = Storage::putFileAs('student_family_card', $uploadedFile, $uploadedFile->hashName());
+                }
+                // End Upload Student's Family Card
 
                 $student->save();
             // End Save Student
 
-            // If Has Unique Tuitions
-                if ($request->has('tuitions')) {
-                    foreach ($request->tuitions as $key => $value) {
-                        if ($value) {
-                            $studentTuitions = new StudentTuition;
-
-                            $studentTuitions->school_id = $request->school_id ?? Auth::user()->school_id;
-                            $studentTuitions->student_id = $student->id;
-
-                            $studentTuitions->tuition_type_id = $key;
-                            $studentTuitions->price = $value > 0 ? $value : 0;
-                            $studentTuitions->note = $value->note ?? null;
-                            
-                            $studentTuitions->save();
-                        }
-                    };
-                };
-            // End If Has Unique Tuitions
-
             DB::commit();
 
-            return redirect()->route('students.index')->withToastSuccess('Berhasil menambahkan data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil menambahkan data siswa!');
         } catch (\Throwable $th) {
+            dd($th);
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat menambahkan data murid!');
+            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat menambahkan data siswa!');
         }
     }
 
@@ -128,27 +128,10 @@ class StudentsController extends Controller
      */
     public function edit(Student $student)
     {
-        $studentTuitions = StudentTuition::with('tuition_type')
-                                            ->where('school_id', Auth::user()->school_id)
-                                            ->where('student_id', $student->id)
-                                            ->get();
-
-        $tuitions = collect(TuitionType::where('school_id', Auth::user()->school_id)->get())
-                    ->reject(function($tuitions) use($studentTuitions){
-                        foreach ($studentTuitions as $studentTuition) {
-                            if ($tuitions->id == $studentTuition->tuition_type_id) {
-                                // Remove if has same id with studentTuition
-                                return $tuitions;
-                            }
-                        }
-                    });
-
         $data = [
             'student' => $student,
-            'academic_years' => AcademicYear::where('school_id', Auth::user()->school_id)->orderByDesc('created_at')->get(),
-            'student_tuitions' => $studentTuitions,
-            'tuition_types' => $tuitions,
-            'title' => "Ubah Data Murid",
+            'academic_years' => AcademicYear::where('school_id', session('school_id'))->orderByDesc('created_at')->get(),
+            'title' => "Ubah Data Siswa",
         ];
 
         return view('pages.students.edit', $data);
@@ -163,8 +146,6 @@ class StudentsController extends Controller
             DB::beginTransaction();
             
             // Update Student
-                $student->academic_year_id          = $request->academic_year_id;
-
                 $student->name                      = $request->name;
                 $student->email                     = $request->email;
                 $student->gender                    = $request->gender;
@@ -172,69 +153,59 @@ class StudentsController extends Controller
                 $student->dob                       = $request->dob;
                 $student->religion                  = $request->religion;
                 $student->phone_number              = $request->phone_number;
+                $student->family_card_number        = $request->family_card_number;
                 $student->nik                       = $request->nik;
                 $student->nis                       = $request->nis;
                 $student->nisn                      = $request->nisn;
+
                 $student->father_name               = $request->father_name;
-                $student->father_dob                = $request->father_dob;
-                $student->father_work               = $request->father_work;
-                $student->father_education          = $request->father_education;
-                $student->father_income             = $request->father_income;
+                $student->father_phone_number       = $request->father_phone_number;
+                $student->father_address            = $request->father_address;
+
                 $student->mother_name               = $request->mother_name;
-                $student->mother_dob                = $request->mother_dob;
-                $student->mother_work               = $request->mother_work;
-                $student->mother_education          = $request->mother_education;
-                $student->mother_income             = $request->mother_income;
+                $student->mother_phone_number       = $request->mother_phone_number;
+                $student->mother_address            = $request->mother_address;
+
                 $student->guardian_name             = $request->guardian_name;
-                $student->guardian_dob              = $request->guardian_dob;
-                $student->guardian_work             = $request->guardian_work;
-                $student->guardian_education        = $request->guardian_education;
-                $student->guardian_income           = $request->guardian_income;
+                $student->guardian_phone_number     = $request->guardian_phone_number;
+                $student->guardian_address          = $request->guardian_address;
+
+                // Upload Student's Photo
+                if ($request->hasFile('file_photo')) {
+                    $uploadedFile = $request->file('file_photo');
+                    if ($student->file_photo) Storage::delete($student->getRawOriginal('file_photo')); // Delete old photo
+                    $student->file_photo = Storage::putFileAs('student_photo', $uploadedFile, $uploadedFile->hashName());
+                } else {
+                    $student->file_photo = 'default-profile.jpg';
+                }
+                // End Upload Student's Photo
+
+                // Upload Student's Birth Certificate
+                if ($request->hasFile('file_birth_certificate')) {
+                    $uploadedFile = $request->file('file_birth_certificate');
+                    if ($student->file_birth_certificate) Storage::delete($student->getRawOriginal('file_birth_certificate')); // Delete old photo
+                    $student->file_birth_certificate = Storage::putFileAs('student_birth_certificate', $uploadedFile, $uploadedFile->hashName());
+                }
+                // End Upload Student's Birth Certificate
+
+                // Upload Student's Family Card
+                if ($request->hasFile('file_family_card')) {
+                    $uploadedFile = $request->file('file_family_card');
+                    if ($student->file_family_card) Storage::delete($student->getRawOriginal('file_family_card')); // Delete old photo
+                    $student->file_family_card = Storage::putFileAs('student_family_card', $uploadedFile, $uploadedFile->hashName());
+                }
+                // End Upload Student's Family Card
+
                 $student->save();
             // End Update Student
 
-            // Update Student Tuitions
-                if ($request->has('selected_tuitions')) {
-                    foreach ($request->selected_tuitions as $key => $value) {
-
-                        // Get Student Tuitions Data
-                        $selectedStudentTuition = StudentTuition::findOrFail($key);
-
-                        if ($value > 0) {
-                            $selectedStudentTuition->price = $value;
-                            $selectedStudentTuition->note = $value->note ?? null;
-                            $selectedStudentTuition->save();
-                        } else {
-                            $selectedStudentTuition->forceDelete();
-                        }
-                    };
-                };
-            // Update Student Tuitions
-
-            // If Has New Added Tuitions
-                if ($request->has('tuitions')) {
-                    foreach ($request->tuitions as $key => $value) {
-                        if ($value) {
-                            $studentTuition = new StudentTuition;
-
-                            $studentTuition->school_id = $request->school_id ?? Auth::user()->school_id;
-                            $studentTuition->student_id = $student->id;
-
-                            $studentTuition->tuition_type_id = $key;
-                            $studentTuition->price = $value > 0 ? $value : 0;
-                            $studentTuition->note = $value->note ?? null;
-                            $studentTuition->save();
-                        }
-                    };
-                };
-            // End If Has New Added Tuitions
 
             DB::commit();
 
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengubah data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengubah data siswa!');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengubah data murid!');
+            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengubah data siswa!');
         }
     }
 
@@ -249,27 +220,54 @@ class StudentsController extends Controller
             $student->delete();
 
             return response()->json([
-                'msg' => 'Berhasil menghapus data murid!'
+                'msg' => 'Berhasil menghapus data siswa!'
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
-                'msg' => 'Gagal menghapus data murid!'
+                'msg' => 'Gagal menghapus data siswa!'
             ], 400);
+        }
+    }
+
+    public function importStudent()
+    {
+        try {
+            $excel = Excel::import(new StudentsImport(1, 1), public_path('excel_import_template/students_import.xlsx'));
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+
+            if (count($failures) > 0) {
+                $row = $failures[0]->row(); // row that went wrong
+                $column = $failures[0]->attribute(); // either heading key (if using heading row concern) or column index
+                $error = $failures[0]->errors(); // Actual error messages from Laravel validator
+                // $value = $failures[0]->values(); // The values of the row that has failed.
+                
+                return redirect()->route('students.index')->withToastError("Terjadi kesalahan pada Baris $row, Kolom $column, dengan pesan $error[0]");
+            }
+        } catch (\Throwable $th) {
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         }
     }
 
     public function importStudentByExcel(Request $request)
     {
         try {
-            $school_id = $request->school_id ?? Auth::user()->school_id;
+            $excel = Excel::import(new StudentsImport(session('school_id'), $request->academic_year_id), $request->file('excel'));
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
 
-            $excel = Excel::import(new StudentsImport($school_id, $request->academic_year_id), $request->file('excel'));
-            dd($excel);
-
-            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data murid!');
+            if (count($failures) > 0) {
+                $row = $failures[0]->row(); // row that went wrong
+                $column = $failures[0]->attribute(); // either heading key (if using heading row concern) or column index
+                $error = $failures[0]->errors(); // Actual error messages from Laravel validator
+                // $value = $failures[0]->values(); // The values of the row that has failed.
+                
+                return redirect()->route('students.index')->withToastError("Terjadi kesalahan pada Baris $row, Kolom $column, dengan pesan $error[0]");
+            }
         } catch (\Throwable $th) {
-            DB::rollBack();
-            return redirect()->back()->withInput()->withToastError('Ops, ada kesalahan saat mengimpor data murid!');
+            return redirect()->route('students.index')->withToastSuccess('Berhasil mengimpor data siswa!');
         }
     }
 }

@@ -20,7 +20,7 @@ class ClassroomFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElements(['1a', '2b', '3c', '4d', '5e'])
+            'name' => fake()->randomElement(['1a', '2b', '3c', '4d', '5e'])
         ];
     }
 }

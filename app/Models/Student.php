@@ -18,8 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
-
+use Illuminate\Support\Facades\Storage;
 
 class Student extends Model
 {
@@ -45,10 +44,10 @@ class Student extends Model
         return $this->hasMany(StudentTuition::class);
     }
 
-    public function academic_year(): HasOne
-    {
-        return $this->hasOne(AcademicYear::class);
-    }
+    // public function academic_year(): HasOne
+    // {
+    //     return $this->hasOne(AcademicYear::class);
+    // }
 
     public function user(): BelongsTo
     {
@@ -60,11 +59,49 @@ class Student extends Model
         return $this->belongsTo(School::class);
     }
 
+    public function student_tuition_masters(): HasMany
+    {
+        return $this->hasMany(School::class);
+    }
+
 
     protected static function booted()
     {
         static::addGlobalScope(new StudentScope);
     }
+
+    // Accessor
+    public function getFilePhotoAttribute($value)
+    {
+        if (is_null($value)) return null;
+        if (strpos($value, 'http') === false) {
+            return Storage::url($value);
+        } else {
+            return $value;
+        }
+    }
+
+    public function getFileBirthCertificateAttribute($value)
+    {
+        if (is_null($value)) return null;
+        if (strpos($value, 'http') === false) {
+            return Storage::url($value);
+        } else {
+            return $value;
+        }
+    }
+
+    public function getFileFamilyCardAttribute($value)
+    {
+        if (is_null($value)) return null;
+        if (strpos($value, 'http') === false) {
+            return Storage::url($value);
+        } else {
+            return $value;
+        }
+    }
+    // End Accessor
+    
 
     public static function boot()
     {
@@ -76,10 +113,10 @@ class Student extends Model
                 $user               = new User;
                 $user->school_id    = $student->school_id;
                 $user->name         = $student->name;
-                $user->email        = Str::slug($student->name. Carbon::parse($student->dob)->format('dmy'), '-').'@gmail.com';
+                $user->email        = Str::slug($student->name. Carbon::parse($student->created_at)->format('dmy'), '-').'@gmail.com';
                 $user->password     = bcrypt('password');
                 $user->save();
-                $user->assignRole(User::ROLE_MURID);
+                $user->assignRole(User::ROLE_SISWA);
             // End Save User
 
             // Update Student's User ID
@@ -102,7 +139,7 @@ class Student extends Model
         self::deleted(function(Student $student){
 
             // Delete User
-                User::findOrFail($student->user_id)->delete();
+                // User::findOrFail($student->user_id)->delete();
             // End Delete User
 
         });

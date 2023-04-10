@@ -5,6 +5,7 @@ use App\Http\Controllers\GradeController;
 use App\Http\Controllers\SchoolsController;
 use App\Http\Controllers\TuitionController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
@@ -43,12 +44,12 @@ Route::group([], function () {
 
     // School
     Route::resource('schools', SchoolsController::class)->except('show');
-
     // Classroom
     Route::resource("classroom", ClassroomController::class)->except(['show']);
 
     // Student
     Route::resource('students', StudentsController::class)->except(['show']);
+    Route::get('students/import', [StudentsController::class, 'importStudent'])->name('students.import');
     Route::post('students/import-excel', [StudentsController::class, 'importStudentByExcel'])->name('students.importStudentByExcel');
 
     // Tuition Type
@@ -58,7 +59,10 @@ Route::group([], function () {
     Route::post('school_selector', SchoolSelectorController::class)->name('school_selector')->middleware('role:super admin|ops admin');
 
     // Assign Classroom student
-    Route::get('assign-classroom-student', AssignClassroomStudentController::class)->name(('assign-classroom-student'));
+    Route::GET('assign-classroom-student', AssignClassroomStudentController::class)->name(('assign-classroom-student.index'));
+    Route::POST('assign-classroom-student', [AssignClassroomStudentController::class, 'store'])->name(('assign-classroom-student.store'));
+    Route::DELETE('assign-classroom-student', [AssignClassroomStudentController::class, 'destroy'])->name(('assign-classroom-student.destroy'));
+
 
     // Transactions
     Route::resource("transactions", TransactionController::class);
@@ -66,7 +70,6 @@ Route::group([], function () {
     // Tuition
     Route::resource('tuition', TuitionController::class)->except(['show']);
     Route::resource('publish-tuition', PublishTuitionController::class)->except(['show']);
-
 });
 
 Route::group([], function () {
@@ -81,3 +84,4 @@ Route::group(['prefix' => 'config', 'as' => 'config.'], function () {
 Route::fallback(function () {
     abort(404);
 });
+

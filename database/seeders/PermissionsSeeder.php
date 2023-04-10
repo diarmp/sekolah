@@ -15,6 +15,7 @@ use Database\Seeders\Permissions\MasterConfigSeeder;
 use Database\Seeders\Permissions\SchoolConfigSeeder;
 use Database\Seeders\Permissions\SchoolSelectorSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Seeders\Permissions\AssignClassroomStudentSeeder;
 
 class PermissionsSeeder extends Seeder
 {
@@ -45,6 +46,7 @@ class PermissionsSeeder extends Seeder
             MasterConfigSeeder::class,
             SchoolConfigSeeder::class,
             TransactionSeeder::class,
+            AssignClassroomStudentSeeder::class,
             TuitionSeeder::class,
         ]);
     }
