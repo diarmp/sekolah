@@ -10,7 +10,6 @@ use App\Http\Controllers\AcademyYearController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TuitionTypeController;
 use App\Http\Controllers\ConfigSchoolController;
-use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\PublishTuitionController;
 use App\Http\Controllers\SchoolSelectorController;
 use App\Http\Controllers\AssignClassroomStudentController;

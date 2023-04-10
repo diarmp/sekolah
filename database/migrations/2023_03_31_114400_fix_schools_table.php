@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::table('schools', function (Blueprint $table) {
             $table->dropColumn(['type']);
+            $table->string('name')->nullable()->renameTo('school_name')->change();
             $table->after('school_id', function ($table) {
                 $table->enum('grade', ['TK', 'SD','SMP',"SMA","SMK"]);
                 $table->text("address")->nullable();
@@ -37,6 +38,7 @@ return new class extends Migration
             });
             $table->dropColumn(['grade','alamat','city','province','telp','email']);
             $table->dropForeign(['owner_id']);
+            $table->renameColumn('school_name', 'name');
         });
     }
 };
